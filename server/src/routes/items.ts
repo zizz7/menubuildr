@@ -85,7 +85,7 @@ router.post('/section/:sectionId', async (req: AuthRequest, res) => {
     });
 
     // Regenerate HTML if menu is published
-    await regenerateMenuIfPublished(section.menuId);
+    if (section) await regenerateMenuIfPublished(section.menuId);
 
     res.status(201).json(item);
   } catch (error: any) {
@@ -141,7 +141,7 @@ router.put('/:id', async (req: AuthRequest, res) => {
     });
 
     // Regenerate HTML if menu is published
-    await regenerateMenuIfPublished(existingItem.section.menuId);
+    await regenerateMenuIfPublished(existingItem!.section.menuId);
 
     res.json(item);
   } catch (error) {
@@ -213,7 +213,7 @@ router.put('/:id/reorder', async (req: AuthRequest, res) => {
     });
 
     // Regenerate HTML if menu is published
-    await regenerateMenuIfPublished(existingItem.section.menuId);
+    await regenerateMenuIfPublished(existingItem!.section.menuId);
 
     res.json(item);
   } catch (error) {
@@ -361,7 +361,7 @@ router.put('/:id/recipe', async (req: AuthRequest, res) => {
     });
 
     // Regenerate HTML if menu is published
-    await regenerateMenuIfPublished(menuItem.section.menuId);
+    await regenerateMenuIfPublished(menuItem!.section.menuId);
 
     res.json(recipeDetails);
   } catch (error) {
