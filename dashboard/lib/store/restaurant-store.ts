@@ -5,11 +5,13 @@ interface Restaurant {
   name: string;
   slug: string;
   logoUrl?: string;
+  logoPosition?: string;
   currency: string;
   defaultLanguage: string;
   activeStatus: boolean;
   themeSettings?: ThemeSettings;
   moduleSettings?: ModuleSettings;
+  _count?: { menus: number };
 }
 
 interface ThemeSettings {

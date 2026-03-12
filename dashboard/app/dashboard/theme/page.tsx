@@ -1054,7 +1054,7 @@ export default function ThemePage() {
                     defaultValue="4"
                     className="flex-1"
                     onChange={(e) => {
-                      const value = e.target.value;
+                      const value = Number(e.target.value);
                       const customCss = formData.customCss || '';
                       const shadowValue = `0 ${value/2}px ${value}px rgba(0, 0, 0, ${value/40})`;
                       const updatedCss = customCss.replace(/\.menu-item\s*\{[^}]*box-shadow:\s*[^;]+;?/g, '')
