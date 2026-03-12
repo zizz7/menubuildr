@@ -1,7 +1,15 @@
 import express from 'express';
 import { authenticateToken, AuthRequest } from '../middleware/auth';
 import { requireSubscription } from '../middleware/subscription';
-import translate from 'translate';
+// Dynamic import for ESM-only 'translate' package (CommonJS compat)
+let translateFn: ((text: string, opts: { from: string; to: string }) => Promise<string>) | null = null;
+async function getTranslate() {
+  if (!translateFn) {
+    const mod = await import('translate');
+    translateFn = mod.default;
+  }
+  return translateFn!;
+}
 
 const router = express.Router();
 
@@ -54,7 +62,7 @@ router.post('/', async (req: AuthRequest, res) => {
     const targetCode = languageCodeMap[targetLanguage] || targetLanguage.toLowerCase();
 
     try {
-      // Use translate package (uses Google Translate free API)
+      const translate = await getTranslate();
       const translatedText = await translate(text, {
         from: sourceCode,
         to: targetCode,
