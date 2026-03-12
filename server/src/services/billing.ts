@@ -1,7 +1,16 @@
 import Stripe from 'stripe';
 import prisma from '../config/database';
 
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY as string);
+// Lazy-init Stripe so the server can start without STRIPE_SECRET_KEY
+let _stripe: Stripe | null = null;
+function getStripe(): Stripe {
+  if (!_stripe) {
+    const key = process.env.STRIPE_SECRET_KEY;
+    if (!key) throw new Error('STRIPE_SECRET_KEY is not set — billing features unavailable');
+    _stripe = new Stripe(key);
+  }
+  return _stripe;
+}
 
 /**
  * Looks up an Admin by ID. If no stripeCustomerId exists, creates a Stripe
@@ -13,7 +22,7 @@ export async function getOrCreateStripeCustomer(adminId: string): Promise<string
 
   if (admin.stripeCustomerId) return admin.stripeCustomerId;
 
-  const customer = await stripe.customers.create({ email: admin.email });
+  const customer = await getStripe().customers.create({ email: admin.email });
 
   await prisma.admin.update({
     where: { id: adminId },
@@ -32,7 +41,7 @@ export async function createCheckoutSession(
   priceId: string,
   urls: { success: string; cancel: string },
 ): Promise<string> {
-  const session = await stripe.checkout.sessions.create({
+  const session = await getStripe().checkout.sessions.create({
     customer: customerId,
     mode: 'subscription',
     line_items: [{ price: priceId, quantity: 1 }],
@@ -52,7 +61,7 @@ export async function createPortalSession(
   customerId: string,
   returnUrl: string,
 ): Promise<string> {
-  const session = await stripe.billingPortal.sessions.create({
+  const session = await getStripe().billingPortal.sessions.create({
     customer: customerId,
     return_url: returnUrl,
   });

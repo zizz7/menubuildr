@@ -10,7 +10,17 @@ import {
 import prisma from '../config/database';
 
 const router = express.Router();
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY as string);
+
+// Lazy-init Stripe so the server can start without STRIPE_SECRET_KEY
+let _stripe: Stripe | null = null;
+function getStripe(): Stripe {
+  if (!_stripe) {
+    const key = process.env.STRIPE_SECRET_KEY;
+    if (!key) throw new Error('STRIPE_SECRET_KEY is not set');
+    _stripe = new Stripe(key);
+  }
+  return _stripe;
+}
 
 // POST /create-checkout-session — create a Stripe Checkout Session
 router.post('/create-checkout-session', authenticateToken, async (req: AuthRequest, res) => {
@@ -55,7 +65,7 @@ router.post('/webhook', async (req, res) => {
   const rawBody = req.body as Buffer;
 
   try {
-    const event = stripe.webhooks.constructEvent(
+    const event = getStripe().webhooks.constructEvent(
       rawBody,
       sig,
       process.env.STRIPE_WEBHOOK_SECRET!,
