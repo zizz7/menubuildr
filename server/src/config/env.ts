@@ -1,6 +1,9 @@
 const REQUIRED_VARS = [
   'DATABASE_URL',
   'JWT_SECRET',
+] as const;
+
+const OPTIONAL_WARN_VARS = [
   'STRIPE_SECRET_KEY',
   'STRIPE_WEBHOOK_SECRET',
   'STRIPE_PRICE_ID',
@@ -12,8 +15,12 @@ export function validateEnv(): void {
   const missing = REQUIRED_VARS.filter((v) => !process.env[v]);
 
   if (missing.length > 0) {
-    // eslint-disable-next-line no-console
     console.error(`Missing required environment variables: ${missing.join(', ')}`);
     process.exit(1);
+  }
+
+  const missingOptional = OPTIONAL_WARN_VARS.filter((v) => !process.env[v]);
+  if (missingOptional.length > 0) {
+    console.warn(`Warning: Missing optional environment variables (billing features disabled): ${missingOptional.join(', ')}`);
   }
 }
