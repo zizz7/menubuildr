@@ -33,3 +33,7 @@ dashboard/public/menus/
 # Logs
 *.log
 npm-debug.log*
+
+# Railway deploy scripts
+railway-*.ps1
+railway-*.mjs
