@@ -5,8 +5,17 @@
  * Uses the 'translate' package (free Google Translate API).
  */
 
-import translate from 'translate';
 import prisma from '../config/database';
+
+// Dynamic import for ESM-only 'translate' package (CommonJS compat)
+let translateFn: ((text: string, opts: { from: string; to: string }) => Promise<string>) | null = null;
+async function getTranslate() {
+  if (!translateFn) {
+    const mod = await import('translate');
+    translateFn = mod.default;
+  }
+  return translateFn!;
+}
 
 // Map internal language codes to ISO 639-1 codes for the translate API
 const languageCodeMap: Record<string, string> = {
@@ -36,6 +45,7 @@ async function translateText(text: string, fromLang: string, toLang: string): Pr
   if (fromLang === toLang) return text;
 
   try {
+    const translate = await getTranslate();
     const result = await translate(text, {
       from: getISOCode(fromLang),
       to: getISOCode(toLang),
