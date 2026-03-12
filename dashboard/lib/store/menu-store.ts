@@ -9,6 +9,7 @@ interface Menu {
   status: 'draft' | 'published';
   orderIndex: number;
   sections?: Section[];
+  _count?: { sections: number };
 }
 
 interface Section {
