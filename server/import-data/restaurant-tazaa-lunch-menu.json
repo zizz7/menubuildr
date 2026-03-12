@@ -1,0 +1,1063 @@
+{
+  "name": "Tazaa Lunch Menu",
+  "logoUrl": null,
+  "logoPosition": null,
+  "slug": "tazaa-lunch-menu",
+  "currency": "USD",
+  "defaultLanguage": "ENG",
+  "activeStatus": true,
+  "themeSettings": {
+    "primaryColor": "#000000",
+    "secondaryColor": "#ffffff",
+    "accentColor": "#ff6b6b",
+    "backgroundColor": "#ffffff",
+    "textColor": "#000000",
+    "customCss": null,
+    "customFontsUrls": [],
+    "backgroundIllustrationUrl": null
+  },
+  "moduleSettings": {
+    "enablePriceVariations": false,
+    "enableAvailabilitySchedule": false,
+    "enableSeasonalItems": false,
+    "enableQrGeneration": false,
+    "enableSubcategories": false
+  },
+  "menus": [
+    {
+      "name": {
+        "ENG": "Tazaa Lunch Menu"
+      },
+      "slug": "tazaa-lunch-menu",
+      "menuType": "lunch",
+      "status": "draft",
+      "orderIndex": 0,
+      "themeSettings": null,
+      "sections": [
+        {
+          "title": {
+            "ENG": "Soup"
+          },
+          "orderIndex": 0,
+          "parentSectionId": null,
+          "illustrationUrl": null,
+          "illustrationAsBackground": false,
+          "illustrationPosition": null,
+          "illustrationSize": null,
+          "items": [
+            {
+              "name": {
+                "ENG": "Chilled Tomato Gazpacho"
+              },
+              "description": {
+                "ENG": "Tomatoes, peppers, cucumber, herbs, olive oil"
+              },
+              "price": null,
+              "calories": 85,
+              "imageUrl": null,
+              "orderIndex": 0,
+              "isAvailable": true,
+              "preparationTime": null,
+              "allergens": [],
+              "recipeDetails": {
+                "ingredients": {
+                  "ENG": "Tomatoes, peppers, cucumber, herbs, olive oil"
+                },
+                "instructions": null,
+                "servings": null,
+                "difficultyLevel": null
+              },
+              "priceVariations": [],
+              "availabilitySchedule": null
+            },
+            {
+              "name": {
+                "ENG": "Kale & Asparagus Soup"
+              },
+              "description": {
+                "ENG": "Kale, asparagus, cream"
+              },
+              "price": null,
+              "calories": 140,
+              "imageUrl": null,
+              "orderIndex": 1,
+              "isAvailable": true,
+              "preparationTime": null,
+              "allergens": [],
+              "recipeDetails": {
+                "ingredients": {
+                  "ENG": "Kale, asparagus, cream"
+                },
+                "instructions": null,
+                "servings": null,
+                "difficultyLevel": null
+              },
+              "priceVariations": [],
+              "availabilitySchedule": null
+            },
+            {
+              "name": {
+                "ENG": "Pelmeni"
+              },
+              "description": {
+                "ENG": "Meat dumpling broth, sour cream, chives"
+              },
+              "price": null,
+              "calories": 290,
+              "imageUrl": null,
+              "orderIndex": 2,
+              "isAvailable": true,
+              "preparationTime": null,
+              "allergens": [],
+              "recipeDetails": {
+                "ingredients": {
+                  "ENG": "Meat dumpling broth, sour cream, chives"
+                },
+                "instructions": null,
+                "servings": null,
+                "difficultyLevel": null
+              },
+              "priceVariations": [],
+              "availabilitySchedule": null
+            },
+            {
+              "name": {
+                "ENG": "Cream of Mushroom"
+              },
+              "description": {
+                "ENG": "Mixed mushrooms, leeks, cream"
+              },
+              "price": null,
+              "calories": 165,
+              "imageUrl": null,
+              "orderIndex": 3,
+              "isAvailable": true,
+              "preparationTime": null,
+              "allergens": [],
+              "recipeDetails": {
+                "ingredients": {
+                  "ENG": "Mixed mushrooms, leeks, cream"
+                },
+                "instructions": null,
+                "servings": null,
+                "difficultyLevel": null
+              },
+              "priceVariations": [],
+              "availabilitySchedule": null
+            }
+          ],
+          "categories": []
+        },
+        {
+          "title": {
+            "ENG": "Salad"
+          },
+          "orderIndex": 1,
+          "parentSectionId": null,
+          "illustrationUrl": null,
+          "illustrationAsBackground": false,
+          "illustrationPosition": null,
+          "illustrationSize": null,
+          "items": [
+            {
+              "name": {
+                "ENG": "Caesar"
+              },
+              "description": {
+                "ENG": "Romaine, chicken, croutons, parmesan, anchovy, eggs, dressing"
+              },
+              "price": null,
+              "calories": 340,
+              "imageUrl": null,
+              "orderIndex": 0,
+              "isAvailable": true,
+              "preparationTime": null,
+              "allergens": [],
+              "recipeDetails": {
+                "ingredients": {
+                  "ENG": "Romaine, chicken, croutons, parmesan, anchovy, eggs, dressing"
+                },
+                "instructions": null,
+                "servings": null,
+                "difficultyLevel": null
+              },
+              "priceVariations": [],
+              "availabilitySchedule": null
+            },
+            {
+              "name": {
+                "ENG": "Ceviche"
+              },
+              "description": {
+                "ENG": "Reef fish, lemon, aji Amarillo, red onion, coriander, olive oil"
+              },
+              "price": null,
+              "calories": 190,
+              "imageUrl": null,
+              "orderIndex": 1,
+              "isAvailable": true,
+              "preparationTime": null,
+              "allergens": [],
+              "recipeDetails": {
+                "ingredients": {
+                  "ENG": "Reef fish, lemon, aji Amarillo, red onion, coriander, olive oil"
+                },
+                "instructions": null,
+                "servings": null,
+                "difficultyLevel": null
+              },
+              "priceVariations": [],
+              "availabilitySchedule": null
+            },
+            {
+              "name": {
+                "ENG": "Pomelo"
+              },
+              "description": {
+                "ENG": "Mixed greens, avocado, carrot, tomato, chives, pomelo, dressing"
+              },
+              "price": null,
+              "calories": 150,
+              "imageUrl": null,
+              "orderIndex": 2,
+              "isAvailable": true,
+              "preparationTime": null,
+              "allergens": [],
+              "recipeDetails": {
+                "ingredients": {
+                  "ENG": "Mixed greens, avocado, carrot, tomato, chives, pomelo, dressing"
+                },
+                "instructions": null,
+                "servings": null,
+                "difficultyLevel": null
+              },
+              "priceVariations": [],
+              "availabilitySchedule": null
+            },
+            {
+              "name": {
+                "ENG": "Feta"
+              },
+              "description": {
+                "ENG": "Feta, bell pepper, olives, cucumber, mint, oregano, onion, tomato, balsamic"
+              },
+              "price": null,
+              "calories": 185,
+              "imageUrl": null,
+              "orderIndex": 3,
+              "isAvailable": true,
+              "preparationTime": null,
+              "allergens": [],
+              "recipeDetails": {
+                "ingredients": {
+                  "ENG": "Feta, bell pepper, olives, cucumber, mint, oregano, onion, tomato, balsamic"
+                },
+                "instructions": null,
+                "servings": null,
+                "difficultyLevel": null
+              },
+              "priceVariations": [],
+              "availabilitySchedule": null
+            },
+            {
+              "name": {
+                "ENG": "Niçoise"
+              },
+              "description": {
+                "ENG": "Seared tuna, anchovy, egg, potato, beans, olives, lettuce, dressing"
+              },
+              "price": null,
+              "calories": 240,
+              "imageUrl": null,
+              "orderIndex": 4,
+              "isAvailable": true,
+              "preparationTime": null,
+              "allergens": [],
+              "recipeDetails": {
+                "ingredients": {
+                  "ENG": "Seared tuna, anchovy, egg, potato, beans, olives, lettuce, dressing"
+                },
+                "instructions": null,
+                "servings": null,
+                "difficultyLevel": null
+              },
+              "priceVariations": [],
+              "availabilitySchedule": null
+            }
+          ],
+          "categories": []
+        },
+        {
+          "title": {
+            "ENG": "Burgers / Wraps"
+          },
+          "orderIndex": 2,
+          "parentSectionId": null,
+          "illustrationUrl": null,
+          "illustrationAsBackground": false,
+          "illustrationPosition": null,
+          "illustrationSize": null,
+          "items": [
+            {
+              "name": {
+                "ENG": "The Burger"
+              },
+              "description": {
+                "ENG": "Angus beef, tomato, lettuce, onion, bacon, cheese"
+              },
+              "price": null,
+              "calories": 480,
+              "imageUrl": null,
+              "orderIndex": 0,
+              "isAvailable": true,
+              "preparationTime": null,
+              "allergens": [],
+              "recipeDetails": {
+                "ingredients": {
+                  "ENG": "Angus beef, tomato, lettuce, onion, bacon, cheese"
+                },
+                "instructions": null,
+                "servings": null,
+                "difficultyLevel": null
+              },
+              "priceVariations": [],
+              "availabilitySchedule": null
+            },
+            {
+              "name": {
+                "ENG": "Roast Beef"
+              },
+              "description": {
+                "ENG": "Ciabatta, roasted beef, melted cheese, tomato, pickles"
+              },
+              "price": null,
+              "calories": 410,
+              "imageUrl": null,
+              "orderIndex": 1,
+              "isAvailable": true,
+              "preparationTime": null,
+              "allergens": [],
+              "recipeDetails": {
+                "ingredients": {
+                  "ENG": "Ciabatta, roasted beef, melted cheese, tomato, pickles"
+                },
+                "instructions": null,
+                "servings": null,
+                "difficultyLevel": null
+              },
+              "priceVariations": [],
+              "availabilitySchedule": null
+            },
+            {
+              "name": {
+                "ENG": "Fried Chicken Burger"
+              },
+              "description": {
+                "ENG": "Crispy chicken, kimchi mayo, lettuce, tomato, cheese"
+              },
+              "price": null,
+              "calories": 450,
+              "imageUrl": null,
+              "orderIndex": 2,
+              "isAvailable": true,
+              "preparationTime": null,
+              "allergens": [],
+              "recipeDetails": {
+                "ingredients": {
+                  "ENG": "Crispy chicken, kimchi mayo, lettuce, tomato, cheese"
+                },
+                "instructions": null,
+                "servings": null,
+                "difficultyLevel": null
+              },
+              "priceVariations": [],
+              "availabilitySchedule": null
+            },
+            {
+              "name": {
+                "ENG": "Quesadilla (Chicken or Veg)"
+              },
+              "description": {
+                "ENG": "Tortilla, grilled chicken, cheese, red beans, peppers"
+              },
+              "price": null,
+              "calories": 420,
+              "imageUrl": null,
+              "orderIndex": 3,
+              "isAvailable": true,
+              "preparationTime": null,
+              "allergens": [],
+              "recipeDetails": {
+                "ingredients": {
+                  "ENG": "Tortilla, grilled chicken, cheese, red beans, peppers"
+                },
+                "instructions": null,
+                "servings": null,
+                "difficultyLevel": null
+              },
+              "priceVariations": [],
+              "availabilitySchedule": null
+            },
+            {
+              "name": {
+                "ENG": "Khathi Roll (Paneer)"
+              },
+              "description": {
+                "ENG": "Paneer, onions, peppers, spices, tortilla, mango chutney"
+              },
+              "price": null,
+              "calories": 390,
+              "imageUrl": null,
+              "orderIndex": 4,
+              "isAvailable": true,
+              "preparationTime": null,
+              "allergens": [],
+              "recipeDetails": {
+                "ingredients": {
+                  "ENG": "Paneer, onions, peppers, spices, tortilla, mango chutney"
+                },
+                "instructions": null,
+                "servings": null,
+                "difficultyLevel": null
+              },
+              "priceVariations": [],
+              "availabilitySchedule": null
+            },
+            {
+              "name": {
+                "ENG": "Khathi Roll (Chicken)"
+              },
+              "description": {
+                "ENG": "Chicken, onions, peppers, spices, tortilla, mango chutney"
+              },
+              "price": null,
+              "calories": 450,
+              "imageUrl": null,
+              "orderIndex": 5,
+              "isAvailable": true,
+              "preparationTime": null,
+              "allergens": [],
+              "recipeDetails": {
+                "ingredients": {
+                  "ENG": "Chicken, onions, peppers, spices, tortilla, mango chutney"
+                },
+                "instructions": null,
+                "servings": null,
+                "difficultyLevel": null
+              },
+              "priceVariations": [],
+              "availabilitySchedule": null
+            },
+            {
+              "name": {
+                "ENG": "Fish and Chips"
+              },
+              "description": {
+                "ENG": "Battered reef fish, fries, tartare sauce, lemon"
+              },
+              "price": null,
+              "calories": 460,
+              "imageUrl": null,
+              "orderIndex": 6,
+              "isAvailable": true,
+              "preparationTime": null,
+              "allergens": [],
+              "recipeDetails": {
+                "ingredients": {
+                  "ENG": "Battered reef fish, fries, tartare sauce, lemon"
+                },
+                "instructions": null,
+                "servings": null,
+                "difficultyLevel": null
+              },
+              "priceVariations": [],
+              "availabilitySchedule": null
+            }
+          ],
+          "categories": []
+        },
+        {
+          "title": {
+            "ENG": "Grill"
+          },
+          "orderIndex": 3,
+          "parentSectionId": null,
+          "illustrationUrl": null,
+          "illustrationAsBackground": false,
+          "illustrationPosition": null,
+          "illustrationSize": null,
+          "items": [
+            {
+              "name": {
+                "ENG": "Yellow Fin Tuna"
+              },
+              "description": {
+                "ENG": "Tuna, grilled veg/mash, lemon butter sauce"
+              },
+              "price": null,
+              "calories": 280,
+              "imageUrl": null,
+              "orderIndex": 0,
+              "isAvailable": true,
+              "preparationTime": null,
+              "allergens": [],
+              "recipeDetails": {
+                "ingredients": {
+                  "ENG": "Tuna, grilled veg/mash, lemon butter sauce"
+                },
+                "instructions": null,
+                "servings": null,
+                "difficultyLevel": null
+              },
+              "priceVariations": [],
+              "availabilitySchedule": null
+            },
+            {
+              "name": {
+                "ENG": "Reef Fish"
+              },
+              "description": {
+                "ENG": "Catch of the day, broccolini, citrus cream sauce"
+              },
+              "price": null,
+              "calories": 260,
+              "imageUrl": null,
+              "orderIndex": 1,
+              "isAvailable": true,
+              "preparationTime": null,
+              "allergens": [],
+              "recipeDetails": {
+                "ingredients": {
+                  "ENG": "Catch of the day, broccolini, citrus cream sauce"
+                },
+                "instructions": null,
+                "servings": null,
+                "difficultyLevel": null
+              },
+              "priceVariations": [],
+              "availabilitySchedule": null
+            },
+            {
+              "name": {
+                "ENG": "Chicken Ballotine"
+              },
+              "description": {
+                "ENG": "Rolled chicken, sausage, spinach, chicken jus"
+              },
+              "price": null,
+              "calories": 380,
+              "imageUrl": null,
+              "orderIndex": 2,
+              "isAvailable": true,
+              "preparationTime": null,
+              "allergens": [],
+              "recipeDetails": {
+                "ingredients": {
+                  "ENG": "Rolled chicken, sausage, spinach, chicken jus"
+                },
+                "instructions": null,
+                "servings": null,
+                "difficultyLevel": null
+              },
+              "priceVariations": [],
+              "availabilitySchedule": null
+            },
+            {
+              "name": {
+                "ENG": "Pork Chops"
+              },
+              "description": {
+                "ENG": "Pork, roasted potatoes, mustard jus"
+              },
+              "price": null,
+              "calories": 410,
+              "imageUrl": null,
+              "orderIndex": 3,
+              "isAvailable": true,
+              "preparationTime": null,
+              "allergens": [],
+              "recipeDetails": {
+                "ingredients": {
+                  "ENG": "Pork, roasted potatoes, mustard jus"
+                },
+                "instructions": null,
+                "servings": null,
+                "difficultyLevel": null
+              },
+              "priceVariations": [],
+              "availabilitySchedule": null
+            }
+          ],
+          "categories": []
+        },
+        {
+          "title": {
+            "ENG": "Curry Bowl"
+          },
+          "orderIndex": 4,
+          "parentSectionId": null,
+          "illustrationUrl": null,
+          "illustrationAsBackground": false,
+          "illustrationPosition": null,
+          "illustrationSize": null,
+          "items": [
+            {
+              "name": {
+                "ENG": "Hyderabadi Dum Ka Murgh"
+              },
+              "description": {
+                "ENG": "Chicken, yoghurt, spices, almond, cream, ghee"
+              },
+              "price": null,
+              "calories": 320,
+              "imageUrl": null,
+              "orderIndex": 0,
+              "isAvailable": true,
+              "preparationTime": null,
+              "allergens": [],
+              "recipeDetails": {
+                "ingredients": {
+                  "ENG": "Chicken, yoghurt, spices, almond, cream, ghee"
+                },
+                "instructions": null,
+                "servings": null,
+                "difficultyLevel": null
+              },
+              "priceVariations": [],
+              "availabilitySchedule": null
+            },
+            {
+              "name": {
+                "ENG": "Maldivian Tuna Curry"
+              },
+              "description": {
+                "ENG": "Tuna, coconut cream, chili, spices"
+              },
+              "price": null,
+              "calories": 290,
+              "imageUrl": null,
+              "orderIndex": 1,
+              "isAvailable": true,
+              "preparationTime": null,
+              "allergens": [],
+              "recipeDetails": {
+                "ingredients": {
+                  "ENG": "Tuna, coconut cream, chili, spices"
+                },
+                "instructions": null,
+                "servings": null,
+                "difficultyLevel": null
+              },
+              "priceVariations": [],
+              "availabilitySchedule": null
+            },
+            {
+              "name": {
+                "ENG": "Prawn Moilee"
+              },
+              "description": {
+                "ENG": "Tiger prawns, coconut milk, ginger, turmeric, curry leaves"
+              },
+              "price": null,
+              "calories": 250,
+              "imageUrl": null,
+              "orderIndex": 2,
+              "isAvailable": true,
+              "preparationTime": null,
+              "allergens": [],
+              "recipeDetails": {
+                "ingredients": {
+                  "ENG": "Tiger prawns, coconut milk, ginger, turmeric, curry leaves"
+                },
+                "instructions": null,
+                "servings": null,
+                "difficultyLevel": null
+              },
+              "priceVariations": [],
+              "availabilitySchedule": null
+            },
+            {
+              "name": {
+                "ENG": "Dal Makhani"
+              },
+              "description": {
+                "ENG": "Smoked black lentils, spices, butter"
+              },
+              "price": null,
+              "calories": 210,
+              "imageUrl": null,
+              "orderIndex": 3,
+              "isAvailable": true,
+              "preparationTime": null,
+              "allergens": [],
+              "recipeDetails": {
+                "ingredients": {
+                  "ENG": "Smoked black lentils, spices, butter"
+                },
+                "instructions": null,
+                "servings": null,
+                "difficultyLevel": null
+              },
+              "priceVariations": [],
+              "availabilitySchedule": null
+            },
+            {
+              "name": {
+                "ENG": "Paneer Lababdar"
+              },
+              "description": {
+                "ENG": "Cottage cheese, tomato gravy, spices, cream"
+              },
+              "price": null,
+              "calories": 340,
+              "imageUrl": null,
+              "orderIndex": 4,
+              "isAvailable": true,
+              "preparationTime": null,
+              "allergens": [],
+              "recipeDetails": {
+                "ingredients": {
+                  "ENG": "Cottage cheese, tomato gravy, spices, cream"
+                },
+                "instructions": null,
+                "servings": null,
+                "difficultyLevel": null
+              },
+              "priceVariations": [],
+              "availabilitySchedule": null
+            },
+            {
+              "name": {
+                "ENG": "Vegetable Biryani"
+              },
+              "description": {
+                "ENG": "Basmati rice, seasonal vegetables, spices, mint"
+              },
+              "price": null,
+              "calories": 260,
+              "imageUrl": null,
+              "orderIndex": 5,
+              "isAvailable": true,
+              "preparationTime": null,
+              "allergens": [],
+              "recipeDetails": {
+                "ingredients": {
+                  "ENG": "Basmati rice, seasonal vegetables, spices, mint"
+                },
+                "instructions": null,
+                "servings": null,
+                "difficultyLevel": null
+              },
+              "priceVariations": [],
+              "availabilitySchedule": null
+            },
+            {
+              "name": {
+                "ENG": "Chicken Biryani"
+              },
+              "description": {
+                "ENG": "Basmati rice, yoghurt chicken, spices, coriander"
+              },
+              "price": null,
+              "calories": 310,
+              "imageUrl": null,
+              "orderIndex": 6,
+              "isAvailable": true,
+              "preparationTime": null,
+              "allergens": [],
+              "recipeDetails": {
+                "ingredients": {
+                  "ENG": "Basmati rice, yoghurt chicken, spices, coriander"
+                },
+                "instructions": null,
+                "servings": null,
+                "difficultyLevel": null
+              },
+              "priceVariations": [],
+              "availabilitySchedule": null
+            }
+          ],
+          "categories": []
+        },
+        {
+          "title": {
+            "ENG": "Moksha (Healthy)"
+          },
+          "orderIndex": 5,
+          "parentSectionId": null,
+          "illustrationUrl": null,
+          "illustrationAsBackground": false,
+          "illustrationPosition": null,
+          "illustrationSize": null,
+          "items": [
+            {
+              "name": {
+                "ENG": "Roasted Beet & Orange"
+              },
+              "description": {
+                "ENG": "Beetroot, orange, citrus dressing, goat's cheese"
+              },
+              "price": null,
+              "calories": 140,
+              "imageUrl": null,
+              "orderIndex": 0,
+              "isAvailable": true,
+              "preparationTime": null,
+              "allergens": [],
+              "recipeDetails": {
+                "ingredients": {
+                  "ENG": "Beetroot, orange, citrus dressing, goat's cheese"
+                },
+                "instructions": null,
+                "servings": null,
+                "difficultyLevel": null
+              },
+              "priceVariations": [],
+              "availabilitySchedule": null
+            },
+            {
+              "name": {
+                "ENG": "Poke Bowl"
+              },
+              "description": {
+                "ENG": "Sashimi tuna, edamame, avocado, wild rice, sesame dressing"
+              },
+              "price": null,
+              "calories": 280,
+              "imageUrl": null,
+              "orderIndex": 1,
+              "isAvailable": true,
+              "preparationTime": null,
+              "allergens": [],
+              "recipeDetails": {
+                "ingredients": {
+                  "ENG": "Sashimi tuna, edamame, avocado, wild rice, sesame dressing"
+                },
+                "instructions": null,
+                "servings": null,
+                "difficultyLevel": null
+              },
+              "priceVariations": [],
+              "availabilitySchedule": null
+            },
+            {
+              "name": {
+                "ENG": "Falafel Wrap"
+              },
+              "description": {
+                "ENG": "Falafel, pita, veggies, vegan tahini sauce"
+              },
+              "price": null,
+              "calories": 360,
+              "imageUrl": null,
+              "orderIndex": 2,
+              "isAvailable": true,
+              "preparationTime": null,
+              "allergens": [],
+              "recipeDetails": {
+                "ingredients": {
+                  "ENG": "Falafel, pita, veggies, vegan tahini sauce"
+                },
+                "instructions": null,
+                "servings": null,
+                "difficultyLevel": null
+              },
+              "priceVariations": [],
+              "availabilitySchedule": null
+            },
+            {
+              "name": {
+                "ENG": "Buckwheat"
+              },
+              "description": {
+                "ENG": "Buckwheat, squash, mushroom, spinach, tomato"
+              },
+              "price": null,
+              "calories": 190,
+              "imageUrl": null,
+              "orderIndex": 3,
+              "isAvailable": true,
+              "preparationTime": null,
+              "allergens": [],
+              "recipeDetails": {
+                "ingredients": {
+                  "ENG": "Buckwheat, squash, mushroom, spinach, tomato"
+                },
+                "instructions": null,
+                "servings": null,
+                "difficultyLevel": null
+              },
+              "priceVariations": [],
+              "availabilitySchedule": null
+            }
+          ],
+          "categories": []
+        },
+        {
+          "title": {
+            "ENG": "Dessert"
+          },
+          "orderIndex": 6,
+          "parentSectionId": null,
+          "illustrationUrl": null,
+          "illustrationAsBackground": false,
+          "illustrationPosition": null,
+          "illustrationSize": null,
+          "items": [
+            {
+              "name": {
+                "ENG": "Lemongrass Crème Brûlée"
+              },
+              "description": {
+                "ENG": "Lemongrass custard, vanilla, grapefruit, berries"
+              },
+              "price": null,
+              "calories": 410,
+              "imageUrl": null,
+              "orderIndex": 0,
+              "isAvailable": true,
+              "preparationTime": null,
+              "allergens": [],
+              "recipeDetails": {
+                "ingredients": {
+                  "ENG": "Lemongrass custard, vanilla, grapefruit, berries"
+                },
+                "instructions": null,
+                "servings": null,
+                "difficultyLevel": null
+              },
+              "priceVariations": [],
+              "availabilitySchedule": null
+            },
+            {
+              "name": {
+                "ENG": "Sticky Date Pudding"
+              },
+              "description": {
+                "ENG": "Date cake, toffee sauce, pecan, caramel touille"
+              },
+              "price": null,
+              "calories": 520,
+              "imageUrl": null,
+              "orderIndex": 1,
+              "isAvailable": true,
+              "preparationTime": null,
+              "allergens": [],
+              "recipeDetails": {
+                "ingredients": {
+                  "ENG": "Date cake, toffee sauce, pecan, caramel touille"
+                },
+                "instructions": null,
+                "servings": null,
+                "difficultyLevel": null
+              },
+              "priceVariations": [],
+              "availabilitySchedule": null
+            },
+            {
+              "name": {
+                "ENG": "Pandan Cheesecake"
+              },
+              "description": {
+                "ENG": "Pandan cheesecake, coconut crumble, lime jel"
+              },
+              "price": null,
+              "calories": 480,
+              "imageUrl": null,
+              "orderIndex": 2,
+              "isAvailable": true,
+              "preparationTime": null,
+              "allergens": [],
+              "recipeDetails": {
+                "ingredients": {
+                  "ENG": "Pandan cheesecake, coconut crumble, lime jel"
+                },
+                "instructions": null,
+                "servings": null,
+                "difficultyLevel": null
+              },
+              "priceVariations": [],
+              "availabilitySchedule": null
+            },
+            {
+              "name": {
+                "ENG": "Chocolate Mousse"
+              },
+              "description": {
+                "ENG": "Valrhona chocolate, honeycomb, raspberries"
+              },
+              "price": null,
+              "calories": 440,
+              "imageUrl": null,
+              "orderIndex": 3,
+              "isAvailable": true,
+              "preparationTime": null,
+              "allergens": [],
+              "recipeDetails": {
+                "ingredients": {
+                  "ENG": "Valrhona chocolate, honeycomb, raspberries"
+                },
+                "instructions": null,
+                "servings": null,
+                "difficultyLevel": null
+              },
+              "priceVariations": [],
+              "availabilitySchedule": null
+            },
+            {
+              "name": {
+                "ENG": "Ice-cream Sundae"
+              },
+              "description": {
+                "ENG": "Vanilla Ice cream, Berry Compote, whipped cream"
+              },
+              "price": null,
+              "calories": 455,
+              "imageUrl": null,
+              "orderIndex": 4,
+              "isAvailable": true,
+              "preparationTime": null,
+              "allergens": [],
+              "recipeDetails": {
+                "ingredients": {
+                  "ENG": "Vanilla Ice cream, Berry Compote, whipped cream"
+                },
+                "instructions": null,
+                "servings": null,
+                "difficultyLevel": null
+              },
+              "priceVariations": [],
+              "availabilitySchedule": null
+            },
+            {
+              "name": {
+                "ENG": "Fruits"
+              },
+              "description": {
+                "ENG": "Watermelon, Pineapple, Passionfruit, Papaya"
+              },
+              "price": null,
+              "calories": 135,
+              "imageUrl": null,
+              "orderIndex": 5,
+              "isAvailable": true,
+              "preparationTime": null,
+              "allergens": [],
+              "recipeDetails": {
+                "ingredients": {
+                  "ENG": "Watermelon, Pineapple, Passionfruit, Papaya"
+                },
+                "instructions": null,
+                "servings": null,
+                "difficultyLevel": null
+              },
+              "priceVariations": [],
+              "availabilitySchedule": null
+            }
+          ],
+          "categories": []
+        }
+      ]
+    }
+  ]
+}

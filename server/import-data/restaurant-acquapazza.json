@@ -1,0 +1,1998 @@
+{
+  "name": "Acquapazza",
+  "logoUrl": null,
+  "logoPosition": null,
+  "slug": "acquapazza",
+  "currency": "USD",
+  "defaultLanguage": "ENG",
+  "activeStatus": true,
+  "themeSettings": {
+    "primaryColor": "#000000",
+    "secondaryColor": "#ffffff",
+    "accentColor": "#ff6b6b",
+    "backgroundColor": "#ffffff",
+    "textColor": "#000000",
+    "customCss": null,
+    "customFontsUrls": [],
+    "backgroundIllustrationUrl": null
+  },
+  "moduleSettings": {
+    "enablePriceVariations": false,
+    "enableAvailabilitySchedule": false,
+    "enableSeasonalItems": false,
+    "enableQrGeneration": false,
+    "enableSubcategories": false
+  },
+  "menus": [
+    {
+      "name": {
+        "ENG": "Acquapazza Lunch 2026"
+      },
+      "slug": "acquapazza-lunch-2026",
+      "menuType": "lunch",
+      "status": "draft",
+      "orderIndex": 0,
+      "themeSettings": null,
+      "sections": [
+        {
+          "title": {
+            "ENG": "Appetizer & Salad"
+          },
+          "orderIndex": 0,
+          "parentSectionId": null,
+          "illustrationUrl": null,
+          "illustrationAsBackground": false,
+          "illustrationPosition": null,
+          "illustrationSize": null,
+          "items": [
+            {
+              "name": {
+                "ENG": "Acqua Salad"
+              },
+              "description": {
+                "ENG": "Mixed greens, baby mozzarella, honey mustard, cherry tomato, cucumber, avocado, Kalamata olives"
+              },
+              "price": null,
+              "calories": 210,
+              "imageUrl": null,
+              "orderIndex": 0,
+              "isAvailable": true,
+              "preparationTime": null,
+              "allergens": [],
+              "recipeDetails": {
+                "ingredients": {
+                  "ENG": "Mixed greens, baby mozzarella, honey mustard, cherry tomato, cucumber, avocado, Kalamata olives"
+                },
+                "instructions": null,
+                "servings": null,
+                "difficultyLevel": null
+              },
+              "priceVariations": [],
+              "availabilitySchedule": null
+            },
+            {
+              "name": {
+                "ENG": "Bocconcini"
+              },
+              "description": {
+                "ENG": "Baby mozzarella, basil pesto, heirloom tomato, herb oil, plum"
+              },
+              "price": null,
+              "calories": 245,
+              "imageUrl": null,
+              "orderIndex": 1,
+              "isAvailable": true,
+              "preparationTime": null,
+              "allergens": [],
+              "recipeDetails": {
+                "ingredients": {
+                  "ENG": "Baby mozzarella, basil pesto, heirloom tomato, herb oil, plum"
+                },
+                "instructions": null,
+                "servings": null,
+                "difficultyLevel": null
+              },
+              "priceVariations": [],
+              "availabilitySchedule": null
+            },
+            {
+              "name": {
+                "ENG": "Aperitivo"
+              },
+              "description": {
+                "ENG": "Cold cuts, olives, sundried tomato, honey, cheese"
+              },
+              "price": null,
+              "calories": 320,
+              "imageUrl": null,
+              "orderIndex": 2,
+              "isAvailable": true,
+              "preparationTime": null,
+              "allergens": [],
+              "recipeDetails": {
+                "ingredients": {
+                  "ENG": "Cold cuts, olives, sundried tomato, honey, cheese"
+                },
+                "instructions": null,
+                "servings": null,
+                "difficultyLevel": null
+              },
+              "priceVariations": [],
+              "availabilitySchedule": null
+            },
+            {
+              "name": {
+                "ENG": "Ceasar Salad"
+              },
+              "description": {
+                "ENG": "Romain lettuce, Caesar dressing, parmesan shavings, anchovies, croutons"
+              },
+              "price": null,
+              "calories": 280,
+              "imageUrl": null,
+              "orderIndex": 3,
+              "isAvailable": true,
+              "preparationTime": null,
+              "allergens": [],
+              "recipeDetails": {
+                "ingredients": {
+                  "ENG": "Romain lettuce, Caesar dressing, parmesan shavings, anchovies, croutons"
+                },
+                "instructions": null,
+                "servings": null,
+                "difficultyLevel": null
+              },
+              "priceVariations": [],
+              "availabilitySchedule": null
+            },
+            {
+              "name": {
+                "ENG": "Cora Salad"
+              },
+              "description": {
+                "ENG": "Copy leaves, Maldivian rocket, passion fruit, celery, olive oil"
+              },
+              "price": null,
+              "calories": 135,
+              "imageUrl": null,
+              "orderIndex": 4,
+              "isAvailable": true,
+              "preparationTime": null,
+              "allergens": [],
+              "recipeDetails": {
+                "ingredients": {
+                  "ENG": "Copy leaves, Maldivian rocket, passion fruit, celery, olive oil"
+                },
+                "instructions": null,
+                "servings": null,
+                "difficultyLevel": null
+              },
+              "priceVariations": [],
+              "availabilitySchedule": null
+            },
+            {
+              "name": {
+                "ENG": "Finocchio"
+              },
+              "description": {
+                "ENG": "Fennel, lemon dressing, orange segments, dill, fennel cream"
+              },
+              "price": null,
+              "calories": 115,
+              "imageUrl": null,
+              "orderIndex": 5,
+              "isAvailable": true,
+              "preparationTime": null,
+              "allergens": [],
+              "recipeDetails": {
+                "ingredients": {
+                  "ENG": "Fennel, lemon dressing, orange segments, dill, fennel cream"
+                },
+                "instructions": null,
+                "servings": null,
+                "difficultyLevel": null
+              },
+              "priceVariations": [],
+              "availabilitySchedule": null
+            }
+          ],
+          "categories": []
+        },
+        {
+          "title": {
+            "ENG": "Soup"
+          },
+          "orderIndex": 1,
+          "parentSectionId": null,
+          "illustrationUrl": null,
+          "illustrationAsBackground": false,
+          "illustrationPosition": null,
+          "illustrationSize": null,
+          "items": [
+            {
+              "name": {
+                "ENG": "Gazpacho"
+              },
+              "description": {
+                "ENG": "Tomato, red bell pepper, celery, cucumber, vinegar, onion, olive oil, croutons"
+              },
+              "price": null,
+              "calories": 160,
+              "imageUrl": null,
+              "orderIndex": 0,
+              "isAvailable": true,
+              "preparationTime": null,
+              "allergens": [],
+              "recipeDetails": {
+                "ingredients": {
+                  "ENG": "Tomato, red bell pepper, celery, cucumber, vinegar, onion, olive oil, croutons"
+                },
+                "instructions": null,
+                "servings": null,
+                "difficultyLevel": null
+              },
+              "priceVariations": [],
+              "availabilitySchedule": null
+            },
+            {
+              "name": {
+                "ENG": "Moscardini"
+              },
+              "description": {
+                "ENG": "Mixed seafood, tomato, cream, mashed potato, croutons, herb oil"
+              },
+              "price": null,
+              "calories": 240,
+              "imageUrl": null,
+              "orderIndex": 1,
+              "isAvailable": true,
+              "preparationTime": null,
+              "allergens": [],
+              "recipeDetails": {
+                "ingredients": {
+                  "ENG": "Mixed seafood, tomato, cream, mashed potato, croutons, herb oil"
+                },
+                "instructions": null,
+                "servings": null,
+                "difficultyLevel": null
+              },
+              "priceVariations": [],
+              "availabilitySchedule": null
+            }
+          ],
+          "categories": []
+        },
+        {
+          "title": {
+            "ENG": "Bruschetta"
+          },
+          "orderIndex": 2,
+          "parentSectionId": null,
+          "illustrationUrl": null,
+          "illustrationAsBackground": false,
+          "illustrationPosition": null,
+          "illustrationSize": null,
+          "items": [
+            {
+              "name": {
+                "ENG": "Basilicata"
+              },
+              "description": {
+                "ENG": "Tomato, basil, oregano, olive oil, balsamic, garlic"
+              },
+              "price": null,
+              "calories": 290,
+              "imageUrl": null,
+              "orderIndex": 0,
+              "isAvailable": true,
+              "preparationTime": null,
+              "allergens": [],
+              "recipeDetails": {
+                "ingredients": {
+                  "ENG": "Tomato, basil, oregano, olive oil, balsamic, garlic"
+                },
+                "instructions": null,
+                "servings": null,
+                "difficultyLevel": null
+              },
+              "priceVariations": [],
+              "availabilitySchedule": null
+            },
+            {
+              "name": {
+                "ENG": "Ricotta e Mortadella"
+              },
+              "description": {
+                "ENG": "Ricotta, mortadella, basil pesto"
+              },
+              "price": null,
+              "calories": 410,
+              "imageUrl": null,
+              "orderIndex": 1,
+              "isAvailable": true,
+              "preparationTime": null,
+              "allergens": [],
+              "recipeDetails": {
+                "ingredients": {
+                  "ENG": "Ricotta, mortadella, basil pesto"
+                },
+                "instructions": null,
+                "servings": null,
+                "difficultyLevel": null
+              },
+              "priceVariations": [],
+              "availabilitySchedule": null
+            },
+            {
+              "name": {
+                "ENG": "Piselli"
+              },
+              "description": {
+                "ENG": "Green peas, guanciale, onion, baby mozzarella"
+              },
+              "price": null,
+              "calories": 380,
+              "imageUrl": null,
+              "orderIndex": 2,
+              "isAvailable": true,
+              "preparationTime": null,
+              "allergens": [],
+              "recipeDetails": {
+                "ingredients": {
+                  "ENG": "Green peas, guanciale, onion, baby mozzarella"
+                },
+                "instructions": null,
+                "servings": null,
+                "difficultyLevel": null
+              },
+              "priceVariations": [],
+              "availabilitySchedule": null
+            }
+          ],
+          "categories": []
+        },
+        {
+          "title": {
+            "ENG": "Pizza"
+          },
+          "orderIndex": 3,
+          "parentSectionId": null,
+          "illustrationUrl": null,
+          "illustrationAsBackground": false,
+          "illustrationPosition": null,
+          "illustrationSize": null,
+          "items": [
+            {
+              "name": {
+                "ENG": "Margherita"
+              },
+              "description": {
+                "ENG": "Tomato, mozzarella"
+              },
+              "price": null,
+              "calories": 450,
+              "imageUrl": null,
+              "orderIndex": 0,
+              "isAvailable": true,
+              "preparationTime": null,
+              "allergens": [],
+              "recipeDetails": {
+                "ingredients": {
+                  "ENG": "Tomato, mozzarella"
+                },
+                "instructions": null,
+                "servings": null,
+                "difficultyLevel": null
+              },
+              "priceVariations": [],
+              "availabilitySchedule": null
+            },
+            {
+              "name": {
+                "ENG": "5 Formaggi"
+              },
+              "description": {
+                "ENG": "Mozzarella, gorgonzola, brie, smoked cheese, parmesan"
+              },
+              "price": null,
+              "calories": 560,
+              "imageUrl": null,
+              "orderIndex": 1,
+              "isAvailable": true,
+              "preparationTime": null,
+              "allergens": [],
+              "recipeDetails": {
+                "ingredients": {
+                  "ENG": "Mozzarella, gorgonzola, brie, smoked cheese, parmesan"
+                },
+                "instructions": null,
+                "servings": null,
+                "difficultyLevel": null
+              },
+              "priceVariations": [],
+              "availabilitySchedule": null
+            },
+            {
+              "name": {
+                "ENG": "Mortadella"
+              },
+              "description": {
+                "ENG": "Cherry tomato, rucola, mozzarella, mortadella, stracciatella, olive oil, pistachio"
+              },
+              "price": null,
+              "calories": 520,
+              "imageUrl": null,
+              "orderIndex": 2,
+              "isAvailable": true,
+              "preparationTime": null,
+              "allergens": [],
+              "recipeDetails": {
+                "ingredients": {
+                  "ENG": "Cherry tomato, rucola, mozzarella, mortadella, stracciatella, olive oil, pistachio"
+                },
+                "instructions": null,
+                "servings": null,
+                "difficultyLevel": null
+              },
+              "priceVariations": [],
+              "availabilitySchedule": null
+            },
+            {
+              "name": {
+                "ENG": "Pepperoni"
+              },
+              "description": {
+                "ENG": "Mozzarella, tomato sauce, beef pepperoni, olives, bell pepper, onion"
+              },
+              "price": null,
+              "calories": 510,
+              "imageUrl": null,
+              "orderIndex": 3,
+              "isAvailable": true,
+              "preparationTime": null,
+              "allergens": [],
+              "recipeDetails": {
+                "ingredients": {
+                  "ENG": "Mozzarella, tomato sauce, beef pepperoni, olives, bell pepper, onion"
+                },
+                "instructions": null,
+                "servings": null,
+                "difficultyLevel": null
+              },
+              "priceVariations": [],
+              "availabilitySchedule": null
+            },
+            {
+              "name": {
+                "ENG": "Acciuga"
+              },
+              "description": {
+                "ENG": "Tomato, anchovies, capers, olives, cherry tomato, rucola"
+              },
+              "price": null,
+              "calories": 410,
+              "imageUrl": null,
+              "orderIndex": 4,
+              "isAvailable": true,
+              "preparationTime": null,
+              "allergens": [],
+              "recipeDetails": {
+                "ingredients": {
+                  "ENG": "Tomato, anchovies, capers, olives, cherry tomato, rucola"
+                },
+                "instructions": null,
+                "servings": null,
+                "difficultyLevel": null
+              },
+              "priceVariations": [],
+              "availabilitySchedule": null
+            },
+            {
+              "name": {
+                "ENG": "Prosciutto di Parma"
+              },
+              "description": {
+                "ENG": "Parma ham, rucola, sun-dried tomato, tomato sauce, mozzarella"
+              },
+              "price": null,
+              "calories": 480,
+              "imageUrl": null,
+              "orderIndex": 5,
+              "isAvailable": true,
+              "preparationTime": null,
+              "allergens": [],
+              "recipeDetails": {
+                "ingredients": {
+                  "ENG": "Parma ham, rucola, sun-dried tomato, tomato sauce, mozzarella"
+                },
+                "instructions": null,
+                "servings": null,
+                "difficultyLevel": null
+              },
+              "priceVariations": [],
+              "availabilitySchedule": null
+            },
+            {
+              "name": {
+                "ENG": "Diavola"
+              },
+              "description": {
+                "ENG": "Mozzarella, tomato, spicy salami, bell peppers"
+              },
+              "price": null,
+              "calories": 530,
+              "imageUrl": null,
+              "orderIndex": 6,
+              "isAvailable": true,
+              "preparationTime": null,
+              "allergens": [],
+              "recipeDetails": {
+                "ingredients": {
+                  "ENG": "Mozzarella, tomato, spicy salami, bell peppers"
+                },
+                "instructions": null,
+                "servings": null,
+                "difficultyLevel": null
+              },
+              "priceVariations": [],
+              "availabilitySchedule": null
+            },
+            {
+              "name": {
+                "ENG": "Pollo al Tartufo"
+              },
+              "description": {
+                "ENG": "Truffle cream, mozzarella, chicken, mushroom"
+              },
+              "price": null,
+              "calories": 490,
+              "imageUrl": null,
+              "orderIndex": 7,
+              "isAvailable": true,
+              "preparationTime": null,
+              "allergens": [],
+              "recipeDetails": {
+                "ingredients": {
+                  "ENG": "Truffle cream, mozzarella, chicken, mushroom"
+                },
+                "instructions": null,
+                "servings": null,
+                "difficultyLevel": null
+              },
+              "priceVariations": [],
+              "availabilitySchedule": null
+            }
+          ],
+          "categories": []
+        },
+        {
+          "title": {
+            "ENG": "Main"
+          },
+          "orderIndex": 4,
+          "parentSectionId": null,
+          "illustrationUrl": null,
+          "illustrationAsBackground": false,
+          "illustrationPosition": null,
+          "illustrationSize": null,
+          "items": [
+            {
+              "name": {
+                "ENG": "Pescato del Giorno"
+              },
+              "description": {
+                "ENG": "Almond crusted reef fish, spinach puree, coconut cream, tomato concasse, herb oil"
+              },
+              "price": null,
+              "calories": 360,
+              "imageUrl": null,
+              "orderIndex": 0,
+              "isAvailable": true,
+              "preparationTime": null,
+              "allergens": [],
+              "recipeDetails": {
+                "ingredients": {
+                  "ENG": "Almond crusted reef fish, spinach puree, coconut cream, tomato concasse, herb oil"
+                },
+                "instructions": null,
+                "servings": null,
+                "difficultyLevel": null
+              },
+              "priceVariations": [],
+              "availabilitySchedule": null
+            },
+            {
+              "name": {
+                "ENG": "Filetto di Manzo"
+              },
+              "description": {
+                "ENG": "Beef tenderloin, French beans, celery root puree, sautéed spinach, peppercorn jus"
+              },
+              "price": null,
+              "calories": 390,
+              "imageUrl": null,
+              "orderIndex": 1,
+              "isAvailable": true,
+              "preparationTime": null,
+              "allergens": [],
+              "recipeDetails": {
+                "ingredients": {
+                  "ENG": "Beef tenderloin, French beans, celery root puree, sautéed spinach, peppercorn jus"
+                },
+                "instructions": null,
+                "servings": null,
+                "difficultyLevel": null
+              },
+              "priceVariations": [],
+              "availabilitySchedule": null
+            },
+            {
+              "name": {
+                "ENG": "Polpo alla Griglia"
+              },
+              "description": {
+                "ENG": "Grilled octopus, zucchini cream, fried leeks, lemon zest, baby courgette"
+              },
+              "price": null,
+              "calories": 220,
+              "imageUrl": null,
+              "orderIndex": 2,
+              "isAvailable": true,
+              "preparationTime": null,
+              "allergens": [],
+              "recipeDetails": {
+                "ingredients": {
+                  "ENG": "Grilled octopus, zucchini cream, fried leeks, lemon zest, baby courgette"
+                },
+                "instructions": null,
+                "servings": null,
+                "difficultyLevel": null
+              },
+              "priceVariations": [],
+              "availabilitySchedule": null
+            }
+          ],
+          "categories": []
+        },
+        {
+          "title": {
+            "ENG": "Pasta & Risotto"
+          },
+          "orderIndex": 5,
+          "parentSectionId": null,
+          "illustrationUrl": null,
+          "illustrationAsBackground": false,
+          "illustrationPosition": null,
+          "illustrationSize": null,
+          "items": [
+            {
+              "name": {
+                "ENG": "Rigatoni al Ragù"
+              },
+              "description": {
+                "ENG": "Rigatoni, beef ragu, parmesan cheese"
+              },
+              "price": null,
+              "calories": 420,
+              "imageUrl": null,
+              "orderIndex": 0,
+              "isAvailable": true,
+              "preparationTime": null,
+              "allergens": [],
+              "recipeDetails": {
+                "ingredients": {
+                  "ENG": "Rigatoni, beef ragu, parmesan cheese"
+                },
+                "instructions": null,
+                "servings": null,
+                "difficultyLevel": null
+              },
+              "priceVariations": [],
+              "availabilitySchedule": null
+            },
+            {
+              "name": {
+                "ENG": "Spaghetti Frutti di Mare"
+              },
+              "description": {
+                "ENG": "Spaghetti, cherry tomato, Indian Ocean seafood, parsley, white wine"
+              },
+              "price": null,
+              "calories": 380,
+              "imageUrl": null,
+              "orderIndex": 1,
+              "isAvailable": true,
+              "preparationTime": null,
+              "allergens": [],
+              "recipeDetails": {
+                "ingredients": {
+                  "ENG": "Spaghetti, cherry tomato, Indian Ocean seafood, parsley, white wine"
+                },
+                "instructions": null,
+                "servings": null,
+                "difficultyLevel": null
+              },
+              "priceVariations": [],
+              "availabilitySchedule": null
+            },
+            {
+              "name": {
+                "ENG": "Fettuccine Gamberi"
+              },
+              "description": {
+                "ENG": "Tiger prawn, zucchini, cream, parsley"
+              },
+              "price": null,
+              "calories": 440,
+              "imageUrl": null,
+              "orderIndex": 2,
+              "isAvailable": true,
+              "preparationTime": null,
+              "allergens": [],
+              "recipeDetails": {
+                "ingredients": {
+                  "ENG": "Tiger prawn, zucchini, cream, parsley"
+                },
+                "instructions": null,
+                "servings": null,
+                "difficultyLevel": null
+              },
+              "priceVariations": [],
+              "availabilitySchedule": null
+            },
+            {
+              "name": {
+                "ENG": "Spaghetti Carbonara"
+              },
+              "description": {
+                "ENG": "Guanciale, egg yolk, black pepper, pecorino"
+              },
+              "price": null,
+              "calories": 510,
+              "imageUrl": null,
+              "orderIndex": 3,
+              "isAvailable": true,
+              "preparationTime": null,
+              "allergens": [],
+              "recipeDetails": {
+                "ingredients": {
+                  "ENG": "Guanciale, egg yolk, black pepper, pecorino"
+                },
+                "instructions": null,
+                "servings": null,
+                "difficultyLevel": null
+              },
+              "priceVariations": [],
+              "availabilitySchedule": null
+            },
+            {
+              "name": {
+                "ENG": "Risotto alla Pisellio"
+              },
+              "description": {
+                "ENG": "Carnaroli rice, green peas, onion, tiger prawns, lemon zest, parsley"
+              },
+              "price": null,
+              "calories": 340,
+              "imageUrl": null,
+              "orderIndex": 4,
+              "isAvailable": true,
+              "preparationTime": null,
+              "allergens": [],
+              "recipeDetails": {
+                "ingredients": {
+                  "ENG": "Carnaroli rice, green peas, onion, tiger prawns, lemon zest, parsley"
+                },
+                "instructions": null,
+                "servings": null,
+                "difficultyLevel": null
+              },
+              "priceVariations": [],
+              "availabilitySchedule": null
+            },
+            {
+              "name": {
+                "ENG": "Risotto Porcini"
+              },
+              "description": {
+                "ENG": "Carnaroli rice, porcini mushrooms, parsley, mushroom cream, parmesan"
+              },
+              "price": null,
+              "calories": 370,
+              "imageUrl": null,
+              "orderIndex": 5,
+              "isAvailable": true,
+              "preparationTime": null,
+              "allergens": [],
+              "recipeDetails": {
+                "ingredients": {
+                  "ENG": "Carnaroli rice, porcini mushrooms, parsley, mushroom cream, parmesan"
+                },
+                "instructions": null,
+                "servings": null,
+                "difficultyLevel": null
+              },
+              "priceVariations": [],
+              "availabilitySchedule": null
+            }
+          ],
+          "categories": []
+        },
+        {
+          "title": {
+            "ENG": "Dessert"
+          },
+          "orderIndex": 6,
+          "parentSectionId": null,
+          "illustrationUrl": null,
+          "illustrationAsBackground": false,
+          "illustrationPosition": null,
+          "illustrationSize": null,
+          "items": [
+            {
+              "name": {
+                "ENG": "Classic Tiramisu"
+              },
+              "description": {
+                "ENG": "Coffee crème brûlée, mascarpone, ladyfingers"
+              },
+              "price": null,
+              "calories": 480,
+              "imageUrl": null,
+              "orderIndex": 0,
+              "isAvailable": true,
+              "preparationTime": null,
+              "allergens": [],
+              "recipeDetails": {
+                "ingredients": {
+                  "ENG": "Coffee crème brûlée, mascarpone, ladyfingers"
+                },
+                "instructions": null,
+                "servings": null,
+                "difficultyLevel": null
+              },
+              "priceVariations": [],
+              "availabilitySchedule": null
+            },
+            {
+              "name": {
+                "ENG": "Yoghurt Pannacotta"
+              },
+              "description": {
+                "ENG": "Vanilla pannacotta, berry coulis, fresh fruits"
+              },
+              "price": null,
+              "calories": 290,
+              "imageUrl": null,
+              "orderIndex": 1,
+              "isAvailable": true,
+              "preparationTime": null,
+              "allergens": [],
+              "recipeDetails": {
+                "ingredients": {
+                  "ENG": "Vanilla pannacotta, berry coulis, fresh fruits"
+                },
+                "instructions": null,
+                "servings": null,
+                "difficultyLevel": null
+              },
+              "priceVariations": [],
+              "availabilitySchedule": null
+            },
+            {
+              "name": {
+                "ENG": "Plum Tart"
+              },
+              "description": {
+                "ENG": "Classic plum tart, vanilla ice cream"
+              },
+              "price": null,
+              "calories": 410,
+              "imageUrl": null,
+              "orderIndex": 2,
+              "isAvailable": true,
+              "preparationTime": null,
+              "allergens": [],
+              "recipeDetails": {
+                "ingredients": {
+                  "ENG": "Classic plum tart, vanilla ice cream"
+                },
+                "instructions": null,
+                "servings": null,
+                "difficultyLevel": null
+              },
+              "priceVariations": [],
+              "availabilitySchedule": null
+            },
+            {
+              "name": {
+                "ENG": "Fruits"
+              },
+              "description": {
+                "ENG": "Watermelon, Pineapple, Passionfruit, Papaya"
+              },
+              "price": null,
+              "calories": 135,
+              "imageUrl": null,
+              "orderIndex": 3,
+              "isAvailable": true,
+              "preparationTime": null,
+              "allergens": [],
+              "recipeDetails": {
+                "ingredients": {
+                  "ENG": "Watermelon, Pineapple, Passionfruit, Papaya"
+                },
+                "instructions": null,
+                "servings": null,
+                "difficultyLevel": null
+              },
+              "priceVariations": [],
+              "availabilitySchedule": null
+            }
+          ],
+          "categories": []
+        }
+      ]
+    },
+    {
+      "name": {
+        "ENG": "Acquapazza Dinner 2026"
+      },
+      "slug": "acquapazza-dinner-2026",
+      "menuType": "dinner",
+      "status": "draft",
+      "orderIndex": 1,
+      "themeSettings": null,
+      "sections": [
+        {
+          "title": {
+            "ENG": "Salad & Appetizers"
+          },
+          "orderIndex": 0,
+          "parentSectionId": null,
+          "illustrationUrl": null,
+          "illustrationAsBackground": false,
+          "illustrationPosition": null,
+          "illustrationSize": null,
+          "items": [
+            {
+              "name": {
+                "ENG": "Acqua Salad"
+              },
+              "description": {
+                "ENG": "Mix Greens, Baby Mozzarella, Honey Mustard, Cherry Tomato, Cucumber, Avocado, Kalamata Olives"
+              },
+              "price": null,
+              "calories": 210,
+              "imageUrl": null,
+              "orderIndex": 0,
+              "isAvailable": true,
+              "preparationTime": null,
+              "allergens": [],
+              "recipeDetails": {
+                "ingredients": {
+                  "ENG": "Mix Greens, Baby Mozzarella, Honey Mustard, Cherry Tomato, Cucumber, Avocado, Kalamata Olives"
+                },
+                "instructions": null,
+                "servings": null,
+                "difficultyLevel": null
+              },
+              "priceVariations": [],
+              "availabilitySchedule": null
+            },
+            {
+              "name": {
+                "ENG": "Bocconcini"
+              },
+              "description": {
+                "ENG": "Baby Mozzarella, Basil Pesto, Heirloom Tomato, Herb Oil, Plum"
+              },
+              "price": null,
+              "calories": 240,
+              "imageUrl": null,
+              "orderIndex": 1,
+              "isAvailable": true,
+              "preparationTime": null,
+              "allergens": [],
+              "recipeDetails": {
+                "ingredients": {
+                  "ENG": "Baby Mozzarella, Basil Pesto, Heirloom Tomato, Herb Oil, Plum"
+                },
+                "instructions": null,
+                "servings": null,
+                "difficultyLevel": null
+              },
+              "priceVariations": [],
+              "availabilitySchedule": null
+            },
+            {
+              "name": {
+                "ENG": "Aperitivo"
+              },
+              "description": {
+                "ENG": "Cold Cuts, Olives, Sundried Tomato, Honey, Cheese"
+              },
+              "price": null,
+              "calories": 380,
+              "imageUrl": null,
+              "orderIndex": 2,
+              "isAvailable": true,
+              "preparationTime": null,
+              "allergens": [],
+              "recipeDetails": {
+                "ingredients": {
+                  "ENG": "Cold Cuts, Olives, Sundried Tomato, Honey, Cheese"
+                },
+                "instructions": null,
+                "servings": null,
+                "difficultyLevel": null
+              },
+              "priceVariations": [],
+              "availabilitySchedule": null
+            },
+            {
+              "name": {
+                "ENG": "Cora Salad"
+              },
+              "description": {
+                "ENG": "Copy Leaves, Maldivian Rocket, Passion Fruit, Celery, Olive Oil"
+              },
+              "price": null,
+              "calories": 120,
+              "imageUrl": null,
+              "orderIndex": 3,
+              "isAvailable": true,
+              "preparationTime": null,
+              "allergens": [],
+              "recipeDetails": {
+                "ingredients": {
+                  "ENG": "Copy Leaves, Maldivian Rocket, Passion Fruit, Celery, Olive Oil"
+                },
+                "instructions": null,
+                "servings": null,
+                "difficultyLevel": null
+              },
+              "priceVariations": [],
+              "availabilitySchedule": null
+            },
+            {
+              "name": {
+                "ENG": "Carpaccio"
+              },
+              "description": {
+                "ENG": "Thinly Sliced Angus Beef, Rucola, Parmesan Shaves, Capers, Radish, Balsamic"
+              },
+              "price": null,
+              "calories": 220,
+              "imageUrl": null,
+              "orderIndex": 4,
+              "isAvailable": true,
+              "preparationTime": null,
+              "allergens": [],
+              "recipeDetails": {
+                "ingredients": {
+                  "ENG": "Thinly Sliced Angus Beef, Rucola, Parmesan Shaves, Capers, Radish, Balsamic"
+                },
+                "instructions": null,
+                "servings": null,
+                "difficultyLevel": null
+              },
+              "priceVariations": [],
+              "availabilitySchedule": null
+            },
+            {
+              "name": {
+                "ENG": "Parmigiana"
+              },
+              "description": {
+                "ENG": "Baked Eggplant, Mozzarella, Basil Pesto, Parmesan, Tomato Sauce, Herb Oil"
+              },
+              "price": null,
+              "calories": 260,
+              "imageUrl": null,
+              "orderIndex": 5,
+              "isAvailable": true,
+              "preparationTime": null,
+              "allergens": [],
+              "recipeDetails": {
+                "ingredients": {
+                  "ENG": "Baked Eggplant, Mozzarella, Basil Pesto, Parmesan, Tomato Sauce, Herb Oil"
+                },
+                "instructions": null,
+                "servings": null,
+                "difficultyLevel": null
+              },
+              "priceVariations": [],
+              "availabilitySchedule": null
+            },
+            {
+              "name": {
+                "ENG": "Prosciutto e Bocconcini"
+              },
+              "description": {
+                "ENG": "Parma Ham, Baby Mozzarella, Rucola, Olive Oil, Cherry Tomato"
+              },
+              "price": null,
+              "calories": 310,
+              "imageUrl": null,
+              "orderIndex": 6,
+              "isAvailable": true,
+              "preparationTime": null,
+              "allergens": [],
+              "recipeDetails": {
+                "ingredients": {
+                  "ENG": "Parma Ham, Baby Mozzarella, Rucola, Olive Oil, Cherry Tomato"
+                },
+                "instructions": null,
+                "servings": null,
+                "difficultyLevel": null
+              },
+              "priceVariations": [],
+              "availabilitySchedule": null
+            }
+          ],
+          "categories": []
+        },
+        {
+          "title": {
+            "ENG": "Soup"
+          },
+          "orderIndex": 1,
+          "parentSectionId": null,
+          "illustrationUrl": null,
+          "illustrationAsBackground": false,
+          "illustrationPosition": null,
+          "illustrationSize": null,
+          "items": [
+            {
+              "name": {
+                "ENG": "Tuna Minestrone"
+              },
+              "description": {
+                "ENG": "Maldivian Tuna, Seasonal Vegetables, Broth, Pasta, Basil Pesto"
+              },
+              "price": null,
+              "calories": 180,
+              "imageUrl": null,
+              "orderIndex": 0,
+              "isAvailable": true,
+              "preparationTime": null,
+              "allergens": [],
+              "recipeDetails": {
+                "ingredients": {
+                  "ENG": "Maldivian Tuna, Seasonal Vegetables, Broth, Pasta, Basil Pesto"
+                },
+                "instructions": null,
+                "servings": null,
+                "difficultyLevel": null
+              },
+              "priceVariations": [],
+              "availabilitySchedule": null
+            },
+            {
+              "name": {
+                "ENG": "Patate"
+              },
+              "description": {
+                "ENG": "Potato, Leeks, Onion"
+              },
+              "price": null,
+              "calories": 140,
+              "imageUrl": null,
+              "orderIndex": 1,
+              "isAvailable": true,
+              "preparationTime": null,
+              "allergens": [],
+              "recipeDetails": {
+                "ingredients": {
+                  "ENG": "Potato, Leeks, Onion"
+                },
+                "instructions": null,
+                "servings": null,
+                "difficultyLevel": null
+              },
+              "priceVariations": [],
+              "availabilitySchedule": null
+            }
+          ],
+          "categories": []
+        },
+        {
+          "title": {
+            "ENG": "Bruschette"
+          },
+          "orderIndex": 2,
+          "parentSectionId": null,
+          "illustrationUrl": null,
+          "illustrationAsBackground": false,
+          "illustrationPosition": null,
+          "illustrationSize": null,
+          "items": [
+            {
+              "name": {
+                "ENG": "Basilicata"
+              },
+              "description": {
+                "ENG": "Tomato, Basil, Oregano, Olive Oil, Balsamic, Garlic"
+              },
+              "price": null,
+              "calories": 240,
+              "imageUrl": null,
+              "orderIndex": 0,
+              "isAvailable": true,
+              "preparationTime": null,
+              "allergens": [],
+              "recipeDetails": {
+                "ingredients": {
+                  "ENG": "Tomato, Basil, Oregano, Olive Oil, Balsamic, Garlic"
+                },
+                "instructions": null,
+                "servings": null,
+                "difficultyLevel": null
+              },
+              "priceVariations": [],
+              "availabilitySchedule": null
+            },
+            {
+              "name": {
+                "ENG": "Ricotta e Mortadella"
+              },
+              "description": {
+                "ENG": "Ricotta, Mortadella, Basil Pesto"
+              },
+              "price": null,
+              "calories": 340,
+              "imageUrl": null,
+              "orderIndex": 1,
+              "isAvailable": true,
+              "preparationTime": null,
+              "allergens": [],
+              "recipeDetails": {
+                "ingredients": {
+                  "ENG": "Ricotta, Mortadella, Basil Pesto"
+                },
+                "instructions": null,
+                "servings": null,
+                "difficultyLevel": null
+              },
+              "priceVariations": [],
+              "availabilitySchedule": null
+            },
+            {
+              "name": {
+                "ENG": "Piselli"
+              },
+              "description": {
+                "ENG": "Green Peas, Guanciale, Onion, Baby Mozzarella"
+              },
+              "price": null,
+              "calories": 310,
+              "imageUrl": null,
+              "orderIndex": 2,
+              "isAvailable": true,
+              "preparationTime": null,
+              "allergens": [],
+              "recipeDetails": {
+                "ingredients": {
+                  "ENG": "Green Peas, Guanciale, Onion, Baby Mozzarella"
+                },
+                "instructions": null,
+                "servings": null,
+                "difficultyLevel": null
+              },
+              "priceVariations": [],
+              "availabilitySchedule": null
+            }
+          ],
+          "categories": []
+        },
+        {
+          "title": {
+            "ENG": "Pizza Alla Pala"
+          },
+          "orderIndex": 3,
+          "parentSectionId": null,
+          "illustrationUrl": null,
+          "illustrationAsBackground": false,
+          "illustrationPosition": null,
+          "illustrationSize": null,
+          "items": [
+            {
+              "name": {
+                "ENG": "Margherita"
+              },
+              "description": {
+                "ENG": "Tomato, Mozzarella"
+              },
+              "price": null,
+              "calories": 420,
+              "imageUrl": null,
+              "orderIndex": 0,
+              "isAvailable": true,
+              "preparationTime": null,
+              "allergens": [],
+              "recipeDetails": {
+                "ingredients": {
+                  "ENG": "Tomato, Mozzarella"
+                },
+                "instructions": null,
+                "servings": null,
+                "difficultyLevel": null
+              },
+              "priceVariations": [],
+              "availabilitySchedule": null
+            },
+            {
+              "name": {
+                "ENG": "5 Formaggi"
+              },
+              "description": {
+                "ENG": "Mozzarella, Gorgonzola, Brie, Smoked Cheese, Parmesan"
+              },
+              "price": null,
+              "calories": 550,
+              "imageUrl": null,
+              "orderIndex": 1,
+              "isAvailable": true,
+              "preparationTime": null,
+              "allergens": [],
+              "recipeDetails": {
+                "ingredients": {
+                  "ENG": "Mozzarella, Gorgonzola, Brie, Smoked Cheese, Parmesan"
+                },
+                "instructions": null,
+                "servings": null,
+                "difficultyLevel": null
+              },
+              "priceVariations": [],
+              "availabilitySchedule": null
+            },
+            {
+              "name": {
+                "ENG": "Mortadella"
+              },
+              "description": {
+                "ENG": "Cherry Tomato, Rucola, Mozzarella, Mortadella, Stracciatella, Olive Oil, Pistachio"
+              },
+              "price": null,
+              "calories": 510,
+              "imageUrl": null,
+              "orderIndex": 2,
+              "isAvailable": true,
+              "preparationTime": null,
+              "allergens": [],
+              "recipeDetails": {
+                "ingredients": {
+                  "ENG": "Cherry Tomato, Rucola, Mozzarella, Mortadella, Stracciatella, Olive Oil, Pistachio"
+                },
+                "instructions": null,
+                "servings": null,
+                "difficultyLevel": null
+              },
+              "priceVariations": [],
+              "availabilitySchedule": null
+            },
+            {
+              "name": {
+                "ENG": "Pepperoni"
+              },
+              "description": {
+                "ENG": "Mozzarella, Tomato Sauce, Beef Pepperoni, Olives, Bell Pepper, Onion"
+              },
+              "price": null,
+              "calories": 480,
+              "imageUrl": null,
+              "orderIndex": 3,
+              "isAvailable": true,
+              "preparationTime": null,
+              "allergens": [],
+              "recipeDetails": {
+                "ingredients": {
+                  "ENG": "Mozzarella, Tomato Sauce, Beef Pepperoni, Olives, Bell Pepper, Onion"
+                },
+                "instructions": null,
+                "servings": null,
+                "difficultyLevel": null
+              },
+              "priceVariations": [],
+              "availabilitySchedule": null
+            },
+            {
+              "name": {
+                "ENG": "Acciuga"
+              },
+              "description": {
+                "ENG": "Tomato, Cherry Tomato, Rucola, Anchovies, Capers, Olives"
+              },
+              "price": null,
+              "calories": 380,
+              "imageUrl": null,
+              "orderIndex": 4,
+              "isAvailable": true,
+              "preparationTime": null,
+              "allergens": [],
+              "recipeDetails": {
+                "ingredients": {
+                  "ENG": "Tomato, Cherry Tomato, Rucola, Anchovies, Capers, Olives"
+                },
+                "instructions": null,
+                "servings": null,
+                "difficultyLevel": null
+              },
+              "priceVariations": [],
+              "availabilitySchedule": null
+            },
+            {
+              "name": {
+                "ENG": "Prosciutto di Parma"
+              },
+              "description": {
+                "ENG": "Parma Ham, Rucola, Sun-Dried Tomato, Tomato Sauce, Mozzarella"
+              },
+              "price": null,
+              "calories": 460,
+              "imageUrl": null,
+              "orderIndex": 5,
+              "isAvailable": true,
+              "preparationTime": null,
+              "allergens": [],
+              "recipeDetails": {
+                "ingredients": {
+                  "ENG": "Parma Ham, Rucola, Sun-Dried Tomato, Tomato Sauce, Mozzarella"
+                },
+                "instructions": null,
+                "servings": null,
+                "difficultyLevel": null
+              },
+              "priceVariations": [],
+              "availabilitySchedule": null
+            },
+            {
+              "name": {
+                "ENG": "Diavola"
+              },
+              "description": {
+                "ENG": "Mozzarella, Tomato, Spicy Salami, Bell Peppers"
+              },
+              "price": null,
+              "calories": 490,
+              "imageUrl": null,
+              "orderIndex": 6,
+              "isAvailable": true,
+              "preparationTime": null,
+              "allergens": [],
+              "recipeDetails": {
+                "ingredients": {
+                  "ENG": "Mozzarella, Tomato, Spicy Salami, Bell Peppers"
+                },
+                "instructions": null,
+                "servings": null,
+                "difficultyLevel": null
+              },
+              "priceVariations": [],
+              "availabilitySchedule": null
+            },
+            {
+              "name": {
+                "ENG": "Pollo al Tartufo"
+              },
+              "description": {
+                "ENG": "Truffle Cream, Mozzarella, Chicken, Mushroom"
+              },
+              "price": null,
+              "calories": 470,
+              "imageUrl": null,
+              "orderIndex": 7,
+              "isAvailable": true,
+              "preparationTime": null,
+              "allergens": [],
+              "recipeDetails": {
+                "ingredients": {
+                  "ENG": "Truffle Cream, Mozzarella, Chicken, Mushroom"
+                },
+                "instructions": null,
+                "servings": null,
+                "difficultyLevel": null
+              },
+              "priceVariations": [],
+              "availabilitySchedule": null
+            }
+          ],
+          "categories": []
+        },
+        {
+          "title": {
+            "ENG": "Mains"
+          },
+          "orderIndex": 4,
+          "parentSectionId": null,
+          "illustrationUrl": null,
+          "illustrationAsBackground": false,
+          "illustrationPosition": null,
+          "illustrationSize": null,
+          "items": [
+            {
+              "name": {
+                "ENG": "Pescato Del Giorno"
+              },
+              "description": {
+                "ENG": "Almond Crusted Maldivian Reef Fish, Spinach Puree, Coconut Cream, Tomato Concasse, Herb Oil"
+              },
+              "price": null,
+              "calories": 320,
+              "imageUrl": null,
+              "orderIndex": 0,
+              "isAvailable": true,
+              "preparationTime": null,
+              "allergens": [],
+              "recipeDetails": {
+                "ingredients": {
+                  "ENG": "Almond Crusted Maldivian Reef Fish, Spinach Puree, Coconut Cream, Tomato Concasse, Herb Oil"
+                },
+                "instructions": null,
+                "servings": null,
+                "difficultyLevel": null
+              },
+              "priceVariations": [],
+              "availabilitySchedule": null
+            },
+            {
+              "name": {
+                "ENG": "Saltimbocca"
+              },
+              "description": {
+                "ENG": "Veal Tenderloin, Coppa Ham, Peppercorn Jus, Mashed Potato"
+              },
+              "price": null,
+              "calories": 380,
+              "imageUrl": null,
+              "orderIndex": 1,
+              "isAvailable": true,
+              "preparationTime": null,
+              "allergens": [],
+              "recipeDetails": {
+                "ingredients": {
+                  "ENG": "Veal Tenderloin, Coppa Ham, Peppercorn Jus, Mashed Potato"
+                },
+                "instructions": null,
+                "servings": null,
+                "difficultyLevel": null
+              },
+              "priceVariations": [],
+              "availabilitySchedule": null
+            },
+            {
+              "name": {
+                "ENG": "Ossobuco Milanese"
+              },
+              "description": {
+                "ENG": "Veal Shanks, Carrot, Onion, Celery, Red Wine, Saffron Risotto"
+              },
+              "price": null,
+              "calories": 440,
+              "imageUrl": null,
+              "orderIndex": 2,
+              "isAvailable": true,
+              "preparationTime": null,
+              "allergens": [],
+              "recipeDetails": {
+                "ingredients": {
+                  "ENG": "Veal Shanks, Carrot, Onion, Celery, Red Wine, Saffron Risotto"
+                },
+                "instructions": null,
+                "servings": null,
+                "difficultyLevel": null
+              },
+              "priceVariations": [],
+              "availabilitySchedule": null
+            },
+            {
+              "name": {
+                "ENG": "Tonno"
+              },
+              "description": {
+                "ENG": "Sesame Seared Tuna, Endives, Fennel Purée"
+              },
+              "price": null,
+              "calories": 280,
+              "imageUrl": null,
+              "orderIndex": 3,
+              "isAvailable": true,
+              "preparationTime": null,
+              "allergens": [],
+              "recipeDetails": {
+                "ingredients": {
+                  "ENG": "Sesame Seared Tuna, Endives, Fennel Purée"
+                },
+                "instructions": null,
+                "servings": null,
+                "difficultyLevel": null
+              },
+              "priceVariations": [],
+              "availabilitySchedule": null
+            }
+          ],
+          "categories": []
+        },
+        {
+          "title": {
+            "ENG": "Pasta & Risotto"
+          },
+          "orderIndex": 5,
+          "parentSectionId": null,
+          "illustrationUrl": null,
+          "illustrationAsBackground": false,
+          "illustrationPosition": null,
+          "illustrationSize": null,
+          "items": [
+            {
+              "name": {
+                "ENG": "Paccheri al Ragu"
+              },
+              "description": {
+                "ENG": "Paccheri, Octopus Ragù, Cherry Tomato, Parsley, White Wine"
+              },
+              "price": null,
+              "calories": 390,
+              "imageUrl": null,
+              "orderIndex": 0,
+              "isAvailable": true,
+              "preparationTime": null,
+              "allergens": [],
+              "recipeDetails": {
+                "ingredients": {
+                  "ENG": "Paccheri, Octopus Ragù, Cherry Tomato, Parsley, White Wine"
+                },
+                "instructions": null,
+                "servings": null,
+                "difficultyLevel": null
+              },
+              "priceVariations": [],
+              "availabilitySchedule": null
+            },
+            {
+              "name": {
+                "ENG": "Fettuccine al Tartufo"
+              },
+              "description": {
+                "ENG": "Fettuccini, Cream, Truffle, Parmesan Cheese"
+              },
+              "price": null,
+              "calories": 460,
+              "imageUrl": null,
+              "orderIndex": 1,
+              "isAvailable": true,
+              "preparationTime": null,
+              "allergens": [],
+              "recipeDetails": {
+                "ingredients": {
+                  "ENG": "Fettuccini, Cream, Truffle, Parmesan Cheese"
+                },
+                "instructions": null,
+                "servings": null,
+                "difficultyLevel": null
+              },
+              "priceVariations": [],
+              "availabilitySchedule": null
+            },
+            {
+              "name": {
+                "ENG": "Rigatoni alla Zozzona"
+              },
+              "description": {
+                "ENG": "Rigatoni, Guanciale, Italian Sausage, Tomato, Egg Yolk, Pecorino"
+              },
+              "price": null,
+              "calories": 580,
+              "imageUrl": null,
+              "orderIndex": 2,
+              "isAvailable": true,
+              "preparationTime": null,
+              "allergens": [],
+              "recipeDetails": {
+                "ingredients": {
+                  "ENG": "Rigatoni, Guanciale, Italian Sausage, Tomato, Egg Yolk, Pecorino"
+                },
+                "instructions": null,
+                "servings": null,
+                "difficultyLevel": null
+              },
+              "priceVariations": [],
+              "availabilitySchedule": null
+            },
+            {
+              "name": {
+                "ENG": "Spaghetti alla Nerano"
+              },
+              "description": {
+                "ENG": "Spaghetti, Zucchini Cream, Fried Zucchini"
+              },
+              "price": null,
+              "calories": 410,
+              "imageUrl": null,
+              "orderIndex": 3,
+              "isAvailable": true,
+              "preparationTime": null,
+              "allergens": [],
+              "recipeDetails": {
+                "ingredients": {
+                  "ENG": "Spaghetti, Zucchini Cream, Fried Zucchini"
+                },
+                "instructions": null,
+                "servings": null,
+                "difficultyLevel": null
+              },
+              "priceVariations": [],
+              "availabilitySchedule": null
+            },
+            {
+              "name": {
+                "ENG": "Linguine alla Bottarga"
+              },
+              "description": {
+                "ENG": "Linguini, Garlic, Chilli Flakes, Lemon Zest, Bottarga, Parsley"
+              },
+              "price": null,
+              "calories": 390,
+              "imageUrl": null,
+              "orderIndex": 4,
+              "isAvailable": true,
+              "preparationTime": null,
+              "allergens": [],
+              "recipeDetails": {
+                "ingredients": {
+                  "ENG": "Linguini, Garlic, Chilli Flakes, Lemon Zest, Bottarga, Parsley"
+                },
+                "instructions": null,
+                "servings": null,
+                "difficultyLevel": null
+              },
+              "priceVariations": [],
+              "availabilitySchedule": null
+            },
+            {
+              "name": {
+                "ENG": "Risotto alla Piselli"
+              },
+              "description": {
+                "ENG": "Carnaroli Rice, Green Peas, Onion, Tiger Prawns, Lemon Zest, Parsley"
+              },
+              "price": null,
+              "calories": 360,
+              "imageUrl": null,
+              "orderIndex": 5,
+              "isAvailable": true,
+              "preparationTime": null,
+              "allergens": [],
+              "recipeDetails": {
+                "ingredients": {
+                  "ENG": "Carnaroli Rice, Green Peas, Onion, Tiger Prawns, Lemon Zest, Parsley"
+                },
+                "instructions": null,
+                "servings": null,
+                "difficultyLevel": null
+              },
+              "priceVariations": [],
+              "availabilitySchedule": null
+            },
+            {
+              "name": {
+                "ENG": "Risotto Porcini"
+              },
+              "description": {
+                "ENG": "Carnaroli Rice, Porcini Mushrooms, Parsley, Mushroom Cream, Parmesan"
+              },
+              "price": null,
+              "calories": 420,
+              "imageUrl": null,
+              "orderIndex": 6,
+              "isAvailable": true,
+              "preparationTime": null,
+              "allergens": [],
+              "recipeDetails": {
+                "ingredients": {
+                  "ENG": "Carnaroli Rice, Porcini Mushrooms, Parsley, Mushroom Cream, Parmesan"
+                },
+                "instructions": null,
+                "servings": null,
+                "difficultyLevel": null
+              },
+              "priceVariations": [],
+              "availabilitySchedule": null
+            },
+            {
+              "name": {
+                "ENG": "Risotto Pescatora"
+              },
+              "description": {
+                "ENG": "Carnaroli Rice, Cherry Tomato, Indian Ocean Seafood, Parsley, White Wine"
+              },
+              "price": null,
+              "calories": 380,
+              "imageUrl": null,
+              "orderIndex": 7,
+              "isAvailable": true,
+              "preparationTime": null,
+              "allergens": [],
+              "recipeDetails": {
+                "ingredients": {
+                  "ENG": "Carnaroli Rice, Cherry Tomato, Indian Ocean Seafood, Parsley, White Wine"
+                },
+                "instructions": null,
+                "servings": null,
+                "difficultyLevel": null
+              },
+              "priceVariations": [],
+              "availabilitySchedule": null
+            },
+            {
+              "name": {
+                "ENG": "Risotto alla Nduja"
+              },
+              "description": {
+                "ENG": "Carnaroli Rice, Nduja, Cherry Tomato, Parmesan Cheese"
+              },
+              "price": null,
+              "calories": 450,
+              "imageUrl": null,
+              "orderIndex": 8,
+              "isAvailable": true,
+              "preparationTime": null,
+              "allergens": [],
+              "recipeDetails": {
+                "ingredients": {
+                  "ENG": "Carnaroli Rice, Nduja, Cherry Tomato, Parmesan Cheese"
+                },
+                "instructions": null,
+                "servings": null,
+                "difficultyLevel": null
+              },
+              "priceVariations": [],
+              "availabilitySchedule": null
+            }
+          ],
+          "categories": []
+        },
+        {
+          "title": {
+            "ENG": "Dessert"
+          },
+          "orderIndex": 6,
+          "parentSectionId": null,
+          "illustrationUrl": null,
+          "illustrationAsBackground": false,
+          "illustrationPosition": null,
+          "illustrationSize": null,
+          "items": [
+            {
+              "name": {
+                "ENG": "Classic Tiramisu"
+              },
+              "description": {
+                "ENG": "Classic Tiramisu, Coffee Crème Brûlée"
+              },
+              "price": null,
+              "calories": 480,
+              "imageUrl": null,
+              "orderIndex": 0,
+              "isAvailable": true,
+              "preparationTime": null,
+              "allergens": [],
+              "recipeDetails": {
+                "ingredients": {
+                  "ENG": "Classic Tiramisu, Coffee Crème Brûlée"
+                },
+                "instructions": null,
+                "servings": null,
+                "difficultyLevel": null
+              },
+              "priceVariations": [],
+              "availabilitySchedule": null
+            },
+            {
+              "name": {
+                "ENG": "Yoghurt Pannacotta"
+              },
+              "description": {
+                "ENG": "Vanilla Pannacotta, Berry Coulis, Fresh Fruits"
+              },
+              "price": null,
+              "calories": 260,
+              "imageUrl": null,
+              "orderIndex": 1,
+              "isAvailable": true,
+              "preparationTime": null,
+              "allergens": [],
+              "recipeDetails": {
+                "ingredients": {
+                  "ENG": "Vanilla Pannacotta, Berry Coulis, Fresh Fruits"
+                },
+                "instructions": null,
+                "servings": null,
+                "difficultyLevel": null
+              },
+              "priceVariations": [],
+              "availabilitySchedule": null
+            },
+            {
+              "name": {
+                "ENG": "Hazelnut Mousse"
+              },
+              "description": {
+                "ENG": "Hazelnut Mousse, Passion Fruit Crumble, Mango Chunks"
+              },
+              "price": null,
+              "calories": 420,
+              "imageUrl": null,
+              "orderIndex": 2,
+              "isAvailable": true,
+              "preparationTime": null,
+              "allergens": [],
+              "recipeDetails": {
+                "ingredients": {
+                  "ENG": "Hazelnut Mousse, Passion Fruit Crumble, Mango Chunks"
+                },
+                "instructions": null,
+                "servings": null,
+                "difficultyLevel": null
+              },
+              "priceVariations": [],
+              "availabilitySchedule": null
+            },
+            {
+              "name": {
+                "ENG": "Plum Tart"
+              },
+              "description": {
+                "ENG": "Classic Plum Tart, Vanilla Icecream"
+              },
+              "price": null,
+              "calories": 390,
+              "imageUrl": null,
+              "orderIndex": 3,
+              "isAvailable": true,
+              "preparationTime": null,
+              "allergens": [],
+              "recipeDetails": {
+                "ingredients": {
+                  "ENG": "Classic Plum Tart, Vanilla Icecream"
+                },
+                "instructions": null,
+                "servings": null,
+                "difficultyLevel": null
+              },
+              "priceVariations": [],
+              "availabilitySchedule": null
+            },
+            {
+              "name": {
+                "ENG": "Fruits"
+              },
+              "description": {
+                "ENG": "Watermelon, Pineapple, Passionfruit, Papaya"
+              },
+              "price": null,
+              "calories": 135,
+              "imageUrl": null,
+              "orderIndex": 4,
+              "isAvailable": true,
+              "preparationTime": null,
+              "allergens": [],
+              "recipeDetails": {
+                "ingredients": {
+                  "ENG": "Watermelon, Pineapple, Passionfruit, Papaya"
+                },
+                "instructions": null,
+                "servings": null,
+                "difficultyLevel": null
+              },
+              "priceVariations": [],
+              "availabilitySchedule": null
+            }
+          ],
+          "categories": []
+        }
+      ]
+    }
+  ]
+}

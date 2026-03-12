@@ -1,0 +1,1294 @@
+{
+  "name": "Gingermoon",
+  "logoUrl": null,
+  "logoPosition": null,
+  "slug": "gingermoon",
+  "currency": "USD",
+  "defaultLanguage": "ENG",
+  "activeStatus": true,
+  "themeSettings": {
+    "primaryColor": "#000000",
+    "secondaryColor": "#ffffff",
+    "accentColor": "#ff6b6b",
+    "backgroundColor": "#ffffff",
+    "textColor": "#000000",
+    "customCss": null,
+    "customFontsUrls": [],
+    "backgroundIllustrationUrl": null
+  },
+  "moduleSettings": {
+    "enablePriceVariations": false,
+    "enableAvailabilitySchedule": false,
+    "enableSeasonalItems": false,
+    "enableQrGeneration": false,
+    "enableSubcategories": false
+  },
+  "menus": [
+    {
+      "name": {
+        "ENG": "Gingermoon Menu 2026"
+      },
+      "slug": "gingermoon-menu-2026",
+      "menuType": "dinner",
+      "status": "draft",
+      "orderIndex": 0,
+      "themeSettings": null,
+      "sections": [
+        {
+          "title": {
+            "ENG": "To Start With"
+          },
+          "orderIndex": 0,
+          "parentSectionId": null,
+          "illustrationUrl": null,
+          "illustrationAsBackground": false,
+          "illustrationPosition": null,
+          "illustrationSize": null,
+          "items": [
+            {
+              "name": {
+                "ENG": "Som Tam"
+              },
+              "description": {
+                "ENG": "Green papaya, chili, dried shrimp, peanut, tomato, long beans, lime dressing"
+              },
+              "price": null,
+              "calories": 110,
+              "imageUrl": null,
+              "orderIndex": 0,
+              "isAvailable": true,
+              "preparationTime": null,
+              "allergens": [],
+              "recipeDetails": {
+                "ingredients": {
+                  "ENG": "Green papaya, chili, dried shrimp, peanut, tomato, long beans, lime dressing"
+                },
+                "instructions": null,
+                "servings": null,
+                "difficultyLevel": null
+              },
+              "priceVariations": [],
+              "availabilitySchedule": null
+            },
+            {
+              "name": {
+                "ENG": "Vietnamese Rice Paper Roll"
+              },
+              "description": {
+                "ENG": "Shredded raw vegetables, basil, fresh coriander, mint, sweet chili peanut sauce (Optional: poached prawn)"
+              },
+              "price": null,
+              "calories": 145,
+              "imageUrl": null,
+              "orderIndex": 1,
+              "isAvailable": true,
+              "preparationTime": null,
+              "allergens": [],
+              "recipeDetails": {
+                "ingredients": {
+                  "ENG": "Shredded raw vegetables, basil, fresh coriander, mint, sweet chili peanut sauce (Optional: poached prawn)"
+                },
+                "instructions": null,
+                "servings": null,
+                "difficultyLevel": null
+              },
+              "priceVariations": [],
+              "availabilitySchedule": null
+            },
+            {
+              "name": {
+                "ENG": "Labb Tuna"
+              },
+              "description": {
+                "ENG": "Spicy raw tuna, mint, shallot"
+              },
+              "price": null,
+              "calories": 185,
+              "imageUrl": null,
+              "orderIndex": 2,
+              "isAvailable": true,
+              "preparationTime": null,
+              "allergens": [],
+              "recipeDetails": {
+                "ingredients": {
+                  "ENG": "Spicy raw tuna, mint, shallot"
+                },
+                "instructions": null,
+                "servings": null,
+                "difficultyLevel": null
+              },
+              "priceVariations": [],
+              "availabilitySchedule": null
+            },
+            {
+              "name": {
+                "ENG": "Satay"
+              },
+              "description": {
+                "ENG": "Chicken, beef, and prawn satay, peanut sauce"
+              },
+              "price": null,
+              "calories": 320,
+              "imageUrl": null,
+              "orderIndex": 3,
+              "isAvailable": true,
+              "preparationTime": null,
+              "allergens": [],
+              "recipeDetails": {
+                "ingredients": {
+                  "ENG": "Chicken, beef, and prawn satay, peanut sauce"
+                },
+                "instructions": null,
+                "servings": null,
+                "difficultyLevel": null
+              },
+              "priceVariations": [],
+              "availabilitySchedule": null
+            },
+            {
+              "name": {
+                "ENG": "Pung Goong"
+              },
+              "description": {
+                "ENG": "Deep fried toast, minced prawns, sesame seeds, plum sauce"
+              },
+              "price": null,
+              "calories": 410,
+              "imageUrl": null,
+              "orderIndex": 4,
+              "isAvailable": true,
+              "preparationTime": null,
+              "allergens": [],
+              "recipeDetails": {
+                "ingredients": {
+                  "ENG": "Deep fried toast, minced prawns, sesame seeds, plum sauce"
+                },
+                "instructions": null,
+                "servings": null,
+                "difficultyLevel": null
+              },
+              "priceVariations": [],
+              "availabilitySchedule": null
+            },
+            {
+              "name": {
+                "ENG": "Sticky Chicken Wings"
+              },
+              "description": {
+                "ENG": "Chicken wings, Hoisin sauce, oyster sauce, sesame, five spice, ginger, lemon, coriander, spring onion"
+              },
+              "price": null,
+              "calories": 390,
+              "imageUrl": null,
+              "orderIndex": 5,
+              "isAvailable": true,
+              "preparationTime": null,
+              "allergens": [],
+              "recipeDetails": {
+                "ingredients": {
+                  "ENG": "Chicken wings, Hoisin sauce, oyster sauce, sesame, five spice, ginger, lemon, coriander, spring onion"
+                },
+                "instructions": null,
+                "servings": null,
+                "difficultyLevel": null
+              },
+              "priceVariations": [],
+              "availabilitySchedule": null
+            },
+            {
+              "name": {
+                "ENG": "Gado Gado Kaum"
+              },
+              "description": {
+                "ENG": "Assorted blanched garden vegetables, peanut dressing, free-range egg, tofu, fried shallots"
+              },
+              "price": null,
+              "calories": 240,
+              "imageUrl": null,
+              "orderIndex": 6,
+              "isAvailable": true,
+              "preparationTime": null,
+              "allergens": [],
+              "recipeDetails": {
+                "ingredients": {
+                  "ENG": "Assorted blanched garden vegetables, peanut dressing, free-range egg, tofu, fried shallots"
+                },
+                "instructions": null,
+                "servings": null,
+                "difficultyLevel": null
+              },
+              "priceVariations": [],
+              "availabilitySchedule": null
+            },
+            {
+              "name": {
+                "ENG": "Ensaladang Talong"
+              },
+              "description": {
+                "ENG": "Grilled eggplants, tomatoes, onions, lime juice"
+              },
+              "price": null,
+              "calories": 85,
+              "imageUrl": null,
+              "orderIndex": 7,
+              "isAvailable": true,
+              "preparationTime": null,
+              "allergens": [],
+              "recipeDetails": {
+                "ingredients": {
+                  "ENG": "Grilled eggplants, tomatoes, onions, lime juice"
+                },
+                "instructions": null,
+                "servings": null,
+                "difficultyLevel": null
+              },
+              "priceVariations": [],
+              "availabilitySchedule": null
+            },
+            {
+              "name": {
+                "ENG": "Pomelo Salad"
+              },
+              "description": {
+                "ENG": "Pomelo segments, celery leaves, shallots, poached prawns, lime, fish sauce"
+              },
+              "price": null,
+              "calories": 135,
+              "imageUrl": null,
+              "orderIndex": 8,
+              "isAvailable": true,
+              "preparationTime": null,
+              "allergens": [],
+              "recipeDetails": {
+                "ingredients": {
+                  "ENG": "Pomelo segments, celery leaves, shallots, poached prawns, lime, fish sauce"
+                },
+                "instructions": null,
+                "servings": null,
+                "difficultyLevel": null
+              },
+              "priceVariations": [],
+              "availabilitySchedule": null
+            }
+          ],
+          "categories": []
+        },
+        {
+          "title": {
+            "ENG": "Soups"
+          },
+          "orderIndex": 1,
+          "parentSectionId": null,
+          "illustrationUrl": null,
+          "illustrationAsBackground": false,
+          "illustrationPosition": null,
+          "illustrationSize": null,
+          "items": [
+            {
+              "name": {
+                "ENG": "Pho Bo"
+              },
+              "description": {
+                "ENG": "Vietnamese beef broth, beef dumpling, Asian herbs, rice noodles"
+              },
+              "price": null,
+              "calories": 165,
+              "imageUrl": null,
+              "orderIndex": 0,
+              "isAvailable": true,
+              "preparationTime": null,
+              "allergens": [],
+              "recipeDetails": {
+                "ingredients": {
+                  "ENG": "Vietnamese beef broth, beef dumpling, Asian herbs, rice noodles"
+                },
+                "instructions": null,
+                "servings": null,
+                "difficultyLevel": null
+              },
+              "priceVariations": [],
+              "availabilitySchedule": null
+            },
+            {
+              "name": {
+                "ENG": "Tom Yam Goong"
+              },
+              "description": {
+                "ENG": "Thai spicy prawn soup, chilli, coriander, galangal, lemongrass, mushrooms, tomato"
+              },
+              "price": null,
+              "calories": 95,
+              "imageUrl": null,
+              "orderIndex": 1,
+              "isAvailable": true,
+              "preparationTime": null,
+              "allergens": [],
+              "recipeDetails": {
+                "ingredients": {
+                  "ENG": "Thai spicy prawn soup, chilli, coriander, galangal, lemongrass, mushrooms, tomato"
+                },
+                "instructions": null,
+                "servings": null,
+                "difficultyLevel": null
+              },
+              "priceVariations": [],
+              "availabilitySchedule": null
+            },
+            {
+              "name": {
+                "ENG": "Chicken Wonton"
+              },
+              "description": {
+                "ENG": "Clear chicken broth, wonton, bok choy, carrot, green onion, sesame oil"
+              },
+              "price": null,
+              "calories": 150,
+              "imageUrl": null,
+              "orderIndex": 2,
+              "isAvailable": true,
+              "preparationTime": null,
+              "allergens": [],
+              "recipeDetails": {
+                "ingredients": {
+                  "ENG": "Clear chicken broth, wonton, bok choy, carrot, green onion, sesame oil"
+                },
+                "instructions": null,
+                "servings": null,
+                "difficultyLevel": null
+              },
+              "priceVariations": [],
+              "availabilitySchedule": null
+            },
+            {
+              "name": {
+                "ENG": "Malaysian Laksa"
+              },
+              "description": {
+                "ENG": "Spicy coconut soup, noodles, chicken, prawns, chilli, tofu, egg, bean sprouts, coriander, lime"
+              },
+              "price": null,
+              "calories": 315,
+              "imageUrl": null,
+              "orderIndex": 3,
+              "isAvailable": true,
+              "preparationTime": null,
+              "allergens": [],
+              "recipeDetails": {
+                "ingredients": {
+                  "ENG": "Spicy coconut soup, noodles, chicken, prawns, chilli, tofu, egg, bean sprouts, coriander, lime"
+                },
+                "instructions": null,
+                "servings": null,
+                "difficultyLevel": null
+              },
+              "priceVariations": [],
+              "availabilitySchedule": null
+            }
+          ],
+          "categories": []
+        },
+        {
+          "title": {
+            "ENG": "From The Wok"
+          },
+          "orderIndex": 2,
+          "parentSectionId": null,
+          "illustrationUrl": null,
+          "illustrationAsBackground": false,
+          "illustrationPosition": null,
+          "illustrationSize": null,
+          "items": [
+            {
+              "name": {
+                "ENG": "Black Pepper Beef"
+              },
+              "description": {
+                "ENG": "Jiangnan style beef, bell pepper, ground black pepper sauce"
+              },
+              "price": null,
+              "calories": 290,
+              "imageUrl": null,
+              "orderIndex": 0,
+              "isAvailable": true,
+              "preparationTime": null,
+              "allergens": [],
+              "recipeDetails": {
+                "ingredients": {
+                  "ENG": "Jiangnan style beef, bell pepper, ground black pepper sauce"
+                },
+                "instructions": null,
+                "servings": null,
+                "difficultyLevel": null
+              },
+              "priceVariations": [],
+              "availabilitySchedule": null
+            },
+            {
+              "name": {
+                "ENG": "Ka Pao Pla"
+              },
+              "description": {
+                "ENG": "Crispy reef fish cubes, chili, Thai basil"
+              },
+              "price": null,
+              "calories": 260,
+              "imageUrl": null,
+              "orderIndex": 1,
+              "isAvailable": true,
+              "preparationTime": null,
+              "allergens": [],
+              "recipeDetails": {
+                "ingredients": {
+                  "ENG": "Crispy reef fish cubes, chili, Thai basil"
+                },
+                "instructions": null,
+                "servings": null,
+                "difficultyLevel": null
+              },
+              "priceVariations": [],
+              "availabilitySchedule": null
+            },
+            {
+              "name": {
+                "ENG": "Gong Bao Chicken"
+              },
+              "description": {
+                "ENG": "Diced chicken thigh, leeks, chilli, roasted cashew nuts, Szechuan pepper"
+              },
+              "price": null,
+              "calories": 340,
+              "imageUrl": null,
+              "orderIndex": 2,
+              "isAvailable": true,
+              "preparationTime": null,
+              "allergens": [],
+              "recipeDetails": {
+                "ingredients": {
+                  "ENG": "Diced chicken thigh, leeks, chilli, roasted cashew nuts, Szechuan pepper"
+                },
+                "instructions": null,
+                "servings": null,
+                "difficultyLevel": null
+              },
+              "priceVariations": [],
+              "availabilitySchedule": null
+            }
+          ],
+          "categories": []
+        },
+        {
+          "title": {
+            "ENG": "Plant Based"
+          },
+          "orderIndex": 3,
+          "parentSectionId": null,
+          "illustrationUrl": null,
+          "illustrationAsBackground": false,
+          "illustrationPosition": null,
+          "illustrationSize": null,
+          "items": [
+            {
+              "name": {
+                "ENG": "Phad Pak Ruam"
+              },
+              "description": {
+                "ENG": "Stir fried mixed vegetables"
+              },
+              "price": null,
+              "calories": 90,
+              "imageUrl": null,
+              "orderIndex": 0,
+              "isAvailable": true,
+              "preparationTime": null,
+              "allergens": [],
+              "recipeDetails": {
+                "ingredients": {
+                  "ENG": "Stir fried mixed vegetables"
+                },
+                "instructions": null,
+                "servings": null,
+                "difficultyLevel": null
+              },
+              "priceVariations": [],
+              "availabilitySchedule": null
+            },
+            {
+              "name": {
+                "ENG": "Tom Jued"
+              },
+              "description": {
+                "ENG": "Clear vegetable soup with tofu"
+              },
+              "price": null,
+              "calories": 75,
+              "imageUrl": null,
+              "orderIndex": 1,
+              "isAvailable": true,
+              "preparationTime": null,
+              "allergens": [],
+              "recipeDetails": {
+                "ingredients": {
+                  "ENG": "Clear vegetable soup with tofu"
+                },
+                "instructions": null,
+                "servings": null,
+                "difficultyLevel": null
+              },
+              "priceVariations": [],
+              "availabilitySchedule": null
+            },
+            {
+              "name": {
+                "ENG": "Tumis Daging Lembu"
+              },
+              "description": {
+                "ENG": "Stir fried beefless strips, Chinese greens, bamboo shoots"
+              },
+              "price": null,
+              "calories": 195,
+              "imageUrl": null,
+              "orderIndex": 2,
+              "isAvailable": true,
+              "preparationTime": null,
+              "allergens": [],
+              "recipeDetails": {
+                "ingredients": {
+                  "ENG": "Stir fried beefless strips, Chinese greens, bamboo shoots"
+                },
+                "instructions": null,
+                "servings": null,
+                "difficultyLevel": null
+              },
+              "priceVariations": [],
+              "availabilitySchedule": null
+            }
+          ],
+          "categories": []
+        },
+        {
+          "title": {
+            "ENG": "From The Steamer"
+          },
+          "orderIndex": 4,
+          "parentSectionId": null,
+          "illustrationUrl": null,
+          "illustrationAsBackground": false,
+          "illustrationPosition": null,
+          "illustrationSize": null,
+          "items": [
+            {
+              "name": {
+                "ENG": "Dim Sum"
+              },
+              "description": {
+                "ENG": "Vegetable, Prawn, or Chicken options; soy sauce, black vinegar"
+              },
+              "price": null,
+              "calories": 215,
+              "imageUrl": null,
+              "orderIndex": 0,
+              "isAvailable": true,
+              "preparationTime": null,
+              "allergens": [],
+              "recipeDetails": {
+                "ingredients": {
+                  "ENG": "Vegetable, Prawn, or Chicken options; soy sauce, black vinegar"
+                },
+                "instructions": null,
+                "servings": null,
+                "difficultyLevel": null
+              },
+              "priceVariations": [],
+              "availabilitySchedule": null
+            }
+          ],
+          "categories": []
+        },
+        {
+          "title": {
+            "ENG": "Grilled"
+          },
+          "orderIndex": 5,
+          "parentSectionId": null,
+          "illustrationUrl": null,
+          "illustrationAsBackground": false,
+          "illustrationPosition": null,
+          "illustrationSize": null,
+          "items": [
+            {
+              "name": {
+                "ENG": "Pinoy Inasal"
+              },
+              "description": {
+                "ENG": "Ginger, lemongrass, vinegar, lemon marinated (chicken)"
+              },
+              "price": null,
+              "calories": 240,
+              "imageUrl": null,
+              "orderIndex": 0,
+              "isAvailable": true,
+              "preparationTime": null,
+              "allergens": [],
+              "recipeDetails": {
+                "ingredients": {
+                  "ENG": "Ginger, lemongrass, vinegar, lemon marinated (chicken)"
+                },
+                "instructions": null,
+                "servings": null,
+                "difficultyLevel": null
+              },
+              "priceVariations": [],
+              "availabilitySchedule": null
+            },
+            {
+              "name": {
+                "ENG": "Cumi Cumi Bakar"
+              },
+              "description": {
+                "ENG": "Sweet soy, marinated squid, soya and sesame oil"
+              },
+              "price": null,
+              "calories": 180,
+              "imageUrl": null,
+              "orderIndex": 1,
+              "isAvailable": true,
+              "preparationTime": null,
+              "allergens": [],
+              "recipeDetails": {
+                "ingredients": {
+                  "ENG": "Sweet soy, marinated squid, soya and sesame oil"
+                },
+                "instructions": null,
+                "servings": null,
+                "difficultyLevel": null
+              },
+              "priceVariations": [],
+              "availabilitySchedule": null
+            },
+            {
+              "name": {
+                "ENG": "Samgyeopsal"
+              },
+              "description": {
+                "ENG": "Pork belly, green onion, sesame seeds"
+              },
+              "price": null,
+              "calories": 485,
+              "imageUrl": null,
+              "orderIndex": 2,
+              "isAvailable": true,
+              "preparationTime": null,
+              "allergens": [],
+              "recipeDetails": {
+                "ingredients": {
+                  "ENG": "Pork belly, green onion, sesame seeds"
+                },
+                "instructions": null,
+                "servings": null,
+                "difficultyLevel": null
+              },
+              "priceVariations": [],
+              "availabilitySchedule": null
+            }
+          ],
+          "categories": []
+        },
+        {
+          "title": {
+            "ENG": "Curries"
+          },
+          "orderIndex": 6,
+          "parentSectionId": null,
+          "illustrationUrl": null,
+          "illustrationAsBackground": false,
+          "illustrationPosition": null,
+          "illustrationSize": null,
+          "items": [
+            {
+              "name": {
+                "ENG": "Thai Green Curry"
+              },
+              "description": {
+                "ENG": "Chicken, Seafood or Vegetables, eggplant, coconut milk, fish sauce, kaffir lime leaves, basil, jasmine rice"
+              },
+              "price": null,
+              "calories": 325,
+              "imageUrl": null,
+              "orderIndex": 0,
+              "isAvailable": true,
+              "preparationTime": null,
+              "allergens": [],
+              "recipeDetails": {
+                "ingredients": {
+                  "ENG": "Chicken, Seafood or Vegetables, eggplant, coconut milk, fish sauce, kaffir lime leaves, basil, jasmine rice"
+                },
+                "instructions": null,
+                "servings": null,
+                "difficultyLevel": null
+              },
+              "priceVariations": [],
+              "availabilitySchedule": null
+            },
+            {
+              "name": {
+                "ENG": "Thai Red Cry (Red Curry)"
+              },
+              "description": {
+                "ENG": "Chicken, Seafood or vegetables, eggplant, coconut milk, fish sauce, kaffir lime leaves, basil, jasmine rice"
+              },
+              "price": null,
+              "calories": 325,
+              "imageUrl": null,
+              "orderIndex": 1,
+              "isAvailable": true,
+              "preparationTime": null,
+              "allergens": [],
+              "recipeDetails": {
+                "ingredients": {
+                  "ENG": "Chicken, Seafood or vegetables, eggplant, coconut milk, fish sauce, kaffir lime leaves, basil, jasmine rice"
+                },
+                "instructions": null,
+                "servings": null,
+                "difficultyLevel": null
+              },
+              "priceVariations": [],
+              "availabilitySchedule": null
+            },
+            {
+              "name": {
+                "ENG": "Adobo"
+              },
+              "description": {
+                "ENG": "Pork, garlic, spices, oyster sauce, soy sauce, jasmine rice"
+              },
+              "price": null,
+              "calories": 355,
+              "imageUrl": null,
+              "orderIndex": 2,
+              "isAvailable": true,
+              "preparationTime": null,
+              "allergens": [],
+              "recipeDetails": {
+                "ingredients": {
+                  "ENG": "Pork, garlic, spices, oyster sauce, soy sauce, jasmine rice"
+                },
+                "instructions": null,
+                "servings": null,
+                "difficultyLevel": null
+              },
+              "priceVariations": [],
+              "availabilitySchedule": null
+            },
+            {
+              "name": {
+                "ENG": "Balinese Chicken Curry"
+              },
+              "description": {
+                "ENG": "Chicken, yellow chilli paste, jasmine rice"
+              },
+              "price": null,
+              "calories": 315,
+              "imageUrl": null,
+              "orderIndex": 3,
+              "isAvailable": true,
+              "preparationTime": null,
+              "allergens": [],
+              "recipeDetails": {
+                "ingredients": {
+                  "ENG": "Chicken, yellow chilli paste, jasmine rice"
+                },
+                "instructions": null,
+                "servings": null,
+                "difficultyLevel": null
+              },
+              "priceVariations": [],
+              "availabilitySchedule": null
+            }
+          ],
+          "categories": []
+        },
+        {
+          "title": {
+            "ENG": "Noodles"
+          },
+          "orderIndex": 7,
+          "parentSectionId": null,
+          "illustrationUrl": null,
+          "illustrationAsBackground": false,
+          "illustrationPosition": null,
+          "illustrationSize": null,
+          "items": [
+            {
+              "name": {
+                "ENG": "Pad Thai"
+              },
+              "description": {
+                "ENG": "Prawns, Thai rice noodles, dried shrimp, chives, lime, peanuts, sprouts, tamarind"
+              },
+              "price": null,
+              "calories": 345,
+              "imageUrl": null,
+              "orderIndex": 0,
+              "isAvailable": true,
+              "preparationTime": null,
+              "allergens": [],
+              "recipeDetails": {
+                "ingredients": {
+                  "ENG": "Prawns, Thai rice noodles, dried shrimp, chives, lime, peanuts, sprouts, tamarind"
+                },
+                "instructions": null,
+                "servings": null,
+                "difficultyLevel": null
+              },
+              "priceVariations": [],
+              "availabilitySchedule": null
+            },
+            {
+              "name": {
+                "ENG": "Pad See Ew"
+              },
+              "description": {
+                "ENG": "Flat rice noodle, beef, egg, garlic, bok choy, carrot, oyster sauce"
+              },
+              "price": null,
+              "calories": 335,
+              "imageUrl": null,
+              "orderIndex": 1,
+              "isAvailable": true,
+              "preparationTime": null,
+              "allergens": [],
+              "recipeDetails": {
+                "ingredients": {
+                  "ENG": "Flat rice noodle, beef, egg, garlic, bok choy, carrot, oyster sauce"
+                },
+                "instructions": null,
+                "servings": null,
+                "difficultyLevel": null
+              },
+              "priceVariations": [],
+              "availabilitySchedule": null
+            },
+            {
+              "name": {
+                "ENG": "Wok-Fried Mee Goreng"
+              },
+              "description": {
+                "ENG": "Egg noodles, chicken, garlic, cabbage, egg, vegetables"
+              },
+              "price": null,
+              "calories": 365,
+              "imageUrl": null,
+              "orderIndex": 2,
+              "isAvailable": true,
+              "preparationTime": null,
+              "allergens": [],
+              "recipeDetails": {
+                "ingredients": {
+                  "ENG": "Egg noodles, chicken, garlic, cabbage, egg, vegetables"
+                },
+                "instructions": null,
+                "servings": null,
+                "difficultyLevel": null
+              },
+              "priceVariations": [],
+              "availabilitySchedule": null
+            },
+            {
+              "name": {
+                "ENG": "Wok-Fried Hokkien"
+              },
+              "description": {
+                "ENG": "Angus beef, hokkien noodles, egg, vegetables, oyster sauce"
+              },
+              "price": null,
+              "calories": 385,
+              "imageUrl": null,
+              "orderIndex": 3,
+              "isAvailable": true,
+              "preparationTime": null,
+              "allergens": [],
+              "recipeDetails": {
+                "ingredients": {
+                  "ENG": "Angus beef, hokkien noodles, egg, vegetables, oyster sauce"
+                },
+                "instructions": null,
+                "servings": null,
+                "difficultyLevel": null
+              },
+              "priceVariations": [],
+              "availabilitySchedule": null
+            }
+          ],
+          "categories": []
+        },
+        {
+          "title": {
+            "ENG": "Rice"
+          },
+          "orderIndex": 8,
+          "parentSectionId": null,
+          "illustrationUrl": null,
+          "illustrationAsBackground": false,
+          "illustrationPosition": null,
+          "illustrationSize": null,
+          "items": [
+            {
+              "name": {
+                "ENG": "Nasi Goreng"
+              },
+              "description": {
+                "ENG": "Chicken or shrimp fried rice, spring onions, fried egg, chicken or prawn satay, pickled vegetables"
+              },
+              "price": null,
+              "calories": 370,
+              "imageUrl": null,
+              "orderIndex": 0,
+              "isAvailable": true,
+              "preparationTime": null,
+              "allergens": [],
+              "recipeDetails": {
+                "ingredients": {
+                  "ENG": "Chicken or shrimp fried rice, spring onions, fried egg, chicken or prawn satay, pickled vegetables"
+                },
+                "instructions": null,
+                "servings": null,
+                "difficultyLevel": null
+              },
+              "priceVariations": [],
+              "availabilitySchedule": null
+            },
+            {
+              "name": {
+                "ENG": "Bokkeumbap"
+              },
+              "description": {
+                "ENG": "Korean fried rice, beef, kimchi"
+              },
+              "price": null,
+              "calories": 325,
+              "imageUrl": null,
+              "orderIndex": 1,
+              "isAvailable": true,
+              "preparationTime": null,
+              "allergens": [],
+              "recipeDetails": {
+                "ingredients": {
+                  "ENG": "Korean fried rice, beef, kimchi"
+                },
+                "instructions": null,
+                "servings": null,
+                "difficultyLevel": null
+              },
+              "priceVariations": [],
+              "availabilitySchedule": null
+            },
+            {
+              "name": {
+                "ENG": "Egg Fried Rice"
+              },
+              "description": {
+                "ENG": "Jasmine rice, egg, spring onion"
+              },
+              "price": null,
+              "calories": 280,
+              "imageUrl": null,
+              "orderIndex": 2,
+              "isAvailable": true,
+              "preparationTime": null,
+              "allergens": [],
+              "recipeDetails": {
+                "ingredients": {
+                  "ENG": "Jasmine rice, egg, spring onion"
+                },
+                "instructions": null,
+                "servings": null,
+                "difficultyLevel": null
+              },
+              "priceVariations": [],
+              "availabilitySchedule": null
+            },
+            {
+              "name": {
+                "ENG": "Khao Pad Sapparod"
+              },
+              "description": {
+                "ENG": "Pineapple fried rice, cashew nut, raisins"
+              },
+              "price": null,
+              "calories": 315,
+              "imageUrl": null,
+              "orderIndex": 3,
+              "isAvailable": true,
+              "preparationTime": null,
+              "allergens": [],
+              "recipeDetails": {
+                "ingredients": {
+                  "ENG": "Pineapple fried rice, cashew nut, raisins"
+                },
+                "instructions": null,
+                "servings": null,
+                "difficultyLevel": null
+              },
+              "priceVariations": [],
+              "availabilitySchedule": null
+            }
+          ],
+          "categories": []
+        },
+        {
+          "title": {
+            "ENG": "Dessert"
+          },
+          "orderIndex": 9,
+          "parentSectionId": null,
+          "illustrationUrl": null,
+          "illustrationAsBackground": false,
+          "illustrationPosition": null,
+          "illustrationSize": null,
+          "items": [
+            {
+              "name": {
+                "ENG": "Khao Niaow Ma Muang"
+              },
+              "description": {
+                "ENG": "Glutinous rice, mango, coconut milk"
+              },
+              "price": null,
+              "calories": 295,
+              "imageUrl": null,
+              "orderIndex": 0,
+              "isAvailable": true,
+              "preparationTime": null,
+              "allergens": [],
+              "recipeDetails": {
+                "ingredients": {
+                  "ENG": "Glutinous rice, mango, coconut milk"
+                },
+                "instructions": null,
+                "servings": null,
+                "difficultyLevel": null
+              },
+              "priceVariations": [],
+              "availabilitySchedule": null
+            },
+            {
+              "name": {
+                "ENG": "Pon La Mai Ruam"
+              },
+              "description": {
+                "ENG": "Seasonal fruits platter"
+              },
+              "price": null,
+              "calories": 90,
+              "imageUrl": null,
+              "orderIndex": 1,
+              "isAvailable": true,
+              "preparationTime": null,
+              "allergens": [],
+              "recipeDetails": {
+                "ingredients": {
+                  "ENG": "Seasonal fruits platter"
+                },
+                "instructions": null,
+                "servings": null,
+                "difficultyLevel": null
+              },
+              "priceVariations": [],
+              "availabilitySchedule": null
+            },
+            {
+              "name": {
+                "ENG": "Pandan Ice Cream"
+              },
+              "description": {
+                "ENG": "Pandan infusion, dairy/cream base"
+              },
+              "price": null,
+              "calories": 315,
+              "imageUrl": null,
+              "orderIndex": 2,
+              "isAvailable": true,
+              "preparationTime": null,
+              "allergens": [],
+              "recipeDetails": {
+                "ingredients": {
+                  "ENG": "Pandan infusion, dairy/cream base"
+                },
+                "instructions": null,
+                "servings": null,
+                "difficultyLevel": null
+              },
+              "priceVariations": [],
+              "availabilitySchedule": null
+            },
+            {
+              "name": {
+                "ENG": "Passionfruit Sorbet"
+              },
+              "description": {
+                "ENG": "Passionfruit, sugar, water"
+              },
+              "price": null,
+              "calories": 165,
+              "imageUrl": null,
+              "orderIndex": 3,
+              "isAvailable": true,
+              "preparationTime": null,
+              "allergens": [],
+              "recipeDetails": {
+                "ingredients": {
+                  "ENG": "Passionfruit, sugar, water"
+                },
+                "instructions": null,
+                "servings": null,
+                "difficultyLevel": null
+              },
+              "priceVariations": [],
+              "availabilitySchedule": null
+            },
+            {
+              "name": {
+                "ENG": "Kluay Buat Chee"
+              },
+              "description": {
+                "ENG": "Banana cooked in coconut milk and pandan leaves"
+              },
+              "price": null,
+              "calories": 245,
+              "imageUrl": null,
+              "orderIndex": 4,
+              "isAvailable": true,
+              "preparationTime": null,
+              "allergens": [],
+              "recipeDetails": {
+                "ingredients": {
+                  "ENG": "Banana cooked in coconut milk and pandan leaves"
+                },
+                "instructions": null,
+                "servings": null,
+                "difficultyLevel": null
+              },
+              "priceVariations": [],
+              "availabilitySchedule": null
+            }
+          ],
+          "categories": []
+        },
+        {
+          "title": {
+            "ENG": "Hot Pot (500g)"
+          },
+          "orderIndex": 10,
+          "parentSectionId": null,
+          "illustrationUrl": null,
+          "illustrationAsBackground": false,
+          "illustrationPosition": null,
+          "illustrationSize": null,
+          "items": [
+            {
+              "name": {
+                "ENG": "YACHAE"
+              },
+              "description": {
+                "ENG": "Assorted Greens, Tofu, Vegan Salmon, Vegan Tuna, Broth (Miso/Tom Yam/Veg/Shabu)"
+              },
+              "price": null,
+              "calories": 380,
+              "imageUrl": null,
+              "orderIndex": 0,
+              "isAvailable": true,
+              "preparationTime": null,
+              "allergens": [],
+              "recipeDetails": {
+                "ingredients": {
+                  "ENG": "Assorted Greens, Tofu, Vegan Salmon, Vegan Tuna, Broth (Miso/Tom Yam/Veg/Shabu)"
+                },
+                "instructions": null,
+                "servings": null,
+                "difficultyLevel": null
+              },
+              "priceVariations": [],
+              "availabilitySchedule": null
+            },
+            {
+              "name": {
+                "ENG": "GOGI"
+              },
+              "description": {
+                "ENG": "Sliced Beef, Sliced Chicken thigh, Pork belly, assorted greens, Broth"
+              },
+              "price": null,
+              "calories": 980,
+              "imageUrl": null,
+              "orderIndex": 1,
+              "isAvailable": true,
+              "preparationTime": null,
+              "allergens": [],
+              "recipeDetails": {
+                "ingredients": {
+                  "ENG": "Sliced Beef, Sliced Chicken thigh, Pork belly, assorted greens, Broth"
+                },
+                "instructions": null,
+                "servings": null,
+                "difficultyLevel": null
+              },
+              "priceVariations": [],
+              "availabilitySchedule": null
+            },
+            {
+              "name": {
+                "ENG": "BADA"
+              },
+              "description": {
+                "ENG": "Prawn, Calamari, Sliced Fish, Mussels, Fish balls, Fish cake, assorted greens, Broth"
+              },
+              "price": null,
+              "calories": 540,
+              "imageUrl": null,
+              "orderIndex": 2,
+              "isAvailable": true,
+              "preparationTime": null,
+              "allergens": [],
+              "recipeDetails": {
+                "ingredients": {
+                  "ENG": "Prawn, Calamari, Sliced Fish, Mussels, Fish balls, Fish cake, assorted greens, Broth"
+                },
+                "instructions": null,
+                "servings": null,
+                "difficultyLevel": null
+              },
+              "priceVariations": [],
+              "availabilitySchedule": null
+            },
+            {
+              "name": {
+                "ENG": "MODU"
+              },
+              "description": {
+                "ENG": "Beef, Chicken thigh, Pork belly, Egg, Prawn, Calamari, Fish, Mussels, Fish balls/cake, greens, Broth"
+              },
+              "price": null,
+              "calories": 810,
+              "imageUrl": null,
+              "orderIndex": 3,
+              "isAvailable": true,
+              "preparationTime": null,
+              "allergens": [],
+              "recipeDetails": {
+                "ingredients": {
+                  "ENG": "Beef, Chicken thigh, Pork belly, Egg, Prawn, Calamari, Fish, Mussels, Fish balls/cake, greens, Broth"
+                },
+                "instructions": null,
+                "servings": null,
+                "difficultyLevel": null
+              },
+              "priceVariations": [],
+              "availabilitySchedule": null
+            }
+          ],
+          "categories": []
+        }
+      ]
+    }
+  ]
+}

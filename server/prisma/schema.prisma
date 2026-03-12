@@ -1,0 +1,281 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Admin {
+  id                    String       @id @default(uuid())
+  email                 String       @unique
+  passwordHash          String       @map("password_hash")
+  name                  String
+  stripeCustomerId      String?      @unique @map("stripe_customer_id")
+  stripeSubscriptionId  String?      @map("stripe_subscription_id")
+  subscriptionStatus    String       @default("none") @map("subscription_status")
+  subscriptionPlan      String?      @map("subscription_plan")
+  createdAt             DateTime     @default(now()) @map("created_at")
+  restaurants           Restaurant[]
+
+  @@map("admins")
+}
+
+model Restaurant {
+  id              String   @id @default(uuid())
+  adminId         String   @map("admin_id")
+  name            String
+  logoUrl         String?  @map("logo_url")
+  logoPosition    String?  @map("logo_position") // 'background' or 'right'
+  slug            String   @unique
+  currency        String   @default("USD")
+  defaultLanguage String   @default("ENG") @map("default_language")
+  activeStatus    Boolean  @default(true) @map("active_status")
+  createdAt       DateTime @default(now()) @map("created_at")
+  updatedAt       DateTime @updatedAt @map("updated_at")
+
+  admin           Admin    @relation(fields: [adminId], references: [id])
+  menus           Menu[]
+  themeSettings   ThemeSettings?
+  moduleSettings  ModuleSettings?
+
+  @@map("restaurants")
+}
+
+model ThemeSettings {
+  id                      String   @id @default(uuid())
+  restaurantId            String   @unique @map("restaurant_id")
+  primaryColor            String   @default("#000000") @map("primary_color")
+  secondaryColor          String   @default("#ffffff") @map("secondary_color")
+  accentColor             String   @default("#ff6b6b") @map("accent_color")
+  backgroundColor         String   @default("#ffffff") @map("background_color")
+  textColor               String   @default("#000000") @map("text_color")
+  customCss               String?  @map("custom_css") @db.Text
+  customFontsUrls         String[] @default([]) @map("custom_fonts_urls")
+  backgroundIllustrationUrl String? @map("background_illustration_url")
+  backgroundIllustrationOpacity Int @default(30) @map("background_illustration_opacity")
+
+  restaurant Restaurant @relation(fields: [restaurantId], references: [id], onDelete: Cascade)
+
+  @@map("theme_settings")
+}
+
+model ModuleSettings {
+  id                      String   @id @default(uuid())
+  restaurantId            String   @unique @map("restaurant_id")
+  enablePriceVariations   Boolean  @default(false) @map("enable_price_variations")
+  enableAvailabilitySchedule Boolean @default(false) @map("enable_availability_schedule")
+  enableSeasonalItems     Boolean  @default(false) @map("enable_seasonal_items")
+  enableQrGeneration      Boolean  @default(false) @map("enable_qr_generation")
+  enableSubcategories     Boolean  @default(false) @map("enable_subcategories")
+
+  restaurant Restaurant @relation(fields: [restaurantId], references: [id], onDelete: Cascade)
+
+  @@map("module_settings")
+}
+
+model Menu {
+  id          String   @id @default(uuid())
+  restaurantId String  @map("restaurant_id")
+  name        Json     // Multi-language: { "ENG": "Breakfast", "CHN": "早餐", ... }
+  slug        String
+  menuType    String   @map("menu_type") // breakfast|lunch|dinner|drinks
+  status      String   @default("draft") // draft|published
+  orderIndex  Int      @default(0) @map("order_index")
+  themeSettings Json?  @map("theme_settings") // Menu-specific theme overrides
+  templateId  String?  @map("template_id") // Selected template for this menu
+  createdAt   DateTime @default(now()) @map("created_at")
+  updatedAt   DateTime @updatedAt @map("updated_at")
+  publishedAt DateTime? @map("published_at")
+
+  restaurant Restaurant @relation(fields: [restaurantId], references: [id], onDelete: Cascade)
+  template   MenuTemplate? @relation(fields: [templateId], references: [id], onDelete: SetNull)
+  sections   Section[]
+  versions   MenuVersion[]
+
+  @@unique([restaurantId, slug])
+  @@map("menus")
+}
+
+model MenuVersion {
+  id            String   @id @default(uuid())
+  menuId        String   @map("menu_id")
+  versionNumber Int      @map("version_number")
+  snapshotData  Json     @map("snapshot_data") // Full menu state
+  createdBy     String   @map("created_by")
+  createdAt     DateTime @default(now()) @map("created_at")
+  notes         String?
+
+  menu Menu @relation(fields: [menuId], references: [id], onDelete: Cascade)
+
+  @@map("menu_versions")
+}
+
+model Section {
+  id                    String   @id @default(uuid())
+  menuId                String   @map("menu_id")
+  parentSectionId       String?  @map("parent_section_id") // For sub-sections
+  title                 Json     // Multi-language
+  description           Json?    @map("description") // Multi-language (optional)
+  orderIndex            Int      @default(0) @map("order_index")
+  illustrationUrl       String?  @map("illustration_url")
+  illustrationAsBackground Boolean @default(false) @map("illustration_as_background")
+  illustrationPosition  String?  @map("illustration_position") // center, left, right
+  illustrationSize     String?  @map("illustration_size") // fit, fullscreen
+  createdAt             DateTime @default(now()) @map("created_at")
+  updatedAt             DateTime @updatedAt @map("updated_at")
+
+  menu          Menu       @relation(fields: [menuId], references: [id], onDelete: Cascade)
+  parentSection Section?  @relation("SectionSubsections", fields: [parentSectionId], references: [id], onDelete: Cascade)
+  subSections   Section[] @relation("SectionSubsections")
+  categories    Category[]
+  items         MenuItem[]
+
+  @@map("sections")
+}
+
+model Category {
+  id         String   @id @default(uuid())
+  sectionId  String   @map("section_id")
+  name       Json     // Multi-language
+  orderIndex Int      @default(0) @map("order_index")
+
+  section Section    @relation(fields: [sectionId], references: [id], onDelete: Cascade)
+  items   MenuItem[]
+
+  @@map("categories")
+}
+
+model MenuItem {
+  id              String   @id @default(uuid())
+  sectionId       String   @map("section_id")
+  categoryId      String?  @map("category_id")
+  name            Json     // Multi-language
+  description     Json?    // Multi-language
+  price           Float?
+  calories        Int?     @map("calories")
+  imageUrl        String?  @map("image_url")
+  orderIndex      Int      @default(0) @map("order_index")
+  isAvailable     Boolean  @default(true) @map("is_available")
+  preparationTime Int?     @map("preparation_time") // in minutes
+  createdAt       DateTime @default(now()) @map("created_at")
+  updatedAt       DateTime @updatedAt @map("updated_at")
+
+  section            Section             @relation(fields: [sectionId], references: [id], onDelete: Cascade)
+  category           Category?           @relation(fields: [categoryId], references: [id], onDelete: SetNull)
+  allergens          AllergenIcon[]
+  recipeDetails      RecipeDetails?
+  priceVariations    PriceVariation[]
+  availabilitySchedule AvailabilitySchedule?
+  translations       MenuItemTranslation[]
+
+  @@map("menu_items")
+}
+
+model RecipeDetails {
+  id               String   @id @default(uuid())
+  menuItemId       String   @unique @map("menu_item_id")
+  ingredients      Json     // Array of {name, quantity, unit}
+  ingredientsLabel Json?    @map("ingredients_label") // Multi-language: { "ENG": "Ingredients", ... }
+  instructions     String?  @db.Text
+  servings         Int?
+  difficultyLevel  String?  @map("difficulty_level")
+
+  menuItem MenuItem @relation(fields: [menuItemId], references: [id], onDelete: Cascade)
+
+  @@map("recipe_details")
+}
+
+model PriceVariation {
+  id             String   @id @default(uuid())
+  menuItemId     String   @map("menu_item_id")
+  variationName  String   @map("variation_name") // small|medium|large
+  price          Float
+  orderIndex     Int      @default(0) @map("order_index")
+
+  menuItem MenuItem @relation(fields: [menuItemId], references: [id], onDelete: Cascade)
+
+  @@map("price_variations")
+}
+
+model AvailabilitySchedule {
+  id                String   @id @default(uuid())
+  menuItemId        String   @unique @map("menu_item_id")
+  dayOfWeek         Int?     @map("day_of_week") // 0-6 (Sunday-Saturday)
+  startTime         String?  @map("start_time") // HH:MM format
+  endTime           String?  @map("end_time") // HH:MM format
+  seasonalStartDate DateTime? @map("seasonal_start_date")
+  seasonalEndDate   DateTime? @map("seasonal_end_date")
+
+  menuItem MenuItem @relation(fields: [menuItemId], references: [id], onDelete: Cascade)
+
+  @@map("availability_schedules")
+}
+
+model AllergenIcon {
+  id        String   @id @default(uuid())
+  name      String   @unique
+  imageUrl  String   @map("image_url")
+  label     Json     // Multi-language
+  isCustom  Boolean  @default(false) @map("is_custom")
+  orderIndex Int     @default(0) @map("order_index")
+  createdAt DateTime @default(now()) @map("created_at")
+
+  menuItems MenuItem[]
+
+  @@map("allergen_icons")
+}
+
+model AllergenSettings {
+  id         String   @id @default(uuid())
+  filterMode String   @default("exclude") @map("filter_mode") // "exclude" or "include"
+  updatedAt  DateTime @updatedAt @map("updated_at")
+
+  @@map("allergen_settings")
+}
+
+model Language {
+  id         String   @id @default(uuid())
+  code       String   @unique // ENG|CHN|GER|JAP|RUS
+  name       String
+  isActive   Boolean  @default(true) @map("is_active")
+  orderIndex Int      @default(0) @map("order_index")
+
+  @@map("languages")
+}
+
+model MenuTemplate {
+  id              String   @id @default(uuid())
+  slug            String   @unique
+  name            Json     // Multi-language: { "ENG": "Classic", "CHN": "经典", ... }
+  description     Json     // Multi-language descriptions
+  previewImageUrl String   @map("preview_image_url")
+  version         String   @default("1.0.0")
+  isActive        Boolean  @default(true) @map("is_active")
+  createdAt       DateTime @default(now()) @map("created_at")
+  updatedAt       DateTime @updatedAt @map("updated_at")
+
+  menus Menu[]
+
+  @@map("menu_templates")
+}
+
+model MenuItemTranslation {
+  id                    String   @id @default(uuid())
+  menuItemId            String   @map("menu_item_id")
+  languageCode          String   @map("language_code") // ISO 639-1 codes: en, es, fr, etc.
+  translatedName        String   @map("translated_name")
+  translatedDescription String?  @map("translated_description") @db.Text
+  createdAt             DateTime @default(now()) @map("created_at")
+  updatedAt             DateTime @updatedAt @map("updated_at")
+
+  menuItem MenuItem @relation(fields: [menuItemId], references: [id], onDelete: Cascade)
+
+  @@unique([menuItemId, languageCode])
+  @@map("menu_item_translations")
+}
+

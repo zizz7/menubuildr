@@ -1,0 +1,1177 @@
+{
+  "menuName": {
+    "ENG": "Tazaa Breakfast"
+  },
+  "menuSlug": "tazaa-breakfast",
+  "menuType": "breakfast",
+  "sections": [
+    {
+      "title": {
+        "ENG": "Eggs"
+      },
+      "orderIndex": 0,
+      "items": [
+        {
+          "name": {
+            "ENG": "EGG"
+          },
+          "description": {
+            "ENG": "Boiled eggs (soft or hard), soldier bread"
+          },
+          "price": null,
+          "calories": 240,
+          "orderIndex": 0,
+          "recipeDetails": {
+            "ingredients": [
+              {
+                "name": "Boiled eggs (soft or hard)",
+                "quantity": null,
+                "unit": null
+              },
+              {
+                "name": "soldier bread",
+                "quantity": null,
+                "unit": null
+              }
+            ],
+            "instructions": null,
+            "servings": null,
+            "difficultyLevel": null
+          }
+        },
+        {
+          "name": {
+            "ENG": "BENEDICT"
+          },
+          "description": {
+            "ENG": "Poached eggs, toasted English muffin, chives, salmon or turkey bacon, Hollandaise sauce"
+          },
+          "price": null,
+          "calories": 320,
+          "orderIndex": 1,
+          "recipeDetails": {
+            "ingredients": [
+              {
+                "name": "Poached eggs",
+                "quantity": null,
+                "unit": null
+              },
+              {
+                "name": "toasted English muffin",
+                "quantity": null,
+                "unit": null
+              },
+              {
+                "name": "chives",
+                "quantity": null,
+                "unit": null
+              },
+              {
+                "name": "salmon or turkey bacon",
+                "quantity": null,
+                "unit": null
+              },
+              {
+                "name": "Hollandaise sauce",
+                "quantity": null,
+                "unit": null
+              }
+            ],
+            "instructions": null,
+            "servings": null,
+            "difficultyLevel": null
+          }
+        },
+        {
+          "name": {
+            "ENG": "FLORENTINE"
+          },
+          "description": {
+            "ENG": "Poached eggs, toasted English muffin, chives, spinach, Hollandaise sauce"
+          },
+          "price": null,
+          "calories": 290,
+          "orderIndex": 2,
+          "recipeDetails": {
+            "ingredients": [
+              {
+                "name": "Poached eggs",
+                "quantity": null,
+                "unit": null
+              },
+              {
+                "name": "toasted English muffin",
+                "quantity": null,
+                "unit": null
+              },
+              {
+                "name": "chives",
+                "quantity": null,
+                "unit": null
+              },
+              {
+                "name": "spinach",
+                "quantity": null,
+                "unit": null
+              },
+              {
+                "name": "Hollandaise sauce",
+                "quantity": null,
+                "unit": null
+              }
+            ],
+            "instructions": null,
+            "servings": null,
+            "difficultyLevel": null
+          }
+        },
+        {
+          "name": {
+            "ENG": "CHORIZO OMELET"
+          },
+          "description": {
+            "ENG": "Spinach, spring onion, white onion, chorizo, cheddar cheese"
+          },
+          "price": null,
+          "calories": 380,
+          "orderIndex": 3,
+          "recipeDetails": {
+            "ingredients": [
+              {
+                "name": "Spinach",
+                "quantity": null,
+                "unit": null
+              },
+              {
+                "name": "spring onion",
+                "quantity": null,
+                "unit": null
+              },
+              {
+                "name": "white onion",
+                "quantity": null,
+                "unit": null
+              },
+              {
+                "name": "chorizo",
+                "quantity": null,
+                "unit": null
+              },
+              {
+                "name": "cheddar cheese",
+                "quantity": null,
+                "unit": null
+              }
+            ],
+            "instructions": null,
+            "servings": null,
+            "difficultyLevel": null
+          }
+        },
+        {
+          "name": {
+            "ENG": "FRITTATA"
+          },
+          "description": {
+            "ENG": "Bell pepper, leek, mushroom, cheese, olives, rocket"
+          },
+          "price": null,
+          "calories": 260,
+          "orderIndex": 4,
+          "recipeDetails": {
+            "ingredients": [
+              {
+                "name": "Bell pepper",
+                "quantity": null,
+                "unit": null
+              },
+              {
+                "name": "leek",
+                "quantity": null,
+                "unit": null
+              },
+              {
+                "name": "mushroom",
+                "quantity": null,
+                "unit": null
+              },
+              {
+                "name": "cheese",
+                "quantity": null,
+                "unit": null
+              },
+              {
+                "name": "olives",
+                "quantity": null,
+                "unit": null
+              },
+              {
+                "name": "rocket",
+                "quantity": null,
+                "unit": null
+              }
+            ],
+            "instructions": null,
+            "servings": null,
+            "difficultyLevel": null
+          }
+        },
+        {
+          "name": {
+            "ENG": "BAGEL"
+          },
+          "description": {
+            "ENG": "Smoked salmon, cream cheese, capers, onion, cucumber, dill"
+          },
+          "price": null,
+          "calories": 310,
+          "orderIndex": 5,
+          "recipeDetails": {
+            "ingredients": [
+              {
+                "name": "Smoked salmon",
+                "quantity": null,
+                "unit": null
+              },
+              {
+                "name": "cream cheese",
+                "quantity": null,
+                "unit": null
+              },
+              {
+                "name": "capers",
+                "quantity": null,
+                "unit": null
+              },
+              {
+                "name": "onion",
+                "quantity": null,
+                "unit": null
+              },
+              {
+                "name": "cucumber",
+                "quantity": null,
+                "unit": null
+              },
+              {
+                "name": "dill",
+                "quantity": null,
+                "unit": null
+              }
+            ],
+            "instructions": null,
+            "servings": null,
+            "difficultyLevel": null
+          }
+        },
+        {
+          "name": {
+            "ENG": "CROISSANT"
+          },
+          "description": {
+            "ENG": "Toasted croissant, emmental cheese, parma ham, cherry tomato, rocket leaves"
+          },
+          "price": null,
+          "calories": 420,
+          "orderIndex": 6,
+          "recipeDetails": {
+            "ingredients": [
+              {
+                "name": "Toasted croissant",
+                "quantity": null,
+                "unit": null
+              },
+              {
+                "name": "emmental cheese",
+                "quantity": null,
+                "unit": null
+              },
+              {
+                "name": "parma ham",
+                "quantity": null,
+                "unit": null
+              },
+              {
+                "name": "cherry tomato",
+                "quantity": null,
+                "unit": null
+              },
+              {
+                "name": "rocket leaves",
+                "quantity": null,
+                "unit": null
+              }
+            ],
+            "instructions": null,
+            "servings": null,
+            "difficultyLevel": null
+          }
+        },
+        {
+          "name": {
+            "ENG": "BURRITO"
+          },
+          "description": {
+            "ENG": "Chorizo, eggs, tortilla bread, cheddar cheese, onions, bell peppers"
+          },
+          "price": null,
+          "calories": 450,
+          "orderIndex": 7,
+          "recipeDetails": {
+            "ingredients": [
+              {
+                "name": "Chorizo",
+                "quantity": null,
+                "unit": null
+              },
+              {
+                "name": "eggs",
+                "quantity": null,
+                "unit": null
+              },
+              {
+                "name": "tortilla bread",
+                "quantity": null,
+                "unit": null
+              },
+              {
+                "name": "cheddar cheese",
+                "quantity": null,
+                "unit": null
+              },
+              {
+                "name": "onions",
+                "quantity": null,
+                "unit": null
+              },
+              {
+                "name": "bell peppers",
+                "quantity": null,
+                "unit": null
+              }
+            ],
+            "instructions": null,
+            "servings": null,
+            "difficultyLevel": null
+          }
+        }
+      ]
+    },
+    {
+      "title": {
+        "ENG": "Wellbeing"
+      },
+      "orderIndex": 1,
+      "items": [
+        {
+          "name": {
+            "ENG": "EGG & AVOCADO"
+          },
+          "description": {
+            "ENG": "Nine-grain bread, poached eggs, avocado, rocket, tomato, tofu & balsamic sauce"
+          },
+          "price": null,
+          "calories": 340,
+          "orderIndex": 0,
+          "recipeDetails": {
+            "ingredients": [
+              {
+                "name": "Nine-grain bread",
+                "quantity": null,
+                "unit": null
+              },
+              {
+                "name": "poached eggs",
+                "quantity": null,
+                "unit": null
+              },
+              {
+                "name": "avocado",
+                "quantity": null,
+                "unit": null
+              },
+              {
+                "name": "rocket",
+                "quantity": null,
+                "unit": null
+              },
+              {
+                "name": "tomato",
+                "quantity": null,
+                "unit": null
+              },
+              {
+                "name": "tofu & balsamic sauce",
+                "quantity": null,
+                "unit": null
+              }
+            ],
+            "instructions": null,
+            "servings": null,
+            "difficultyLevel": null
+          }
+        },
+        {
+          "name": {
+            "ENG": "BRUSCHETTA"
+          },
+          "description": {
+            "ENG": "Rye bread, fresh herbs, mushroom, ricotta, rocket leaves, extra virgin olive oil"
+          },
+          "price": null,
+          "calories": 280,
+          "orderIndex": 1,
+          "recipeDetails": {
+            "ingredients": [
+              {
+                "name": "Rye bread",
+                "quantity": null,
+                "unit": null
+              },
+              {
+                "name": "fresh herbs",
+                "quantity": null,
+                "unit": null
+              },
+              {
+                "name": "mushroom",
+                "quantity": null,
+                "unit": null
+              },
+              {
+                "name": "ricotta",
+                "quantity": null,
+                "unit": null
+              },
+              {
+                "name": "rocket leaves",
+                "quantity": null,
+                "unit": null
+              },
+              {
+                "name": "extra virgin olive oil",
+                "quantity": null,
+                "unit": null
+              }
+            ],
+            "instructions": null,
+            "servings": null,
+            "difficultyLevel": null
+          }
+        },
+        {
+          "name": {
+            "ENG": "EGG WHITE OMELET"
+          },
+          "description": {
+            "ENG": "Egg white, zucchini, bell peppers, herbs, mushrooms, onions, spinach, tomato"
+          },
+          "price": null,
+          "calories": 120,
+          "orderIndex": 2,
+          "recipeDetails": {
+            "ingredients": [
+              {
+                "name": "Egg white",
+                "quantity": null,
+                "unit": null
+              },
+              {
+                "name": "zucchini",
+                "quantity": null,
+                "unit": null
+              },
+              {
+                "name": "bell peppers",
+                "quantity": null,
+                "unit": null
+              },
+              {
+                "name": "herbs",
+                "quantity": null,
+                "unit": null
+              },
+              {
+                "name": "mushrooms",
+                "quantity": null,
+                "unit": null
+              },
+              {
+                "name": "onions",
+                "quantity": null,
+                "unit": null
+              },
+              {
+                "name": "spinach",
+                "quantity": null,
+                "unit": null
+              },
+              {
+                "name": "tomato",
+                "quantity": null,
+                "unit": null
+              }
+            ],
+            "instructions": null,
+            "servings": null,
+            "difficultyLevel": null
+          }
+        },
+        {
+          "name": {
+            "ENG": "KHAO TOM"
+          },
+          "description": {
+            "ENG": "Thai rice congee, chicken, coriander, ginger, poached eggs, spring onion, soy sauce"
+          },
+          "price": null,
+          "calories": 220,
+          "orderIndex": 3,
+          "recipeDetails": {
+            "ingredients": [
+              {
+                "name": "Thai rice congee",
+                "quantity": null,
+                "unit": null
+              },
+              {
+                "name": "chicken",
+                "quantity": null,
+                "unit": null
+              },
+              {
+                "name": "coriander",
+                "quantity": null,
+                "unit": null
+              },
+              {
+                "name": "ginger",
+                "quantity": null,
+                "unit": null
+              },
+              {
+                "name": "poached eggs",
+                "quantity": null,
+                "unit": null
+              },
+              {
+                "name": "spring onion",
+                "quantity": null,
+                "unit": null
+              },
+              {
+                "name": "soy sauce",
+                "quantity": null,
+                "unit": null
+              }
+            ],
+            "instructions": null,
+            "servings": null,
+            "difficultyLevel": null
+          }
+        },
+        {
+          "name": {
+            "ENG": "SPIRULINA OMELET"
+          },
+          "description": {
+            "ENG": "Egg white, spirulina, mozzarella, roasted tomato, rocket leaves"
+          },
+          "price": null,
+          "calories": 160,
+          "orderIndex": 4,
+          "recipeDetails": {
+            "ingredients": [
+              {
+                "name": "Egg white",
+                "quantity": null,
+                "unit": null
+              },
+              {
+                "name": "spirulina",
+                "quantity": null,
+                "unit": null
+              },
+              {
+                "name": "mozzarella",
+                "quantity": null,
+                "unit": null
+              },
+              {
+                "name": "roasted tomato",
+                "quantity": null,
+                "unit": null
+              },
+              {
+                "name": "rocket leaves",
+                "quantity": null,
+                "unit": null
+              }
+            ],
+            "instructions": null,
+            "servings": null,
+            "difficultyLevel": null
+          }
+        }
+      ]
+    },
+    {
+      "title": {
+        "ENG": "World"
+      },
+      "orderIndex": 2,
+      "items": [
+        {
+          "name": {
+            "ENG": "ARABIC"
+          },
+          "description": {
+            "ENG": "Foul muddamas, shakshouka, labneh, pickled vegetables, pita bread"
+          },
+          "price": null,
+          "calories": 310,
+          "orderIndex": 0,
+          "recipeDetails": {
+            "ingredients": [
+              {
+                "name": "Foul muddamas",
+                "quantity": null,
+                "unit": null
+              },
+              {
+                "name": "shakshouka",
+                "quantity": null,
+                "unit": null
+              },
+              {
+                "name": "labneh",
+                "quantity": null,
+                "unit": null
+              },
+              {
+                "name": "pickled vegetables",
+                "quantity": null,
+                "unit": null
+              },
+              {
+                "name": "pita bread",
+                "quantity": null,
+                "unit": null
+              }
+            ],
+            "instructions": null,
+            "servings": null,
+            "difficultyLevel": null
+          }
+        },
+        {
+          "name": {
+            "ENG": "MEXICAN"
+          },
+          "description": {
+            "ENG": "Crispy corn tortilla, cheese, fried egg, guacamole, beans, sour cream, salsa"
+          },
+          "price": null,
+          "calories": 380,
+          "orderIndex": 1,
+          "recipeDetails": {
+            "ingredients": [
+              {
+                "name": "Crispy corn tortilla",
+                "quantity": null,
+                "unit": null
+              },
+              {
+                "name": "cheese",
+                "quantity": null,
+                "unit": null
+              },
+              {
+                "name": "fried egg",
+                "quantity": null,
+                "unit": null
+              },
+              {
+                "name": "guacamole",
+                "quantity": null,
+                "unit": null
+              },
+              {
+                "name": "beans",
+                "quantity": null,
+                "unit": null
+              },
+              {
+                "name": "sour cream",
+                "quantity": null,
+                "unit": null
+              },
+              {
+                "name": "salsa",
+                "quantity": null,
+                "unit": null
+              }
+            ],
+            "instructions": null,
+            "servings": null,
+            "difficultyLevel": null
+          }
+        },
+        {
+          "name": {
+            "ENG": "MALDIVIAN"
+          },
+          "description": {
+            "ENG": "Tuna mashuni, sambal, fish curry, chapatti"
+          },
+          "price": null,
+          "calories": 350,
+          "orderIndex": 2,
+          "recipeDetails": {
+            "ingredients": [
+              {
+                "name": "Tuna mashuni",
+                "quantity": null,
+                "unit": null
+              },
+              {
+                "name": "sambal",
+                "quantity": null,
+                "unit": null
+              },
+              {
+                "name": "fish curry",
+                "quantity": null,
+                "unit": null
+              },
+              {
+                "name": "chapatti",
+                "quantity": null,
+                "unit": null
+              }
+            ],
+            "instructions": null,
+            "servings": null,
+            "difficultyLevel": null
+          }
+        },
+        {
+          "name": {
+            "ENG": "FRENCH"
+          },
+          "description": {
+            "ENG": "Béchamel, fried egg, cheese, mustard, smoked ham, toasted sandwich"
+          },
+          "price": null,
+          "calories": 440,
+          "orderIndex": 3,
+          "recipeDetails": {
+            "ingredients": [
+              {
+                "name": "Béchamel",
+                "quantity": null,
+                "unit": null
+              },
+              {
+                "name": "fried egg",
+                "quantity": null,
+                "unit": null
+              },
+              {
+                "name": "cheese",
+                "quantity": null,
+                "unit": null
+              },
+              {
+                "name": "mustard",
+                "quantity": null,
+                "unit": null
+              },
+              {
+                "name": "smoked ham",
+                "quantity": null,
+                "unit": null
+              },
+              {
+                "name": "toasted sandwich",
+                "quantity": null,
+                "unit": null
+              }
+            ],
+            "instructions": null,
+            "servings": null,
+            "difficultyLevel": null
+          }
+        },
+        {
+          "name": {
+            "ENG": "INDIAN"
+          },
+          "description": {
+            "ENG": "Masala scrambled eggs, vegetable curry, paratha, pickles, plain yoghurt"
+          },
+          "price": null,
+          "calories": 390,
+          "orderIndex": 4,
+          "recipeDetails": {
+            "ingredients": [
+              {
+                "name": "Masala scrambled eggs",
+                "quantity": null,
+                "unit": null
+              },
+              {
+                "name": "vegetable curry",
+                "quantity": null,
+                "unit": null
+              },
+              {
+                "name": "paratha",
+                "quantity": null,
+                "unit": null
+              },
+              {
+                "name": "pickles",
+                "quantity": null,
+                "unit": null
+              },
+              {
+                "name": "plain yoghurt",
+                "quantity": null,
+                "unit": null
+              }
+            ],
+            "instructions": null,
+            "servings": null,
+            "difficultyLevel": null
+          }
+        }
+      ]
+    },
+    {
+      "title": {
+        "ENG": "Sweet"
+      },
+      "orderIndex": 3,
+      "items": [
+        {
+          "name": {
+            "ENG": "PAIN BRIOCHE"
+          },
+          "description": {
+            "ENG": "French toast, warm apple compote, honey"
+          },
+          "price": null,
+          "calories": 360,
+          "orderIndex": 0,
+          "recipeDetails": {
+            "ingredients": [
+              {
+                "name": "French toast",
+                "quantity": null,
+                "unit": null
+              },
+              {
+                "name": "warm apple compote",
+                "quantity": null,
+                "unit": null
+              },
+              {
+                "name": "honey",
+                "quantity": null,
+                "unit": null
+              }
+            ],
+            "instructions": null,
+            "servings": null,
+            "difficultyLevel": null
+          }
+        },
+        {
+          "name": {
+            "ENG": "PANCAKE"
+          },
+          "description": {
+            "ENG": "American style pancakes, butter, maple syrup (or Nutella, berry compote)"
+          },
+          "price": null,
+          "calories": 410,
+          "orderIndex": 1,
+          "recipeDetails": {
+            "ingredients": [
+              {
+                "name": "American style pancakes",
+                "quantity": null,
+                "unit": null
+              },
+              {
+                "name": "butter",
+                "quantity": null,
+                "unit": null
+              },
+              {
+                "name": "maple syrup (or Nutella",
+                "quantity": null,
+                "unit": null
+              },
+              {
+                "name": "berry compote)",
+                "quantity": null,
+                "unit": null
+              }
+            ],
+            "instructions": null,
+            "servings": null,
+            "difficultyLevel": null
+          }
+        },
+        {
+          "name": {
+            "ENG": "PORRIDGE"
+          },
+          "description": {
+            "ENG": "Oats, choice of milk, almond flakes, bananas, dry fruits, honey"
+          },
+          "price": null,
+          "calories": 280,
+          "orderIndex": 2,
+          "recipeDetails": {
+            "ingredients": [
+              {
+                "name": "Oats",
+                "quantity": null,
+                "unit": null
+              },
+              {
+                "name": "choice of milk",
+                "quantity": null,
+                "unit": null
+              },
+              {
+                "name": "almond flakes",
+                "quantity": null,
+                "unit": null
+              },
+              {
+                "name": "bananas",
+                "quantity": null,
+                "unit": null
+              },
+              {
+                "name": "dry fruits",
+                "quantity": null,
+                "unit": null
+              },
+              {
+                "name": "honey",
+                "quantity": null,
+                "unit": null
+              }
+            ],
+            "instructions": null,
+            "servings": null,
+            "difficultyLevel": null
+          }
+        },
+        {
+          "name": {
+            "ENG": "BELGIAN WAFFLES"
+          },
+          "description": {
+            "ENG": "Mango, palm sugar, crème fraiche"
+          },
+          "price": null,
+          "calories": 380,
+          "orderIndex": 3,
+          "recipeDetails": {
+            "ingredients": [
+              {
+                "name": "Mango",
+                "quantity": null,
+                "unit": null
+              },
+              {
+                "name": "palm sugar",
+                "quantity": null,
+                "unit": null
+              },
+              {
+                "name": "crème fraiche",
+                "quantity": null,
+                "unit": null
+              }
+            ],
+            "instructions": null,
+            "servings": null,
+            "difficultyLevel": null
+          }
+        },
+        {
+          "name": {
+            "ENG": "CRÊPES"
+          },
+          "description": {
+            "ENG": "Crêpes, nutella, cinnamon sugar, honey, or peanut butter"
+          },
+          "price": null,
+          "calories": 350,
+          "orderIndex": 4,
+          "recipeDetails": {
+            "ingredients": [
+              {
+                "name": "Crêpes",
+                "quantity": null,
+                "unit": null
+              },
+              {
+                "name": "nutella",
+                "quantity": null,
+                "unit": null
+              },
+              {
+                "name": "cinnamon sugar",
+                "quantity": null,
+                "unit": null
+              },
+              {
+                "name": "honey",
+                "quantity": null,
+                "unit": null
+              },
+              {
+                "name": "or peanut butter",
+                "quantity": null,
+                "unit": null
+              }
+            ],
+            "instructions": null,
+            "servings": null,
+            "difficultyLevel": null
+          }
+        }
+      ]
+    },
+    {
+      "title": {
+        "ENG": "Beverages"
+      },
+      "orderIndex": 4,
+      "items": [
+        {
+          "name": {
+            "ENG": "GREEN JUICE"
+          },
+          "description": {
+            "ENG": "Celery, cucumber, baby spinach, green apple, lemon"
+          },
+          "price": null,
+          "calories": 60,
+          "orderIndex": 0,
+          "recipeDetails": {
+            "ingredients": [
+              {
+                "name": "Celery",
+                "quantity": null,
+                "unit": null
+              },
+              {
+                "name": "cucumber",
+                "quantity": null,
+                "unit": null
+              },
+              {
+                "name": "baby spinach",
+                "quantity": null,
+                "unit": null
+              },
+              {
+                "name": "green apple",
+                "quantity": null,
+                "unit": null
+              },
+              {
+                "name": "lemon",
+                "quantity": null,
+                "unit": null
+              }
+            ],
+            "instructions": null,
+            "servings": null,
+            "difficultyLevel": null
+          }
+        },
+        {
+          "name": {
+            "ENG": "ABC JUICE"
+          },
+          "description": {
+            "ENG": "Apple, beetroot, carrot"
+          },
+          "price": null,
+          "calories": 80,
+          "orderIndex": 1,
+          "recipeDetails": {
+            "ingredients": [
+              {
+                "name": "Apple",
+                "quantity": null,
+                "unit": null
+              },
+              {
+                "name": "beetroot",
+                "quantity": null,
+                "unit": null
+              },
+              {
+                "name": "carrot",
+                "quantity": null,
+                "unit": null
+              }
+            ],
+            "instructions": null,
+            "servings": null,
+            "difficultyLevel": null
+          }
+        },
+        {
+          "name": {
+            "ENG": "BERRIES SMOOTHIE"
+          },
+          "description": {
+            "ENG": "Raspberry, blackberry, strawberry, yoghurt"
+          },
+          "price": null,
+          "calories": 180,
+          "orderIndex": 2,
+          "recipeDetails": {
+            "ingredients": [
+              {
+                "name": "Raspberry",
+                "quantity": null,
+                "unit": null
+              },
+              {
+                "name": "blackberry",
+                "quantity": null,
+                "unit": null
+              },
+              {
+                "name": "strawberry",
+                "quantity": null,
+                "unit": null
+              },
+              {
+                "name": "yoghurt",
+                "quantity": null,
+                "unit": null
+              }
+            ],
+            "instructions": null,
+            "servings": null,
+            "difficultyLevel": null
+          }
+        }
+      ]
+    }
+  ]
+}

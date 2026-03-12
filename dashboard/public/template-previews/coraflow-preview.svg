@@ -1,0 +1,60 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300" width="400" height="300">
+  <defs>
+    <filter id="blur1" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur in="SourceGraphic" stdDeviation="30"/>
+    </filter>
+    <linearGradient id="tealGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#04BFAE;stop-opacity:1"/>
+      <stop offset="100%" style="stop-color:#06d6a0;stop-opacity:1"/>
+    </linearGradient>
+    <linearGradient id="orangeGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#F3955F;stop-opacity:1"/>
+      <stop offset="100%" style="stop-color:#f7b267;stop-opacity:1"/>
+    </linearGradient>
+    <linearGradient id="pinkGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#F1A0C0;stop-opacity:1"/>
+      <stop offset="100%" style="stop-color:#f8c8dc;stop-opacity:1"/>
+    </linearGradient>
+  </defs>
+  <!-- Background -->
+  <rect width="400" height="300" rx="12" fill="#FAFBFD"/>
+  <!-- Ambient orbs -->
+  <circle cx="340" cy="30" r="80" fill="#04BFAE" opacity="0.08" filter="url(#blur1)"/>
+  <circle cx="60" cy="260" r="70" fill="#F1A0C0" opacity="0.08" filter="url(#blur1)"/>
+  <circle cx="200" cy="150" r="60" fill="#A0DBF8" opacity="0.06" filter="url(#blur1)"/>
+  <!-- Header -->
+  <text x="200" y="36" text-anchor="middle" font-family="serif" font-size="18" font-weight="600" fill="#1a1a2e">Menu</text>
+  <text x="200" y="52" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#6b7280">Restaurant Name</text>
+  <!-- Section tabs -->
+  <rect x="30" y="64" width="70" height="22" rx="11" fill="url(#tealGrad)"/>
+  <text x="65" y="79" text-anchor="middle" font-family="sans-serif" font-size="9" fill="white">Starters</text>
+  <rect x="108" y="64" width="60" height="22" rx="11" fill="none" stroke="#e5e7eb" stroke-width="1"/>
+  <text x="138" y="79" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#6b7280">Mains</text>
+  <rect x="176" y="64" width="65" height="22" rx="11" fill="none" stroke="#e5e7eb" stroke-width="1"/>
+  <text x="208" y="79" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#6b7280">Desserts</text>
+  <!-- Section header bar -->
+  <rect x="30" y="96" width="340" height="28" rx="10" fill="url(#tealGrad)"/>
+  <text x="46" y="114" font-family="serif" font-size="13" font-weight="600" fill="white">Starters</text>
+  <!-- Card row 1 -->
+  <g>
+    <rect x="30" y="134" width="160" height="120" rx="14" fill="white" stroke="#f0f0f0" stroke-width="0.5"/>
+    <rect x="30" y="134" width="160" height="4" rx="2" fill="#04BFAE"/>
+    <rect x="30" y="138" width="160" height="52" rx="0" fill="#e8ecef"/>
+    <text x="46" y="206" font-family="sans-serif" font-size="11" font-weight="600" fill="#1a1a2e">Bruschetta</text>
+    <text x="46" y="220" font-family="sans-serif" font-size="9" fill="#6b7280">Tomato &amp; basil</text>
+    <text x="46" y="244" font-family="sans-serif" font-size="12" font-weight="700" fill="#04BFAE">$12.00</text>
+  </g>
+  <g>
+    <rect x="210" y="134" width="160" height="120" rx="14" fill="white" stroke="#f0f0f0" stroke-width="0.5"/>
+    <rect x="210" y="134" width="160" height="4" rx="2" fill="#F3955F"/>
+    <rect x="210" y="138" width="160" height="52" rx="0" fill="#e8ecef"/>
+    <text x="226" y="206" font-family="sans-serif" font-size="11" font-weight="600" fill="#1a1a2e">Soup of the Day</text>
+    <text x="226" y="220" font-family="sans-serif" font-size="9" fill="#6b7280">Chef's selection</text>
+    <text x="226" y="244" font-family="sans-serif" font-size="12" font-weight="700" fill="#04BFAE">$9.50</text>
+  </g>
+  <!-- Footer dots -->
+  <circle cx="178" cy="278" r="4" fill="#F3955F"/>
+  <circle cx="192" cy="278" r="4" fill="#F1A0C0"/>
+  <circle cx="206" cy="278" r="4" fill="#04BFAE"/>
+  <circle cx="220" cy="278" r="4" fill="#A0DBF8"/>
+</svg>
