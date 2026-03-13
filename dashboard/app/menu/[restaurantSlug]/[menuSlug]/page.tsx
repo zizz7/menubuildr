@@ -6,7 +6,9 @@ import { useParams } from 'next/navigation';
 export default function PublicMenuPage() {
   const params = useParams();
   const restaurantSlug = params.restaurantSlug as string;
-  const menuSlug = params.menuSlug as string;
+  const rawMenuSlug = params.menuSlug as string;
+  // Strip .html extension if present to avoid double .html.html
+  const menuSlug = rawMenuSlug.endsWith('.html') ? rawMenuSlug.slice(0, -5) : rawMenuSlug;
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
