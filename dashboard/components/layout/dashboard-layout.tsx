@@ -148,7 +148,7 @@ export function DashboardLayout({ children }: { children: ReactNode }) {
       </div>
 
       {/* Scrollable Navigation */}
-      <nav className="flex-1 overflow-y-auto px-3 py-4 space-y-6">
+      <nav className="flex-1 overflow-y-auto overflow-x-hidden px-3 py-4 space-y-6">
         {navGroups.map((group) => (
           <div key={group.label} className="space-y-1">
             <p className={cn(
@@ -198,7 +198,7 @@ export function DashboardLayout({ children }: { children: ReactNode }) {
       </nav>
 
       {/* Footer */}
-      <div className="shrink-0 p-4 border-t border-gray-800/50">
+      <div className="shrink-0 p-4 border-t border-gray-800/50 overflow-hidden">
         <button
           onClick={handleLogout}
           className={cn(
@@ -227,20 +227,23 @@ export function DashboardLayout({ children }: { children: ReactNode }) {
   return (
     <div className="flex h-screen overflow-hidden bg-gray-50">
       {/* Desktop Sidebar — always visible on lg+ */}
-      <aside className={cn(
-        'hidden lg:flex bg-gray-900 text-white flex-col shrink-0 transition-all duration-200 relative',
+      {/* Desktop Sidebar wrapper — relative so toggle button can overflow */}
+      <div className={cn(
+        'hidden lg:flex shrink-0 relative transition-all duration-200',
         collapsed ? 'w-[68px]' : 'w-[260px]'
       )}>
-        {renderSidebar(collapsed)}
-        {/* Toggle Button */}
+        <aside className="w-full bg-gray-900 text-white flex flex-col overflow-hidden">
+          {renderSidebar(collapsed)}
+        </aside>
+        {/* Toggle Button — vertically centered on the right edge */}
         <button
           onClick={toggle}
           aria-label={collapsed ? 'Expand sidebar' : 'Collapse sidebar'}
-          className="hidden lg:flex absolute top-5 right-0 translate-x-1/2 w-6 h-6 items-center justify-center rounded-full bg-gray-800 border border-gray-700 text-gray-400 hover:text-white hover:bg-gray-700 transition-colors z-10"
+          className="absolute top-1/2 -translate-y-1/2 -right-3 w-6 h-6 flex items-center justify-center rounded-full bg-gray-800 border border-gray-700 text-gray-400 hover:text-white hover:bg-gray-700 transition-colors z-10"
         >
           {collapsed ? <ChevronsRight className="h-3.5 w-3.5" /> : <ChevronsLeft className="h-3.5 w-3.5" />}
         </button>
-      </aside>
+      </div>
 
       {/* Mobile Drawer Overlay */}
       <div
