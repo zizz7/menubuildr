@@ -13,32 +13,33 @@ async function main() {
   const deployId = '0deeb0de'; // Latest failed dashboard deploy
   
   // Get full deployment ID first
+  const serverServiceId = 'c86c866e-c968-4f24-9e34-c5cbf52db095';
   const dashServiceId = 'd04dcdd9-2e78-427f-b93c-4aee1662c3d7';
   const envId = '7a481a98-7346-431c-b9a0-5db1de9b9790';
   
-  const result = await query(`query($serviceId: String!, $envId: String!) { 
+  // Check server build logs for latest failed deploy
+  const sResult = await query(`query($serviceId: String!, $envId: String!) { 
     deployments(input: { serviceId: $serviceId, environmentId: $envId }, first: 1) { 
       edges { node { id status } } 
     } 
-  }`, { serviceId: dashServiceId, envId });
+  }`, { serviceId: serverServiceId, envId });
   
-  const fullId = result.data?.deployments?.edges?.[0]?.node?.id;
-  console.log('Full deploy ID:', fullId);
+  const sId = sResult.data?.deployments?.edges?.[0]?.node?.id;
+  console.log('Server deploy:', sId, sResult.data?.deployments?.edges?.[0]?.node?.status);
   
-  // Get build logs
-  const logs = await query(`query($deploymentId: String!) {
-    buildLogs(deploymentId: $deploymentId, limit: 100) {
-      message
-      timestamp
+  if (sResult.data?.deployments?.edges?.[0]?.node?.status === 'FAILED') {
+    const logs = await query(`query($deploymentId: String!) {
+      buildLogs(deploymentId: $deploymentId, limit: 50) {
+        message
+      }
+    }`, { deploymentId: sId });
+    
+    if (logs.data?.buildLogs) {
+      console.log('\n=== Server Build Logs (last 50) ===');
+      for (const log of logs.data.buildLogs) {
+        console.log(log.message);
+      }
     }
-  }`, { deploymentId: fullId });
-  
-  if (logs.data?.buildLogs) {
-    for (const log of logs.data.buildLogs) {
-      console.log(log.message);
-    }
-  } else {
-    console.log('No build logs found:', JSON.stringify(logs));
   }
 }
 main().catch(console.error);
