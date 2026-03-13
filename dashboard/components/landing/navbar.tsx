@@ -2,7 +2,6 @@ import Link from 'next/link';
 import { UtensilsCrossed } from 'lucide-react';
 import { SmoothScrollLink } from './smooth-scroll-link';
 import { MobileNavToggle } from './mobile-nav-toggle';
-import { APP_URL } from '@/lib/constants/landing';
 
 const NAV_LINKS = [
   { label: 'Features', href: '#features' },
@@ -34,18 +33,18 @@ export function Navbar() {
 
         {/* Desktop auth buttons */}
         <div className="hidden md:flex items-center gap-4">
-          <a
-            href={`${APP_URL}/login`}
+          <Link
+            href="/login"
             className="text-sm font-medium text-gray-600 hover:text-gray-900 transition-colors"
           >
             Log in
-          </a>
-          <a
-            href={`${APP_URL}/register`}
+          </Link>
+          <Link
+            href="/register"
             className="inline-flex h-10 items-center justify-center rounded-md bg-primary px-6 text-sm font-medium text-primary-foreground hover:bg-primary/90 transition-colors"
           >
             Get Started
-          </a>
+          </Link>
         </div>
 
         {/* Mobile hamburger */}

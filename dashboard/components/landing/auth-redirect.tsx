@@ -1,17 +1,18 @@
 'use client';
 
 import { useEffect } from 'react';
+import { useRouter } from 'next/navigation';
 import { useAuthStore } from '@/lib/store/auth-store';
-import { APP_URL } from '@/lib/constants/landing';
 
 export function AuthRedirect() {
   const { isAuthenticated } = useAuthStore();
+  const router = useRouter();
 
   useEffect(() => {
     if (isAuthenticated()) {
-      window.location.href = `${APP_URL}/dashboard`;
+      router.push('/dashboard');
     }
-  }, [isAuthenticated]);
+  }, [isAuthenticated, router]);
 
   return null;
 }

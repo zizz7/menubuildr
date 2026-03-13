@@ -48,6 +48,9 @@ app.use(express.urlencoded({ extended: true, limit: '10mb' }));
 // Static files for uploads
 app.use('/uploads', express.static(path.join(__dirname, '../uploads')));
 
+// Static files for generated menu HTML
+app.use('/menus', express.static(path.join(__dirname, '../menus')));
+
 // Health check (before auth-protected routes)
 app.get('/api/health', (_req, res) => {
   res.json({ status: 'ok', timestamp: new Date().toISOString() });

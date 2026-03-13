@@ -222,8 +222,8 @@ export async function generateMenuHTML(menuId: string): Promise<string> {
   // Sync uploads to public directory
   syncUploadsToPublic();
 
-  // Ensure directory exists
-  const outputDir = path.join(process.cwd(), '../dashboard/public/menus', menuData.restaurant.slug);
+  // Write to server-local menus directory (served via Express static route)
+  const outputDir = path.join(process.cwd(), 'menus', menuData.restaurant.slug);
   if (!fs.existsSync(outputDir)) {
     fs.mkdirSync(outputDir, { recursive: true });
   }

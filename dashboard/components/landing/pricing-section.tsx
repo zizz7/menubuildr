@@ -1,5 +1,6 @@
+import Link from 'next/link';
 import { Check } from 'lucide-react';
-import { PRICING_PLANS, APP_URL } from '@/lib/constants/landing';
+import { PRICING_PLANS } from '@/lib/constants/landing';
 import { cn } from '@/lib/utils';
 
 export function PricingSection() {
@@ -57,8 +58,8 @@ export function PricingSection() {
                   </li>
                 ))}
               </ul>
-              <a
-                href={`${APP_URL}${plan.ctaHref}`}
+              <Link
+                href={plan.ctaHref}
                 className={cn(
                   'mt-8 inline-flex h-12 items-center justify-center rounded-md px-6 text-sm font-medium transition-colors',
                   plan.recommended
@@ -67,7 +68,7 @@ export function PricingSection() {
                 )}
               >
                 {plan.ctaLabel}
-              </a>
+              </Link>
             </article>
           ))}
         </div>
