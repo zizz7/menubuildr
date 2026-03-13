@@ -1,114 +1,164 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { useRouter } from 'next/navigation';
 import { useAuthStore } from '@/lib/store/auth-store';
+import apiClient from '@/lib/api/client';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { toast } from 'sonner';
-import { Save, User, Lock, Bell, Database, Globe } from 'lucide-react';
-
-// Separator component - simple implementation
-const Separator = () => <div className="h-px bg-gray-200" />;
+import { Save, User, Lock, Camera, Database } from 'lucide-react';
 
 export default function SettingsPage() {
   const router = useRouter();
-  const { isAuthenticated, admin } = useAuthStore();
-  const [loading, setLoading] = useState(false);
-  const [settings, setSettings] = useState({
-    name: '',
-    email: '',
-    currentPassword: '',
-    newPassword: '',
-    confirmPassword: '',
-    notifications: true,
-    language: 'en',
-  });
+  const { isAuthenticated, admin, updateAdmin } = useAuthStore();
+  const fileInputRef = useRef<HTMLInputElement>(null);
+  const [profileLoading, setProfileLoading] = useState(false);
+  const [passwordLoading, setPasswordLoading] = useState(false);
+  const [imageLoading, setImageLoading] = useState(false);
+
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [currentPassword, setCurrentPassword] = useState('');
+  const [newPassword, setNewPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
 
   useEffect(() => {
     if (!isAuthenticated()) {
       router.push('/login');
       return;
     }
-
-    // Load admin user data
     if (admin) {
-      setSettings((prev) => ({
-        ...prev,
-        name: admin.name || '',
-        email: admin.email || '',
-      }));
+      setName(admin.name || '');
+      setEmail(admin.email || '');
     }
   }, [admin, isAuthenticated, router]);
 
   const handleProfileUpdate = async (e: React.FormEvent) => {
     e.preventDefault();
-    setLoading(true);
+    if (!name.trim()) { toast.error('Name is required'); return; }
+    setProfileLoading(true);
     try {
-      // TODO: Implement profile update API
-      toast.success('Profile updated successfully');
+      const res = await apiClient.put('/auth/profile', { name: name.trim() });
+      updateAdmin({ name: res.data.name, profileImageUrl: res.data.profileImageUrl });
+      toast.success('Profile updated');
     } catch (error: any) {
       toast.error(error.response?.data?.error || 'Failed to update profile');
     } finally {
-      setLoading(false);
+      setProfileLoading(false);
     }
   };
 
   const handlePasswordChange = async (e: React.FormEvent) => {
     e.preventDefault();
-    
-    if (settings.newPassword !== settings.confirmPassword) {
-      toast.error('New passwords do not match');
-      return;
-    }
-
-    if (settings.newPassword.length < 6) {
-      toast.error('Password must be at least 6 characters long');
-      return;
-    }
-
-    setLoading(true);
+    if (newPassword !== confirmPassword) { toast.error('Passwords do not match'); return; }
+    if (newPassword.length < 8) { toast.error('Password must be at least 8 characters'); return; }
+    setPasswordLoading(true);
     try {
-      // TODO: Implement password change API
+      await apiClient.put('/auth/password', { currentPassword, newPassword });
       toast.success('Password changed successfully');
-      setSettings((prev) => ({
-        ...prev,
-        currentPassword: '',
-        newPassword: '',
-        confirmPassword: '',
-      }));
+      setCurrentPassword('');
+      setNewPassword('');
+      setConfirmPassword('');
     } catch (error: any) {
       toast.error(error.response?.data?.error || 'Failed to change password');
     } finally {
-      setLoading(false);
+      setPasswordLoading(false);
     }
   };
 
-  const handleNotificationToggle = (enabled: boolean) => {
-    setSettings((prev) => ({ ...prev, notifications: enabled }));
-    toast.success(`Notifications ${enabled ? 'enabled' : 'disabled'}`);
+  const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    if (file.size > 5 * 1024 * 1024) { toast.error('Image must be under 5MB'); return; }
+    setImageLoading(true);
+    try {
+      const formData = new FormData();
+      formData.append('profileImage', file);
+      const res = await apiClient.post('/auth/profile-image', formData, {
+        headers: { 'Content-Type': 'multipart/form-data' },
+      });
+      updateAdmin({ profileImageUrl: res.data.profileImageUrl });
+      toast.success('Profile image updated');
+    } catch (error: any) {
+      toast.error(error.response?.data?.error || 'Failed to upload image');
+    } finally {
+      setImageLoading(false);
+      if (fileInputRef.current) fileInputRef.current.value = '';
+    }
   };
 
-  if (!isAuthenticated()) {
-    return null;
-  }
+  if (!isAuthenticated()) return null;
+
+  const imageUrl = admin?.profileImageUrl
+    ? (admin.profileImageUrl.startsWith('http') ? admin.profileImageUrl : `${process.env.NEXT_PUBLIC_API_URL?.replace('/api', '') || ''}${admin.profileImageUrl}`)
+    : null;
 
   return (
-    <div className="p-8">
+    <div className="p-6 lg:p-8 max-w-3xl">
       <div className="mb-8">
-        <h1 className="text-3xl font-bold">Settings</h1>
-        <p className="text-gray-600 mt-2">Manage your account settings and preferences</p>
+        <h1 className="text-2xl font-bold">Settings</h1>
+        <p className="text-gray-500 mt-1 text-sm">Manage your account settings</p>
       </div>
 
       <div className="space-y-6">
+        {/* Profile Image */}
+        <Card>
+          <CardHeader>
+            <div className="flex items-center gap-2">
+              <Camera className="h-5 w-5 text-gray-500" />
+              <CardTitle className="text-base">Profile Image</CardTitle>
+            </div>
+            <CardDescription>Upload a logo or profile picture</CardDescription>
+          </CardHeader>
+          <CardContent>
+            <div className="flex items-center gap-6">
+              <div className="relative group">
+                <div className="w-20 h-20 rounded-full bg-gray-100 border-2 border-gray-200 flex items-center justify-center overflow-hidden">
+                  {imageUrl ? (
+                    <img src={imageUrl} alt="Profile" className="w-full h-full object-cover" />
+                  ) : (
+                    <User className="h-8 w-8 text-gray-400" />
+                  )}
+                </div>
+                <button
+                  onClick={() => fileInputRef.current?.click()}
+                  disabled={imageLoading}
+                  className="absolute inset-0 rounded-full bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center"
+                >
+                  <Camera className="h-5 w-5 text-white" />
+                </button>
+              </div>
+              <div>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={() => fileInputRef.current?.click()}
+                  disabled={imageLoading}
+                >
+                  {imageLoading ? 'Uploading...' : 'Change Image'}
+                </Button>
+                <p className="text-xs text-gray-500 mt-1">JPG, PNG, WebP or SVG. Max 5MB.</p>
+              </div>
+              <input
+                ref={fileInputRef}
+                type="file"
+                accept="image/jpeg,image/png,image/webp,image/svg+xml"
+                onChange={handleImageUpload}
+                className="hidden"
+              />
+            </div>
+          </CardContent>
+        </Card>
+
         {/* Profile Settings */}
         <Card>
           <CardHeader>
             <div className="flex items-center gap-2">
-              <User className="h-5 w-5" />
-              <CardTitle>Profile Settings</CardTitle>
+              <User className="h-5 w-5 text-gray-500" />
+              <CardTitle className="text-base">Profile</CardTitle>
             </div>
             <CardDescription>Update your personal information</CardDescription>
           </CardHeader>
@@ -116,164 +166,71 @@ export default function SettingsPage() {
             <form onSubmit={handleProfileUpdate} className="space-y-4">
               <div className="space-y-2">
                 <Label htmlFor="name">Full Name</Label>
-                <Input
-                  id="name"
-                  value={settings.name}
-                  onChange={(e) => setSettings({ ...settings, name: e.target.value })}
-                  placeholder="Enter your full name"
-                />
+                <Input id="name" value={name} onChange={(e) => setName(e.target.value)} placeholder="Your name" />
               </div>
               <div className="space-y-2">
                 <Label htmlFor="email">Email Address</Label>
-                <Input
-                  id="email"
-                  type="email"
-                  value={settings.email}
-                  onChange={(e) => setSettings({ ...settings, email: e.target.value })}
-                  placeholder="Enter your email"
-                  disabled
-                />
-                <p className="text-xs text-gray-500">Email cannot be changed</p>
+                <Input id="email" type="email" value={email} disabled className="bg-gray-50" />
+                <p className="text-xs text-gray-400">Email cannot be changed</p>
               </div>
-              <Button type="submit" disabled={loading}>
+              <Button type="submit" disabled={profileLoading} size="sm">
                 <Save className="h-4 w-4 mr-2" />
-                Save Changes
+                {profileLoading ? 'Saving...' : 'Save Changes'}
               </Button>
             </form>
           </CardContent>
         </Card>
 
-        {/* Password Settings */}
+        {/* Password */}
         <Card>
           <CardHeader>
             <div className="flex items-center gap-2">
-              <Lock className="h-5 w-5" />
-              <CardTitle>Change Password</CardTitle>
+              <Lock className="h-5 w-5 text-gray-500" />
+              <CardTitle className="text-base">Change Password</CardTitle>
             </div>
-            <CardDescription>Update your password to keep your account secure</CardDescription>
+            <CardDescription>Keep your account secure</CardDescription>
           </CardHeader>
           <CardContent>
             <form onSubmit={handlePasswordChange} className="space-y-4">
               <div className="space-y-2">
                 <Label htmlFor="currentPassword">Current Password</Label>
-                <Input
-                  id="currentPassword"
-                  type="password"
-                  value={settings.currentPassword}
-                  onChange={(e) => setSettings({ ...settings, currentPassword: e.target.value })}
-                  placeholder="Enter current password"
-                />
+                <Input id="currentPassword" type="password" autoComplete="current-password" value={currentPassword} onChange={(e) => setCurrentPassword(e.target.value)} placeholder="Enter current password" />
               </div>
               <div className="space-y-2">
                 <Label htmlFor="newPassword">New Password</Label>
-                <Input
-                  id="newPassword"
-                  type="password"
-                  value={settings.newPassword}
-                  onChange={(e) => setSettings({ ...settings, newPassword: e.target.value })}
-                  placeholder="Enter new password"
-                />
+                <Input id="newPassword" type="password" autoComplete="new-password" value={newPassword} onChange={(e) => setNewPassword(e.target.value)} placeholder="Min 8 characters" />
               </div>
               <div className="space-y-2">
                 <Label htmlFor="confirmPassword">Confirm New Password</Label>
-                <Input
-                  id="confirmPassword"
-                  type="password"
-                  value={settings.confirmPassword}
-                  onChange={(e) => setSettings({ ...settings, confirmPassword: e.target.value })}
-                  placeholder="Confirm new password"
-                />
+                <Input id="confirmPassword" type="password" autoComplete="new-password" value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} placeholder="Confirm new password" />
               </div>
-              <Button type="submit" disabled={loading}>
+              <Button type="submit" disabled={passwordLoading} size="sm">
                 <Lock className="h-4 w-4 mr-2" />
-                Change Password
+                {passwordLoading ? 'Changing...' : 'Change Password'}
               </Button>
             </form>
           </CardContent>
         </Card>
 
-        {/* Notification Settings */}
+        {/* System Info */}
         <Card>
           <CardHeader>
             <div className="flex items-center gap-2">
-              <Bell className="h-5 w-5" />
-              <CardTitle>Notifications</CardTitle>
+              <Database className="h-5 w-5 text-gray-500" />
+              <CardTitle className="text-base">System</CardTitle>
             </div>
-            <CardDescription>Manage your notification preferences</CardDescription>
           </CardHeader>
           <CardContent>
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="font-medium">Email Notifications</p>
-                <p className="text-sm text-gray-500">Receive email updates about your menus</p>
-              </div>
-              <Button
-                type="button"
-                variant={settings.notifications ? 'default' : 'outline'}
-                onClick={() => handleNotificationToggle(!settings.notifications)}
-              >
-                {settings.notifications ? 'Enabled' : 'Disabled'}
-              </Button>
-            </div>
-          </CardContent>
-        </Card>
-
-        {/* System Information */}
-        <Card>
-          <CardHeader>
-            <div className="flex items-center gap-2">
-              <Database className="h-5 w-5" />
-              <CardTitle>System Information</CardTitle>
-            </div>
-            <CardDescription>Application and system details</CardDescription>
-          </CardHeader>
-          <CardContent>
-            <div className="space-y-3">
+            <div className="space-y-3 text-sm">
               <div className="flex justify-between">
-                <span className="text-gray-600">Application Version</span>
+                <span className="text-gray-500">Version</span>
                 <span className="font-medium">1.0.0</span>
               </div>
-              <Separator />
+              <div className="h-px bg-gray-100" />
               <div className="flex justify-between">
-                <span className="text-gray-600">API Endpoint</span>
-                <span className="font-medium text-sm">{process.env.NEXT_PUBLIC_API_URL || 'Not configured'}</span>
+                <span className="text-gray-500">API</span>
+                <span className="font-medium text-xs">{process.env.NEXT_PUBLIC_API_URL || 'Not configured'}</span>
               </div>
-              <Separator />
-              <div className="flex justify-between">
-                <span className="text-gray-600">Environment</span>
-                <span className="font-medium">{process.env.NODE_ENV || 'development'}</span>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
-
-        {/* Language Settings */}
-        <Card>
-          <CardHeader>
-            <div className="flex items-center gap-2">
-              <Globe className="h-5 w-5" />
-              <CardTitle>Language Preferences</CardTitle>
-            </div>
-            <CardDescription>Choose your preferred interface language</CardDescription>
-          </CardHeader>
-          <CardContent>
-            <div className="space-y-2">
-              <Label htmlFor="language">Interface Language</Label>
-              <select
-                id="language"
-                value={settings.language}
-                onChange={(e) => setSettings({ ...settings, language: e.target.value })}
-                className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
-              >
-                <option value="en">English</option>
-                <option value="es">Spanish</option>
-                <option value="fr">French</option>
-                <option value="de">German</option>
-                <option value="zh">Chinese</option>
-                <option value="ja">Japanese</option>
-                <option value="ru">Russian</option>
-              </select>
-              <p className="text-xs text-gray-500">This affects the dashboard interface language only</p>
             </div>
           </CardContent>
         </Card>
@@ -281,4 +238,3 @@ export default function SettingsPage() {
     </div>
   );
 }
-

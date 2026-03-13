@@ -5,12 +5,14 @@ interface Admin {
   id: string;
   email: string;
   name: string;
+  profileImageUrl?: string | null;
 }
 
 interface AuthState {
   admin: Admin | null;
   token: string | null;
   setAuth: (admin: Admin, token: string) => void;
+  updateAdmin: (data: Partial<Admin>) => void;
   logout: () => void;
   isAuthenticated: () => boolean;
 }
@@ -23,6 +25,10 @@ export const useAuthStore = create<AuthState>()(
       setAuth: (admin, token) => {
         set({ admin, token });
         localStorage.setItem('auth_token', token);
+      },
+      updateAdmin: (data) => {
+        const current = get().admin;
+        if (current) set({ admin: { ...current, ...data } });
       },
       logout: () => {
         set({ admin: null, token: null });
