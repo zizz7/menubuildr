@@ -9,6 +9,7 @@ node_modules/
 # Build outputs
 server/dist/
 dashboard/.next/
+landing/.next/
 
 # Database dumps
 *.dump
