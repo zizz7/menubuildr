@@ -56,6 +56,32 @@ app.get('/api/health', (_req, res) => {
   res.json({ status: 'ok', timestamp: new Date().toISOString() });
 });
 
+// Regenerate all published menu HTML files (admin utility)
+app.post('/api/regenerate-menus', async (_req, res) => {
+  try {
+    const prismaModule = await import('./config/database');
+    const db = prismaModule.default;
+    const publishedMenus = await db.menu.findMany({
+      where: { status: 'published' },
+      select: { id: true, slug: true },
+    });
+
+    const { generateMenuHTML } = await import('./services/menu-generator');
+    const results: Array<{ id: string; slug: string; status: string }> = [];
+    for (const menu of publishedMenus) {
+      try {
+        await generateMenuHTML(menu.id);
+        results.push({ id: menu.id, slug: menu.slug, status: 'ok' });
+      } catch (e: any) {
+        results.push({ id: menu.id, slug: menu.slug, status: `error: ${e.message}` });
+      }
+    }
+    res.json({ regenerated: results.length, results });
+  } catch (error: any) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
 // Routes
 import authRoutes from './routes/auth';
 import restaurantRoutes from './routes/restaurants';
