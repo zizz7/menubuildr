@@ -1,5 +1,6 @@
 export const APP_URL = 'https://app.menubuildr.com';
 export const BASE_URL = 'https://menubuildr.com';
+// Landing page constants
 
 export interface Feature {
   icon: string;
