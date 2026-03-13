@@ -19,8 +19,9 @@ const isProduction = process.env.NODE_ENV === 'production';
 const allowedOrigins = isProduction
   ? [
       process.env.FRONTEND_URL,
+      `https://app.menubuildr.com`,
       `https://www.menubuildr.com`,
-      `https://api.menubuildr.com`,
+      `https://menubuildr.com`,
     ].filter(Boolean) as string[]
   : [
       process.env.FRONTEND_URL || 'http://localhost:3000',
