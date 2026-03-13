@@ -10,6 +10,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { toast } from 'sonner';
 import { Save, User, Lock, Camera, Database } from 'lucide-react';
+import { resolveAssetUrl } from '@/lib/utils';
 
 export default function SettingsPage() {
   const router = useRouter();
@@ -93,7 +94,7 @@ export default function SettingsPage() {
   if (!isAuthenticated()) return null;
 
   const imageUrl = admin?.profileImageUrl
-    ? (admin.profileImageUrl.startsWith('http') ? admin.profileImageUrl : `${process.env.NEXT_PUBLIC_API_URL?.replace('/api', '') || ''}${admin.profileImageUrl}`)
+    ? resolveAssetUrl(admin.profileImageUrl)
     : null;
 
   return (

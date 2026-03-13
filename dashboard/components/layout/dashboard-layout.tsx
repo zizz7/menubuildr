@@ -5,6 +5,9 @@ import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 import { useAuthStore } from '@/lib/store/auth-store';
 import { useRestaurantStore } from '@/lib/store/restaurant-store';
+import { useSidebarStore } from '@/lib/store/sidebar-store';
+import apiClient from '@/lib/api/client';
+import { resolveAssetUrl } from '@/lib/utils';
 import {
   LayoutDashboard,
   Store,
@@ -22,6 +25,8 @@ import {
   X,
   User,
   Bell,
+  ChevronsLeft,
+  ChevronsRight,
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
@@ -71,8 +76,22 @@ export function DashboardLayout({ children }: { children: ReactNode }) {
   const [isDesktop, setIsDesktop] = useState(false);
   const pathname = usePathname();
   const router = useRouter();
-  const { admin, logout } = useAuthStore();
+  const { admin, logout, updateAdmin } = useAuthStore();
   const { selectedRestaurant } = useRestaurantStore();
+  const { collapsed, toggle } = useSidebarStore();
+
+  // Fetch full admin profile on mount
+  useEffect(() => {
+    const fetchProfile = async () => {
+      try {
+        const res = await apiClient.get('/auth/me');
+        updateAdmin(res.data);
+      } catch {
+        // Silently fail — auth interceptor handles 401
+      }
+    };
+    if (admin) fetchProfile();
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
     const check = () => setIsDesktop(window.innerWidth >= 1024);
@@ -102,15 +121,22 @@ export function DashboardLayout({ children }: { children: ReactNode }) {
     return 'Dashboard';
   };
 
-  const sidebar = (
+  const renderSidebar = (isCollapsed: boolean) => (
     <div className="flex flex-col h-full">
       {/* User Profile Header */}
-      <div className="shrink-0 pt-6 pb-6 px-6 border-b border-gray-800/50">
-        <div className="flex items-center gap-3">
-          <div className="w-10 h-10 rounded-full bg-gray-700 flex items-center justify-center text-gray-300 border border-gray-600">
-            <User className="h-5 w-5" />
+      <div className={cn('shrink-0 pt-6 pb-6 border-b border-gray-800/50', isCollapsed ? 'px-3' : 'px-6')}>
+        <div className={cn('flex items-center', isCollapsed ? 'justify-center' : 'gap-3')}>
+          <div className="w-10 h-10 rounded-full bg-gray-700 flex items-center justify-center text-gray-300 border border-gray-600 overflow-hidden shrink-0">
+            {admin?.profileImageUrl ? (
+              <img src={resolveAssetUrl(admin.profileImageUrl)} alt="Profile" className="w-full h-full object-cover" />
+            ) : (
+              <User className="h-5 w-5" />
+            )}
           </div>
-          <div className="flex flex-col min-w-0">
+          <div className={cn(
+            'flex flex-col min-w-0 transition-opacity duration-200',
+            isCollapsed ? 'opacity-0 w-0 overflow-hidden' : 'opacity-100'
+          )}>
             <span className="font-semibold text-white text-sm leading-tight truncate">
               {admin?.name || admin?.email || 'User'}
             </span>
@@ -125,31 +151,46 @@ export function DashboardLayout({ children }: { children: ReactNode }) {
       <nav className="flex-1 overflow-y-auto px-3 py-4 space-y-6">
         {navGroups.map((group) => (
           <div key={group.label} className="space-y-1">
-            <p className="px-3 text-[10px] font-bold text-gray-500 uppercase tracking-widest mb-2">
+            <p className={cn(
+              'px-3 text-[10px] font-bold text-gray-500 uppercase tracking-widest mb-2 transition-opacity duration-200',
+              isCollapsed ? 'opacity-0 h-0 overflow-hidden mb-0' : 'opacity-100'
+            )}>
               {group.label}
             </p>
             {group.items.map((item) => {
               const Icon = item.icon;
               const isActive = pathname === item.href || pathname.startsWith(item.href + '/');
               return (
-                <Link
-                  key={item.href}
-                  href={item.href}
-                  className={cn(
-                    'flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors',
-                    isActive
-                      ? 'bg-white/10 text-white'
-                      : 'text-gray-400 hover:bg-white/5 hover:text-white'
-                  )}
-                >
-                  <Icon className="h-[18px] w-[18px] shrink-0" />
-                  <span>{item.title}</span>
-                  {item.badge && (
-                    <span className="ml-auto bg-white text-gray-900 text-[10px] font-bold px-1.5 py-0.5 rounded-full">
-                      {item.badge}
+                <div key={item.href} className="relative group/navitem">
+                  <Link
+                    href={item.href}
+                    className={cn(
+                      'flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors',
+                      isCollapsed && 'justify-center',
+                      isActive
+                        ? 'bg-white/10 text-white'
+                        : 'text-gray-400 hover:bg-white/5 hover:text-white'
+                    )}
+                  >
+                    <Icon className="h-[18px] w-[18px] shrink-0" />
+                    <span className={cn(
+                      'transition-opacity duration-200',
+                      isCollapsed ? 'opacity-0 w-0 overflow-hidden' : 'opacity-100'
+                    )}>
+                      {item.title}
+                    </span>
+                    {item.badge && !isCollapsed && (
+                      <span className="ml-auto bg-white text-gray-900 text-[10px] font-bold px-1.5 py-0.5 rounded-full">
+                        {item.badge}
+                      </span>
+                    )}
+                  </Link>
+                  {isCollapsed && (
+                    <span className="absolute left-full top-1/2 -translate-y-1/2 ml-2 px-2 py-1 bg-gray-900 text-white text-xs rounded shadow-lg whitespace-nowrap opacity-0 group-hover/navitem:opacity-100 pointer-events-none transition-opacity z-50">
+                      {item.title}
                     </span>
                   )}
-                </Link>
+                </div>
               );
             })}
           </div>
@@ -160,12 +201,25 @@ export function DashboardLayout({ children }: { children: ReactNode }) {
       <div className="shrink-0 p-4 border-t border-gray-800/50">
         <button
           onClick={handleLogout}
-          className="flex items-center gap-3 text-gray-500 hover:text-white transition-colors text-sm font-medium w-full px-3 py-2 rounded-lg hover:bg-white/5"
+          className={cn(
+            'flex items-center gap-3 text-gray-500 hover:text-white transition-colors text-sm font-medium w-full px-3 py-2 rounded-lg hover:bg-white/5',
+            isCollapsed && 'justify-center'
+          )}
         >
-          <LogOut className="h-[18px] w-[18px]" />
-          <span>Log Out</span>
+          <LogOut className="h-[18px] w-[18px] shrink-0" />
+          <span className={cn(
+            'transition-opacity duration-200',
+            isCollapsed ? 'opacity-0 w-0 overflow-hidden' : 'opacity-100'
+          )}>
+            Log Out
+          </span>
         </button>
-        <p className="mt-3 px-3 text-[10px] text-gray-600 font-medium">MenuBuildr v1.0.0</p>
+        <p className={cn(
+          'mt-3 px-3 text-[10px] text-gray-600 font-medium transition-opacity duration-200',
+          isCollapsed ? 'opacity-0 h-0 overflow-hidden mt-0' : 'opacity-100'
+        )}>
+          MenuBuildr v1.0.0
+        </p>
       </div>
     </div>
   );
@@ -173,8 +227,19 @@ export function DashboardLayout({ children }: { children: ReactNode }) {
   return (
     <div className="flex h-screen overflow-hidden bg-gray-50">
       {/* Desktop Sidebar — always visible on lg+ */}
-      <aside className="hidden lg:flex w-[260px] bg-gray-900 text-white flex-col shrink-0">
-        {sidebar}
+      <aside className={cn(
+        'hidden lg:flex bg-gray-900 text-white flex-col shrink-0 transition-all duration-200 relative',
+        collapsed ? 'w-[68px]' : 'w-[260px]'
+      )}>
+        {renderSidebar(collapsed)}
+        {/* Toggle Button */}
+        <button
+          onClick={toggle}
+          aria-label={collapsed ? 'Expand sidebar' : 'Collapse sidebar'}
+          className="hidden lg:flex absolute top-5 right-0 translate-x-1/2 w-6 h-6 items-center justify-center rounded-full bg-gray-800 border border-gray-700 text-gray-400 hover:text-white hover:bg-gray-700 transition-colors z-10"
+        >
+          {collapsed ? <ChevronsRight className="h-3.5 w-3.5" /> : <ChevronsLeft className="h-3.5 w-3.5" />}
+        </button>
       </aside>
 
       {/* Mobile Drawer Overlay */}
@@ -207,7 +272,7 @@ export function DashboardLayout({ children }: { children: ReactNode }) {
           >
             <X className="h-4 w-4" />
           </button>
-          {sidebar}
+          {renderSidebar(false)}
         </div>
         {/* Close area (tap outside) */}
         <div className="flex-1" onClick={() => setDrawerOpen(false)} />

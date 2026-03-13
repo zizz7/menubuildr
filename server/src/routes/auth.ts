@@ -45,6 +45,7 @@ router.post('/login', async (req, res) => {
         id: admin.id,
         email: admin.email,
         name: admin.name,
+        profileImageUrl: admin.profileImageUrl,
       },
     });
   } catch (error: any) {
@@ -190,11 +191,6 @@ router.post('/profile-image', authenticateToken, async (req: AuthRequest, res) =
       if (!(req as any).file) return res.status(400).json({ error: 'No file uploaded' });
 
       const imageUrl = `/uploads/profile/${(req as any).file.filename}`;
-
-      // Also copy to dashboard/public for serving
-      const publicDir = path.join(process.cwd(), '../dashboard/public/uploads/profile');
-      if (!fs.existsSync(publicDir)) fs.mkdirSync(publicDir, { recursive: true });
-      fs.copyFileSync((req as any).file.path, path.join(publicDir, (req as any).file.filename));
 
       const admin = await prisma.admin.update({
         where: { id: req.userId },
