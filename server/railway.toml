@@ -1,6 +1,6 @@
 [build]
 builder = "nixpacks"
-buildCommand = "npx prisma generate && npx tsc"
+buildCommand = "npx prisma generate && ./node_modules/.bin/tsc"
 
 [deploy]
 startCommand = "node dist/server.js"
