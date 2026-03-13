@@ -120,5 +120,32 @@ app.listen(Number(PORT), '0.0.0.0', () => {
   // Sync existing uploads to public directory on startup
   console.log('Syncing uploads to public directory...');
   syncUploadsToPublic();
+
+  // Regenerate all published menu HTML files on startup
+  // (menus directory is ephemeral and lost on redeploy)
+  (async () => {
+    try {
+      const prismaModule = await import('./config/database');
+      const db = prismaModule.default;
+      const publishedMenus = await db.menu.findMany({
+        where: { status: 'published' },
+        select: { id: true, slug: true },
+      });
+      if (publishedMenus.length > 0) {
+        console.log(`Regenerating ${publishedMenus.length} published menus...`);
+        const { generateMenuHTML } = await import('./services/menu-generator');
+        for (const menu of publishedMenus) {
+          try {
+            await generateMenuHTML(menu.id);
+          } catch (e: any) {
+            console.error(`Failed to regenerate menu ${menu.slug}:`, e.message);
+          }
+        }
+        console.log('Menu regeneration complete.');
+      }
+    } catch (e: any) {
+      console.error('Error during startup menu regeneration:', e.message);
+    }
+  })();
 });
 
