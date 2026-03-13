@@ -47,6 +47,11 @@ app.use(express.urlencoded({ extended: true, limit: '10mb' }));
 // Static files for uploads
 app.use('/uploads', express.static(path.join(__dirname, '../uploads')));
 
+// Health check (before auth-protected routes)
+app.get('/api/health', (_req, res) => {
+  res.json({ status: 'ok', timestamp: new Date().toISOString() });
+});
+
 // Routes
 import authRoutes from './routes/auth';
 import restaurantRoutes from './routes/restaurants';
@@ -79,11 +84,6 @@ app.use('/api', importExportRoutes);
 app.use('/api/templates', templateRoutes);
 app.use('/api/menu-items', translationRoutes);
 app.use('/api/billing', billingRoutes);
-
-// Health check
-app.get('/api/health', (req, res) => {
-  res.json({ status: 'ok', timestamp: new Date().toISOString() });
-});
 
 app.listen(Number(PORT), '0.0.0.0', () => {
   console.log(`Server running on 0.0.0.0:${PORT}`);
