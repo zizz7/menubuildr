@@ -81,7 +81,7 @@ export default function SettingsPage() {
       const res = await apiClient.post('/auth/profile-image', formData, {
         headers: { 'Content-Type': 'multipart/form-data' },
       });
-      updateAdmin({ profileImageUrl: res.data.profileImageUrl });
+      updateAdmin({ profileImageUrl: `${res.data.profileImageUrl}?t=${Date.now()}` });
       toast.success('Profile image updated');
     } catch (error: any) {
       toast.error(error.response?.data?.error || 'Failed to upload image');
@@ -117,9 +117,9 @@ export default function SettingsPage() {
           <CardContent>
             <div className="flex items-center gap-6">
               <div className="relative group">
-                <div className="w-20 h-20 rounded-full bg-gray-100 border-2 border-gray-200 flex items-center justify-center overflow-hidden">
+                <div className="w-20 h-20 rounded-full bg-gray-100 border-2 border-gray-200 flex items-center justify-center overflow-hidden relative">
                   {imageUrl ? (
-                    <img src={imageUrl} alt="Profile" className="w-full h-full object-cover" />
+                    <img src={imageUrl} alt="" className="absolute inset-0 w-full h-full object-cover" />
                   ) : (
                     <User className="h-8 w-8 text-gray-400" />
                   )}

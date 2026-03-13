@@ -126,9 +126,9 @@ export function DashboardLayout({ children }: { children: ReactNode }) {
       {/* User Profile Header */}
       <div className={cn('shrink-0 pt-6 pb-6 border-b border-gray-800/50', isCollapsed ? 'px-3' : 'px-6')}>
         <div className={cn('flex items-center', isCollapsed ? 'justify-center' : 'gap-3')}>
-          <div className="w-10 h-10 rounded-full bg-gray-700 flex items-center justify-center text-gray-300 border border-gray-600 overflow-hidden shrink-0">
+          <div className="w-10 h-10 rounded-full bg-gray-700 flex items-center justify-center text-gray-300 border border-gray-600 overflow-hidden shrink-0 relative">
             {admin?.profileImageUrl ? (
-              <img src={resolveAssetUrl(admin.profileImageUrl)} alt="Profile" className="w-full h-full object-cover" />
+              <img src={resolveAssetUrl(admin.profileImageUrl)} alt="" className="absolute inset-0 w-full h-full object-cover" />
             ) : (
               <User className="h-5 w-5" />
             )}
