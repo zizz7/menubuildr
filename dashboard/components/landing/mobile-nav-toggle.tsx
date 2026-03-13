@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import { Menu, X } from 'lucide-react';
 import { SmoothScrollLink } from './smooth-scroll-link';
-import Link from 'next/link';
+import { APP_URL } from '@/lib/constants/landing';
 
 const NAV_LINKS = [
   { label: 'Features', href: '#features' },
@@ -39,20 +39,20 @@ export function MobileNavToggle() {
               </SmoothScrollLink>
             ))}
             <hr className="my-2" />
-            <Link
-              href="/login"
+            <a
+              href={`${APP_URL}/login`}
               className="px-4 py-3 text-gray-700 hover:bg-gray-50 rounded-md text-base font-medium"
               onClick={() => setOpen(false)}
             >
               Log in
-            </Link>
-            <Link
-              href="/register"
+            </a>
+            <a
+              href={`${APP_URL}/register`}
               className="px-4 py-3 bg-primary text-primary-foreground rounded-md text-base font-medium text-center"
               onClick={() => setOpen(false)}
             >
               Get Started
-            </Link>
+            </a>
           </nav>
         </div>
       )}

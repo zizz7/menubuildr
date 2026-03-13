@@ -109,4 +109,5 @@ export const TESTIMONIALS: Testimonial[] = [
   },
 ];
 
-export const BASE_URL = 'https://app.menubuildr.com';
+export const BASE_URL = 'https://menubuildr.com';
+export const APP_URL = 'https://app.menubuildr.com';

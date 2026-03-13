@@ -1,5 +1,5 @@
-import Link from 'next/link';
 import { SmoothScrollLink } from './smooth-scroll-link';
+import { APP_URL } from '@/lib/constants/landing';
 
 export function HeroSection() {
   return (
@@ -21,12 +21,12 @@ export function HeroSection() {
             Multi-language, allergen-safe, and ready to share.
           </p>
           <div className="mt-8 flex flex-col sm:flex-row items-center justify-center gap-3">
-            <Link
-              href="/register"
+            <a
+              href={`${APP_URL}/register`}
               className="inline-flex h-11 w-full sm:w-auto items-center justify-center rounded-lg bg-gray-900 px-6 text-sm font-medium text-white hover:bg-gray-800 transition-colors"
             >
               Get Started
-            </Link>
+            </a>
             <SmoothScrollLink
               href="#pricing"
               className="inline-flex h-11 w-full sm:w-auto items-center justify-center rounded-lg border border-gray-200 bg-white px-6 text-sm font-medium text-gray-700 hover:bg-gray-50 transition-colors"
