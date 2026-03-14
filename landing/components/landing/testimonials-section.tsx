@@ -20,7 +20,7 @@ export function TestimonialsSection() {
           {TESTIMONIALS.map((testimonial) => (
             <article 
               key={testimonial.customerName} 
-              className="relative flex flex-col rounded-[2.5rem] border border-input p-10 bg-white/50 backdrop-blur-sm transition-all duration-500 hover:shadow-2xl hover:shadow-black/5"
+              className="relative flex flex-col rounded-lg border border-input p-8 bg-white"
             >
               <div className="absolute top-10 right-10 text-6xl font-serif text-primary/10 select-none">
                 &ldquo;

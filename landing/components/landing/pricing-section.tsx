@@ -23,14 +23,14 @@ export function PricingSection() {
             <article
               key={plan.name}
               className={cn(
-                'relative flex flex-col rounded-[2.5rem] border p-10 transition-all duration-500 hover:scale-[1.02] hover:shadow-2xl hover:shadow-black/5',
+                'relative flex flex-col rounded-lg border p-8 bg-white transition-colors hover:border-border',
                 plan.recommended 
-                  ? 'border-primary bg-white shadow-xl scale-105 z-10' 
-                  : 'border-input/40 bg-white/50 backdrop-blur-sm',
+                  ? 'border-primary border-2 z-10' 
+                  : 'border-input',
               )}
             >
               {plan.recommended && (
-                <div className="absolute -top-5 left-1/2 -translate-x-1/2 bg-primary text-primary-foreground px-6 py-1.5 rounded-full text-[10px] font-black uppercase tracking-widest shadow-xl">
+                <div className="absolute -top-3 left-1/2 -translate-x-1/2 bg-primary text-primary-foreground px-4 py-1 rounded-md text-[10px] font-bold uppercase tracking-widest">
                   Best Value
                 </div>
               )}
@@ -57,10 +57,10 @@ export function PricingSection() {
               <a
                 href={`${APP_URL}${plan.ctaHref}`}
                 className={cn(
-                  'inline-flex h-14 items-center justify-center rounded-2xl px-8 text-sm font-black uppercase tracking-widest transition-all',
+                  'inline-flex h-10 items-center justify-center rounded-md px-8 text-sm font-bold uppercase tracking-widest transition-colors',
                   plan.recommended
-                    ? 'bg-primary text-primary-foreground shadow-lg shadow-primary/20 hover:bg-primary/90'
-                    : 'bg-input/10 text-foreground hover:bg-input/20',
+                    ? 'bg-primary text-primary-foreground hover:bg-primary/90'
+                    : 'bg-muted text-foreground hover:bg-muted/80',
                 )}
               >
                 {plan.ctaLabel}

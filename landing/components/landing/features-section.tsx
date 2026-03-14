@@ -27,9 +27,9 @@ export function FeaturesSection() {
             return (
               <article 
                 key={feature.title} 
-                className="group relative rounded-[2rem] border border-input bg-white p-8 transition-all duration-300 hover:shadow-2xl hover:shadow-black/5 hover:-translate-y-1"
+                className="group relative rounded-lg border border-input bg-white p-8 transition-colors hover:border-border"
               >
-                <div className="w-12 h-12 rounded-2xl bg-input/10 flex items-center justify-center text-primary mb-6 transition-transform duration-300 group-hover:scale-110 group-hover:bg-primary group-hover:text-primary-foreground shadow-inner">
+                <div className="w-12 h-12 rounded-md bg-input/10 flex items-center justify-center text-primary mb-6 transition-colors group-hover:bg-primary group-hover:text-primary-foreground">
                   {Icon && <Icon className="h-6 w-6" aria-hidden="true" />}
                 </div>
                 <h3 className="text-lg font-black tracking-tight text-foreground mb-3">{feature.title}</h3>

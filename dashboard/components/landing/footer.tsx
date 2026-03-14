@@ -4,7 +4,7 @@ import { SmoothScrollLink } from './smooth-scroll-link';
 
 export function Footer() {
   return (
-    <footer aria-label="Site footer" className="border-t bg-surface/30 backdrop-blur-sm">
+    <footer aria-label="Site footer" className="border-t bg-background">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-16 sm:py-24">
         <div className="grid grid-cols-1 gap-12 sm:grid-cols-2 lg:grid-cols-4">
           {/* Brand */}

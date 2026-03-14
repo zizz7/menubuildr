@@ -190,7 +190,7 @@ export default function RestaurantsPage() {
               Add Restaurant
             </Button>
           </DialogTrigger>
-          <DialogContent className="max-w-md w-full border-none shadow-2xl rounded-lg p-0 overflow-hidden">
+          <DialogContent className="max-w-md w-full border border-border shadow-md rounded-lg p-0 overflow-hidden">
             <div className="p-8 border-b border-input/20 bg-gray-50/50">
               <DialogTitle className="text-xl font-bold tracking-tight">
                 {editingRestaurant ? 'Edit Restaurant' : 'Create Restaurant'}
@@ -450,7 +450,7 @@ export default function RestaurantsPage() {
 
       {restaurants.length === 0 && (
         <Card className="bg-surface/20 border-dashed border-2 flex flex-col items-center justify-center p-20 text-center">
-          <div className="p-6 rounded-2xl bg-surface border border-input text-muted-foreground mb-6 shadow-sm">
+          <div className="p-6 rounded-md bg-surface border border-input text-muted-foreground mb-6 shadow-sm">
             <Store className="h-10 w-10" />
           </div>
           <CardTitle className="text-2xl font-bold tracking-tight">Create your first restaurant</CardTitle>

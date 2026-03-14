@@ -986,7 +986,7 @@ export default function MenuDetailPage() {
               </Button>
             </DialogTrigger>
             {/* Dialog contents follow... */}
-          <DialogContent className="max-w-2xl p-0 overflow-hidden border-none shadow-2xl rounded-lg">
+          <DialogContent className="max-w-2xl p-0 overflow-hidden border border-border shadow-md rounded-lg">
             <div className="flex flex-col h-full bg-white">
               <div className="p-8 border-b border-input/20 bg-gray-50/50">
                 <h2 className="text-2xl font-bold tracking-tight text-gray-900">
@@ -1200,7 +1200,7 @@ export default function MenuDetailPage() {
         
         {/* Sub-Section Dialog */}
         <Dialog open={subSectionDialogOpen} onOpenChange={setSubSectionDialogOpen}>
-          <DialogContent className="max-w-2xl p-0 overflow-hidden border-none shadow-2xl rounded-lg">
+          <DialogContent className="max-w-2xl p-0 overflow-hidden border border-border shadow-md rounded-lg">
             <div className="flex flex-col h-full bg-white">
               <div className="p-8 border-b border-input/20 bg-gray-50/50">
                 <h2 className="text-2xl font-bold tracking-tight text-gray-900">
@@ -1421,7 +1421,7 @@ export default function MenuDetailPage() {
                     <div className="h-px flex-1 bg-input/30" />
                   </div>
                   {section.subSections.map((subSection: Section) => (
-                    <Card key={subSection.id} className="ml-8 border border-input/40 bg-white/40 backdrop-blur-sm overflow-hidden transition-all duration-300 hover:shadow-md">
+                    <Card key={subSection.id} className="ml-8 border border-input bg-white overflow-hidden transition-colors hover:border-border">
                       <CardHeader className="p-4">
                         <div className="flex items-center justify-between gap-4">
                           <div className="flex items-center gap-3 flex-1 min-w-0">
@@ -1548,7 +1548,7 @@ export default function MenuDetailPage() {
       )}
 
       <Dialog open={itemDialogOpen} onOpenChange={setItemDialogOpen}>
-        <DialogContent className="max-w-3xl p-0 overflow-hidden border-none shadow-2xl rounded-lg">
+        <DialogContent className="max-w-3xl p-0 overflow-hidden border border-border shadow-md rounded-lg">
           <div className="flex flex-col h-full bg-white">
             <div className="p-8 border-b border-input/20 bg-gray-50/50">
               <h2 className="text-2xl font-bold tracking-tight text-gray-900">

@@ -147,7 +147,7 @@ export function DashboardLayout({ children }: { children: ReactNode }) {
       </div>
 
       {/* Scrollable Navigation */}
-      <nav className="flex-1 overflow-y-auto overflow-x-hidden px-3 py-4 space-y-6">
+      <nav className="flex-1 overflow-y-auto overflow-x-hidden px-3 py-4 space-y-6 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
         {navGroups.map((group) => (
           <div key={group.label} className="space-y-1">
             <p className={cn(

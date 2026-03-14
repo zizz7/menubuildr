@@ -13,7 +13,7 @@ export function Footer() {
         <div className="grid grid-cols-1 gap-12 sm:grid-cols-2 lg:grid-cols-4 pb-16 border-b border-input/40">
           <div className="sm:col-span-2 lg:col-span-1">
             <a href="/" className="group flex items-center gap-3 font-black text-xl tracking-tight text-foreground transition-all">
-              <div className="w-10 h-10 rounded-2xl bg-primary flex items-center justify-center shadow-lg shadow-primary/20 group-hover:scale-110 transition-transform duration-300">
+              <div className="w-10 h-10 rounded-md bg-primary flex items-center justify-center transition-colors hover:bg-primary/90">
                 <UtensilsCrossed className="h-5 w-5 text-primary-foreground" aria-hidden="true" />
               </div>
               <span>MenuBuildr</span>

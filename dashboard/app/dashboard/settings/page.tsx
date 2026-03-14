@@ -102,7 +102,7 @@ export default function SettingsPage() {
     <div className="p-6 lg:p-10 max-w-5xl mx-auto">
       <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12">
         <div className="flex items-start gap-5">
-          <div className="w-14 h-14 rounded-2xl bg-primary/10 flex items-center justify-center text-primary border border-primary/20 shadow-sm">
+          <div className="w-14 h-14 rounded-md bg-primary/10 flex items-center justify-center text-primary border border-primary/20 shadow-sm">
             <User className="h-7 w-7" />
           </div>
           <div>
@@ -125,7 +125,7 @@ export default function SettingsPage() {
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
         <div className="lg:col-span-2 space-y-8">
           {/* Profile Settings */}
-          <Card className="border-input/40 bg-white/40 backdrop-blur-sm overflow-hidden transition-all duration-300 hover:shadow-lg hover:shadow-black/5">
+          <Card className="overflow-hidden">
             <CardHeader className="border-b border-input/20 pb-6">
               <div className="flex items-center gap-3">
                 <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center text-primary border border-primary/10">
@@ -177,7 +177,7 @@ export default function SettingsPage() {
           </Card>
 
           {/* Password Section */}
-          <Card className="border-input/40 bg-white/40 backdrop-blur-sm overflow-hidden transition-all duration-300 hover:shadow-lg hover:shadow-black/5">
+          <Card className="overflow-hidden">
             <CardHeader className="border-b border-input/20 pb-6">
               <div className="flex items-center gap-3">
                 <div className="w-10 h-10 rounded-lg bg-orange-500/10 flex items-center justify-center text-orange-500 border border-orange-500/10">
@@ -242,21 +242,21 @@ export default function SettingsPage() {
 
         <div className="space-y-8">
           {/* Sidebar Section: Profile Image */}
-          <Card className="border-input/40 bg-white/40 backdrop-blur-sm overflow-hidden transition-all duration-300 hover:shadow-lg hover:shadow-black/5">
+          <Card className="overflow-hidden">
             <CardHeader className="pb-4">
               <CardTitle className="text-lg font-bold">Photo</CardTitle>
             </CardHeader>
             <CardContent>
               <div className="flex flex-col items-center gap-6">
                 <div className="relative group">
-                  <div className="w-32 h-32 rounded-3xl bg-input/20 border-2 border-input/40 flex items-center justify-center overflow-hidden relative shadow-inner">
+                  <div className="w-32 h-32 rounded-lg bg-input/20 border border-input flex items-center justify-center overflow-hidden relative">
                     {imageUrl ? (
                       <img src={imageUrl} alt="" className="absolute inset-0 w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" />
                     ) : (
                       <User className="h-12 w-12 text-muted" />
                     )}
                     {imageLoading && (
-                      <div className="absolute inset-0 bg-white/60 backdrop-blur-sm flex items-center justify-center">
+                      <div className="absolute inset-0 bg-white/80 flex items-center justify-center">
                         <div className="w-6 h-6 border-2 border-primary border-t-transparent rounded-full animate-spin" />
                       </div>
                     )}
@@ -293,7 +293,7 @@ export default function SettingsPage() {
           </Card>
 
           {/* System Info */}
-          <Card className="border-input/40 bg-white/40 backdrop-blur-sm overflow-hidden transition-all duration-300 hover:shadow-lg hover:shadow-black/5">
+          <Card className="overflow-hidden">
             <CardHeader className="pb-4">
               <CardTitle className="text-lg font-bold">Deployment</CardTitle>
             </CardHeader>
