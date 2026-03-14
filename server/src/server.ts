@@ -1,9 +1,11 @@
 import express from 'express';
 import cors from 'cors';
+import helmet from 'helmet';
 import dotenv from 'dotenv';
 import path from 'path';
 import { syncUploadsToPublic } from './utils/sync-uploads';
 import { validateEnv } from './config/env';
+import { authenticateToken, AuthRequest } from './middleware/auth';
 
 dotenv.config();
 validateEnv();
@@ -11,11 +13,11 @@ validateEnv();
 const app = express();
 const PORT = process.env.PORT || 5000;
 
-// Trust proxy headers from Cloudflare
-app.set('trust proxy', 1);
-
 // CORS configuration: locked down in production, permissive in development
 const isProduction = process.env.NODE_ENV === 'production';
+
+// Trust proxy headers from Cloudflare (production only, prevents IP spoofing in dev)
+if (isProduction) app.set('trust proxy', 1);
 const allowedOrigins = isProduction
   ? [
       process.env.FRONTEND_URL,
@@ -38,6 +40,9 @@ app.use(cors({
   credentials: true,
 }));
 
+// L5: Set secure HTTP headers
+app.use(helmet());
+
 // Raw body middleware for Stripe webhook (MUST come before express.json)
 app.use('/api/billing/webhook', express.raw({ type: 'application/json' }));
 
@@ -56,8 +61,8 @@ app.get('/api/health', (_req, res) => {
   res.json({ status: 'ok', timestamp: new Date().toISOString() });
 });
 
-// Regenerate all published menu HTML files (admin utility)
-app.post('/api/regenerate-menus', async (_req, res) => {
+// Regenerate all published menu HTML files (admin utility — requires auth)
+app.post('/api/regenerate-menus', authenticateToken, async (_req: AuthRequest, res) => {
   try {
     const prismaModule = await import('./config/database');
     const db = prismaModule.default;
@@ -114,6 +119,20 @@ app.use('/api', importExportRoutes);
 app.use('/api/templates', templateRoutes);
 app.use('/api/menu-items', translationRoutes);
 app.use('/api/billing', billingRoutes);
+
+// L1: Global error handler to prevent leaking sensitive information
+app.use((err: any, req: express.Request, res: express.Response, next: express.NextFunction) => {
+  console.error('Unhandled error:', err);
+  
+  if (isProduction) {
+    return res.status(500).json({ error: 'Internal server error' });
+  }
+  
+  res.status(err.status || 500).json({
+    error: err.message || 'Internal server error',
+    stack: err.stack,
+  });
+});
 
 app.listen(Number(PORT), '0.0.0.0', () => {
   console.log(`Server running on 0.0.0.0:${PORT}`);

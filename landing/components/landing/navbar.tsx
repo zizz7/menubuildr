@@ -11,41 +11,45 @@ const NAV_LINKS = [
 
 export function Navbar() {
   return (
-    <header className="sticky top-0 z-40 w-full border-b bg-white/95 backdrop-blur supports-[backdrop-filter]:bg-white/60">
-      <nav aria-label="Main navigation" className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
-        <a href="/" className="flex items-center gap-2 font-bold text-xl">
-          <UtensilsCrossed className="h-6 w-6 text-primary" aria-hidden="true" />
-          <span>MenuBuildr</span>
+    <header className="sticky top-0 z-50 w-full border-b border-input/20 bg-background/80 backdrop-blur-xl">
+      <nav aria-label="Main navigation" className="mx-auto flex h-20 max-w-7xl items-center justify-between px-6 lg:px-10">
+        <a href="/" className="flex items-center gap-3 group">
+          <div className="w-10 h-10 rounded-xl bg-primary flex items-center justify-center text-primary-foreground shadow-lg shadow-primary/20 group-hover:scale-110 transition-transform duration-300">
+            <UtensilsCrossed className="h-6 w-6" aria-hidden="true" />
+          </div>
+          <span className="font-black text-2xl tracking-tighter text-foreground group-hover:text-primary transition-colors">MenuBuildr</span>
         </a>
 
-        <div className="hidden md:flex items-center gap-8">
+        <div className="hidden lg:flex items-center gap-10">
           {NAV_LINKS.map((link) => (
             <SmoothScrollLink
               key={link.href}
               href={link.href}
-              className="text-sm font-medium text-gray-600 hover:text-gray-900 transition-colors"
+              className="text-[13px] font-bold uppercase tracking-widest text-muted-foreground hover:text-primary transition-all duration-200"
             >
               {link.label}
             </SmoothScrollLink>
           ))}
         </div>
 
-        <div className="hidden md:flex items-center gap-4">
+        <div className="hidden md:flex items-center gap-6">
           <a
             href={`${APP_URL}/login`}
-            className="text-sm font-medium text-gray-600 hover:text-gray-900 transition-colors"
+            className="text-[13px] font-bold uppercase tracking-widest text-muted-foreground hover:text-primary transition-all duration-200"
           >
             Log in
           </a>
           <a
             href={`${APP_URL}/register`}
-            className="inline-flex h-10 items-center justify-center rounded-md bg-primary px-6 text-sm font-medium text-primary-foreground hover:bg-primary/90 transition-colors"
+            className="inline-flex h-11 items-center justify-center rounded-xl bg-primary px-8 text-[13px] font-black uppercase tracking-widest text-primary-foreground shadow-lg shadow-primary/20 hover:bg-primary/90 hover:scale-[1.02] active:scale-[0.98] transition-all"
           >
-            Get Started
+            Join Now
           </a>
         </div>
 
-        <MobileNavToggle />
+        <div className="md:hidden">
+          <MobileNavToggle />
+        </div>
       </nav>
     </header>
   );

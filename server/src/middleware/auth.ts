@@ -18,7 +18,8 @@ export const authenticateToken = (
   }
 
   try {
-    const decoded = jwt.verify(token, process.env.JWT_SECRET || 'secret') as { userId: string };
+    // JWT_SECRET is guaranteed to be set by validateEnv() at startup — no fallback allowed
+    const decoded = jwt.verify(token, process.env.JWT_SECRET!) as { userId: string };
     if (!decoded.userId) {
       return res.status(401).json({ error: 'Invalid or expired token' });
     }

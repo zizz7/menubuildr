@@ -2,25 +2,40 @@ import { TESTIMONIALS } from '@/lib/constants/landing';
 
 export function TestimonialsSection() {
   return (
-    <section id="testimonials" aria-labelledby="testimonials-heading" className="py-20 sm:py-28 bg-white">
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="mx-auto max-w-2xl text-center">
-          <h2 id="testimonials-heading" className="text-2xl font-bold tracking-tight text-gray-900 sm:text-3xl">
-            What our customers say
+    <section id="testimonials" aria-labelledby="testimonials-heading" className="py-24 lg:py-40 bg-background relative overflow-hidden">
+      <div className="mx-auto max-w-7xl px-6 lg:px-10">
+        <div className="flex flex-col items-center text-center max-w-3xl mx-auto mb-20 lg:mb-24">
+          <h2 id="testimonials-heading" className="text-sm font-black uppercase tracking-[0.3em] text-primary mb-6">
+            Testimonials
           </h2>
-          <p className="mt-3 text-base text-gray-500">
-            Feedback from restaurant owners using MenuBuildr.
+          <h2 className="text-4xl lg:text-6xl font-black tracking-tight text-foreground mb-6">
+            Loved by owners
+          </h2>
+          <p className="text-lg text-muted-foreground font-medium">
+            Join hundreds of restaurants already growing with MenuBuildr.
           </p>
         </div>
-        <div className="mt-16 grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
+
+        <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
           {TESTIMONIALS.map((testimonial) => (
-            <article key={testimonial.customerName} className="rounded-lg border border-gray-200 bg-white p-6">
-              <blockquote className="text-sm text-gray-600 leading-relaxed">
-                &ldquo;{testimonial.quote}&rdquo;
+            <article 
+              key={testimonial.customerName} 
+              className="relative flex flex-col rounded-[2.5rem] border border-input p-10 bg-white/50 backdrop-blur-sm transition-all duration-500 hover:shadow-2xl hover:shadow-black/5"
+            >
+              <div className="absolute top-10 right-10 text-6xl font-serif text-primary/10 select-none">
+                &ldquo;
+              </div>
+              <blockquote className="relative flex-1 text-lg font-medium text-foreground leading-relaxed mb-8">
+                {testimonial.quote}
               </blockquote>
-              <div className="mt-4 pt-4 border-t border-gray-100">
-                <p className="text-sm font-medium text-gray-900">{testimonial.customerName}</p>
-                <p className="text-xs text-gray-500">{testimonial.restaurantName}</p>
+              <div className="flex items-center gap-4 pt-8 border-t border-input/40">
+                <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center text-primary font-black text-lg shadow-inner border border-primary/10">
+                  {testimonial.customerName.charAt(0)}
+                </div>
+                <div>
+                  <p className="text-sm font-black tracking-tight text-foreground">{testimonial.customerName}</p>
+                  <p className="text-xs font-bold text-muted-foreground uppercase tracking-widest">{testimonial.restaurantName}</p>
+                </div>
               </div>
             </article>
           ))}

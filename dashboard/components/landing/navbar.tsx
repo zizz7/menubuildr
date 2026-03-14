@@ -11,9 +11,9 @@ const NAV_LINKS = [
 
 export function Navbar() {
   return (
-    <header className="sticky top-0 z-40 w-full border-b bg-white/95 backdrop-blur supports-[backdrop-filter]:bg-white/60">
+    <header className="sticky top-0 z-40 w-full border-b bg-background">
       <nav aria-label="Main navigation" className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
-        <Link href="/" className="flex items-center gap-2 font-bold text-xl">
+        <Link href="/" className="flex items-center gap-2 font-semibold text-xl tracking-tight">
           <UtensilsCrossed className="h-6 w-6 text-primary" aria-hidden="true" />
           <span>MenuBuildr</span>
         </Link>
@@ -24,7 +24,7 @@ export function Navbar() {
             <SmoothScrollLink
               key={link.href}
               href={link.href}
-              className="text-sm font-medium text-gray-600 hover:text-gray-900 transition-colors"
+              className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors"
             >
               {link.label}
             </SmoothScrollLink>
@@ -35,13 +35,13 @@ export function Navbar() {
         <div className="hidden md:flex items-center gap-4">
           <Link
             href="/login"
-            className="text-sm font-medium text-gray-600 hover:text-gray-900 transition-colors"
+            className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors"
           >
             Log in
           </Link>
           <Link
             href="/register"
-            className="inline-flex h-10 items-center justify-center rounded-md bg-primary px-6 text-sm font-medium text-primary-foreground hover:bg-primary/90 transition-colors"
+            className="inline-flex h-9 items-center justify-center rounded-lg bg-primary px-5 text-sm font-medium text-primary-foreground hover:bg-primary/90 transition-all active:scale-[0.98] duration-150"
           >
             Get Started
           </Link>

@@ -88,16 +88,24 @@ router.post('/menus/:id/export', async (req: AuthRequest, res) => {
     }
 
     if (format === 'csv') {
-      // Generate CSV
+      // M4: Escape CSV values to prevent formula injection
+      const escapeCsvField = (val: unknown): string => {
+        const str = String(val ?? '');
+        // Strip formula-injection prefixes (=, +, -, @)
+        const safe = str.replace(/^[=+\-@]/, "'");
+        // Wrap in double-quotes, escape internal double-quotes by doubling
+        return `"${safe.replace(/"/g, '""')}"`;
+      };
+
       const csvRows = ['name_ENG,description_ENG,price,section_name'];
-      
+
       menu.sections.forEach((section) => {
         section.items.forEach((item) => {
-          const name = (item.name as any).ENG || '';
-          const desc = (item.description as any)?.ENG || '';
-          const price = item.price;
-          const sectionName = (section.title as any).ENG || '';
-          csvRows.push(`"${name}","${desc}",${price},"${sectionName}"`);
+          const name = escapeCsvField((item.name as any).ENG);
+          const desc = escapeCsvField((item.description as any)?.ENG);
+          const price = escapeCsvField(item.price);
+          const sectionName = escapeCsvField((section.title as any).ENG);
+          csvRows.push(`${name},${desc},${price},${sectionName}`);
         });
       });
 
@@ -182,8 +190,42 @@ router.post('/restaurants/import', async (req: AuthRequest, res) => {
       }>;
     };
 
+    // M5: Add count limits to prevent resource exhaustion
+    const MAX_MENUS = 4;
+    const MAX_SECTIONS_PER_MENU = 20;
+    const MAX_ITEMS_PER_SECTION = 50;
+
+    if (body.menus && body.menus.length > MAX_MENUS) {
+      return res.status(400).json({ error: `Maximum ${MAX_MENUS} menus allowed per restaurant` });
+    }
+
+    if (body.menus) {
+      for (const menu of body.menus) {
+        if (menu.sections && menu.sections.length > MAX_SECTIONS_PER_MENU) {
+          return res.status(400).json({ 
+            error: `Maximum ${MAX_SECTIONS_PER_MENU} sections allowed per menu (at menu: ${menu.slug})` 
+          });
+        }
+        if (menu.sections) {
+          for (const section of menu.sections) {
+            if (section.items && section.items.length > MAX_ITEMS_PER_SECTION) {
+              return res.status(400).json({ 
+                error: `Maximum ${MAX_ITEMS_PER_SECTION} items allowed per section (at section: ${section.title?.ENG || 'unnamed'})` 
+              });
+            }
+          }
+        }
+      }
+    }
+
     if (!body.name || !body.slug) {
       return res.status(400).json({ error: 'name and slug are required' });
+    }
+
+    // M1: Validate slug format — only alphanumeric + hyphens allowed
+    const slugPattern = /^[a-z0-9-]+$/;
+    if (!slugPattern.test(body.slug)) {
+      return res.status(400).json({ error: 'Slug must contain only lowercase letters, numbers, and hyphens' });
     }
 
     let restaurant = await prisma.restaurant.findUnique({

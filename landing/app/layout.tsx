@@ -5,8 +5,8 @@ import "./globals.css";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "MenuBuildr — Digital Menu Builder for Restaurants",
-  description: "Create and manage digital menus for your restaurants.",
+  title: "MenuBuildr — The Next-Gen Menu Operating System",
+  description: "Redefine your restaurant's digital presence with high-performance, multi-language, and allergen-aware digital menus. Built for the modern restaurateur.",
 };
 
 export default function RootLayout({

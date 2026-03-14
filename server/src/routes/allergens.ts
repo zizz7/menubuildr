@@ -55,54 +55,20 @@ router.post('/', async (req: AuthRequest, res) => {
 // Get allergen filter mode setting (must come before /:id route)
 router.get('/settings', async (req: AuthRequest, res) => {
   try {
-    // Get or create default settings
+    // NOTE: AllergenSettings is a global singleton (no restaurantId in schema).
+    // L6 scoping requires a Prisma migration — tracked as a schema improvement.
     let settings = await prisma.allergenSettings.findFirst();
-    
+
     if (!settings) {
       settings = await prisma.allergenSettings.create({
-        data: {
-          filterMode: 'exclude', // Default to exclude mode
-        },
+        data: { filterMode: 'exclude' },
       });
     }
 
     res.json(settings);
   } catch (error: any) {
     console.error('Get allergen settings error:', error);
-    
-    // If table doesn't exist, try to create it
-    if (error.code === 'P2021' || error.message?.includes('does not exist') || error.message?.includes('relation') || error.message?.includes('table')) {
-      try {
-        await prisma.$executeRawUnsafe(`
-          CREATE TABLE IF NOT EXISTS allergen_settings (
-            id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-            filter_mode TEXT NOT NULL DEFAULT 'exclude',
-            updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
-          );
-        `);
-        
-        let settings = await prisma.allergenSettings.findFirst();
-        if (!settings) {
-          settings = await prisma.allergenSettings.create({
-            data: {
-              filterMode: 'exclude',
-            },
-          });
-        }
-        res.json(settings);
-      } catch (createError: any) {
-        console.error('Failed to create table:', createError);
-        res.status(500).json({ 
-          error: 'Database table does not exist. Please run: npx prisma db push',
-          details: createError.message,
-        });
-      }
-    } else {
-      res.status(500).json({ 
-        error: 'Internal server error',
-        details: error.message || 'Unknown error',
-      });
-    }
+    res.status(500).json({ error: 'Internal server error' });
   }
 });
 

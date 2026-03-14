@@ -1,5 +1,6 @@
 'use client';
 
+import * as React from 'react';
 import { useEffect, useState, useRef } from 'react';
 import { useRouter } from 'next/navigation';
 import { useAuthStore } from '@/lib/store/auth-store';
@@ -98,143 +99,225 @@ export default function SettingsPage() {
     : null;
 
   return (
-    <div className="p-6 lg:p-8 max-w-3xl">
-      <div className="mb-8">
-        <h1 className="text-2xl font-bold">Settings</h1>
-        <p className="text-gray-500 mt-1 text-sm">Manage your account settings</p>
+    <div className="p-6 lg:p-10 max-w-5xl mx-auto">
+      <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12">
+        <div className="flex items-start gap-5">
+          <div className="w-14 h-14 rounded-2xl bg-primary/10 flex items-center justify-center text-primary border border-primary/20 shadow-sm">
+            <User className="h-7 w-7" />
+          </div>
+          <div>
+            <h1 className="text-4xl font-black tracking-tight text-foreground mb-2">
+              Account Settings
+            </h1>
+            <div className="flex items-center gap-3 text-muted">
+              <span className="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-input/40 text-[11px] font-bold uppercase tracking-wider border border-input/30">
+                <Database className="h-3 w-3" />
+                v1.0.0
+              </span>
+              <p className="text-sm font-medium opacity-80 leading-none">
+                Manage your profile and security preferences.
+              </p>
+            </div>
+          </div>
+        </div>
       </div>
 
-      <div className="space-y-6">
-        {/* Profile Image */}
-        <Card>
-          <CardHeader>
-            <div className="flex items-center gap-2">
-              <Camera className="h-5 w-5 text-gray-500" />
-              <CardTitle className="text-base">Profile Image</CardTitle>
-            </div>
-            <CardDescription>Upload a logo or profile picture</CardDescription>
-          </CardHeader>
-          <CardContent>
-            <div className="flex items-center gap-6">
-              <div className="relative group">
-                <div className="w-20 h-20 rounded-full bg-gray-100 border-2 border-gray-200 flex items-center justify-center overflow-hidden relative">
-                  {imageUrl ? (
-                    <img src={imageUrl} alt="" className="absolute inset-0 w-full h-full object-cover" />
-                  ) : (
-                    <User className="h-8 w-8 text-gray-400" />
-                  )}
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        <div className="lg:col-span-2 space-y-8">
+          {/* Profile Settings */}
+          <Card className="border-input/40 bg-white/40 backdrop-blur-sm overflow-hidden transition-all duration-300 hover:shadow-lg hover:shadow-black/5">
+            <CardHeader className="border-b border-input/20 pb-6">
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center text-primary border border-primary/10">
+                  <User className="h-5 w-5" />
                 </div>
-                <button
-                  onClick={() => fileInputRef.current?.click()}
-                  disabled={imageLoading}
-                  className="absolute inset-0 rounded-full bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center"
-                >
-                  <Camera className="h-5 w-5 text-white" />
-                </button>
+                <div>
+                  <CardTitle className="text-xl font-bold">Profile Details</CardTitle>
+                  <CardDescription>Your personal and contact information</CardDescription>
+                </div>
               </div>
-              <div>
-                <Button
-                  variant="outline"
-                  size="sm"
-                  onClick={() => fileInputRef.current?.click()}
-                  disabled={imageLoading}
-                >
-                  {imageLoading ? 'Uploading...' : 'Change Image'}
-                </Button>
-                <p className="text-xs text-gray-500 mt-1">JPG, PNG, WebP or SVG. Max 5MB.</p>
-              </div>
-              <input
-                ref={fileInputRef}
-                type="file"
-                accept="image/jpeg,image/png,image/webp,image/svg+xml"
-                onChange={handleImageUpload}
-                className="hidden"
-              />
-            </div>
-          </CardContent>
-        </Card>
+            </CardHeader>
+            <CardContent className="pt-8">
+              <form onSubmit={handleProfileUpdate} className="space-y-6">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <div className="space-y-2.5">
+                    <Label htmlFor="name" className="text-xs font-bold uppercase tracking-wider text-muted px-1">Full Name</Label>
+                    <Input 
+                      id="name" 
+                      value={name} 
+                      onChange={(e) => setName(e.target.value)} 
+                      placeholder="Your name"
+                      className="h-11 border-input/50 focus:border-primary/50 transition-all" 
+                    />
+                  </div>
+                  <div className="space-y-2.5">
+                    <Label htmlFor="email" className="text-xs font-bold uppercase tracking-wider text-muted px-1">Email Address</Label>
+                    <div className="relative">
+                      <Input 
+                        id="email" 
+                        type="email" 
+                        value={email} 
+                        disabled 
+                        className="h-11 bg-input/20 border-input/30 text-muted opacity-80 cursor-not-allowed" 
+                      />
+                      <div className="absolute right-3 top-1/2 -translate-y-1/2">
+                        <Lock className="h-3.5 w-3.5 text-muted/50" />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div className="pt-2">
+                  <Button type="submit" disabled={profileLoading} className="h-11 px-8 font-bold tracking-tight shadow-md shadow-primary/20">
+                    <Save className="h-4 w-4 mr-2" />
+                    {profileLoading ? 'Saving...' : 'Update Profile'}
+                  </Button>
+                </div>
+              </form>
+            </CardContent>
+          </Card>
 
-        {/* Profile Settings */}
-        <Card>
-          <CardHeader>
-            <div className="flex items-center gap-2">
-              <User className="h-5 w-5 text-gray-500" />
-              <CardTitle className="text-base">Profile</CardTitle>
-            </div>
-            <CardDescription>Update your personal information</CardDescription>
-          </CardHeader>
-          <CardContent>
-            <form onSubmit={handleProfileUpdate} className="space-y-4">
-              <div className="space-y-2">
-                <Label htmlFor="name">Full Name</Label>
-                <Input id="name" value={name} onChange={(e) => setName(e.target.value)} placeholder="Your name" />
+          {/* Password Section */}
+          <Card className="border-input/40 bg-white/40 backdrop-blur-sm overflow-hidden transition-all duration-300 hover:shadow-lg hover:shadow-black/5">
+            <CardHeader className="border-b border-input/20 pb-6">
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 rounded-lg bg-orange-500/10 flex items-center justify-center text-orange-500 border border-orange-500/10">
+                  <Lock className="h-5 w-5" />
+                </div>
+                <div>
+                  <CardTitle className="text-xl font-bold">Security</CardTitle>
+                  <CardDescription>Update your credentials</CardDescription>
+                </div>
               </div>
-              <div className="space-y-2">
-                <Label htmlFor="email">Email Address</Label>
-                <Input id="email" type="email" value={email} disabled className="bg-gray-50" />
-                <p className="text-xs text-gray-400">Email cannot be changed</p>
-              </div>
-              <Button type="submit" disabled={profileLoading} size="sm">
-                <Save className="h-4 w-4 mr-2" />
-                {profileLoading ? 'Saving...' : 'Save Changes'}
-              </Button>
-            </form>
-          </CardContent>
-        </Card>
+            </CardHeader>
+            <CardContent className="pt-8">
+              <form onSubmit={handlePasswordChange} className="space-y-6">
+                <div className="space-y-2.5">
+                  <Label htmlFor="currentPassword" title="current-password" className="text-xs font-bold uppercase tracking-wider text-muted px-1">Current Password</Label>
+                  <Input 
+                    id="currentPassword" 
+                    type="password" 
+                    autoComplete="current-password" 
+                    value={currentPassword} 
+                    onChange={(e) => setCurrentPassword(e.target.value)} 
+                    placeholder="Enter current password"
+                    className="h-11 border-input/50 focus:border-primary/50" 
+                  />
+                </div>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <div className="space-y-2.5">
+                    <Label htmlFor="newPassword" title="new-password" className="text-xs font-bold uppercase tracking-wider text-muted px-1">New Password</Label>
+                    <Input 
+                      id="newPassword" 
+                      type="password" 
+                      autoComplete="new-password" 
+                      value={newPassword} 
+                      onChange={(e) => setNewPassword(e.target.value)} 
+                      placeholder="Min 8 characters"
+                      className="h-11 border-input/50 focus:border-primary/50" 
+                    />
+                  </div>
+                  <div className="space-y-2.5">
+                    <Label htmlFor="confirmPassword" title="confirm-password" className="text-xs font-bold uppercase tracking-wider text-muted px-1">Confirm New Password</Label>
+                    <Input 
+                      id="confirmPassword" 
+                      type="password" 
+                      autoComplete="new-password" 
+                      value={confirmPassword} 
+                      onChange={(e) => setConfirmPassword(e.target.value)} 
+                      placeholder="Confirm new password"
+                      className="h-11 border-input/50 focus:border-primary/50" 
+                    />
+                  </div>
+                </div>
+                <div className="pt-2">
+                  <Button type="submit" disabled={passwordLoading} variant="outline" className="h-11 px-8 font-bold tracking-tight border-input/50 hover:bg-input/50">
+                    <Lock className="h-4 w-4 mr-2" />
+                    {passwordLoading ? 'Updating...' : 'Change Password'}
+                  </Button>
+                </div>
+              </form>
+            </CardContent>
+          </Card>
+        </div>
 
-        {/* Password */}
-        <Card>
-          <CardHeader>
-            <div className="flex items-center gap-2">
-              <Lock className="h-5 w-5 text-gray-500" />
-              <CardTitle className="text-base">Change Password</CardTitle>
-            </div>
-            <CardDescription>Keep your account secure</CardDescription>
-          </CardHeader>
-          <CardContent>
-            <form onSubmit={handlePasswordChange} className="space-y-4">
-              <div className="space-y-2">
-                <Label htmlFor="currentPassword">Current Password</Label>
-                <Input id="currentPassword" type="password" autoComplete="current-password" value={currentPassword} onChange={(e) => setCurrentPassword(e.target.value)} placeholder="Enter current password" />
+        <div className="space-y-8">
+          {/* Sidebar Section: Profile Image */}
+          <Card className="border-input/40 bg-white/40 backdrop-blur-sm overflow-hidden transition-all duration-300 hover:shadow-lg hover:shadow-black/5">
+            <CardHeader className="pb-4">
+              <CardTitle className="text-lg font-bold">Photo</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="flex flex-col items-center gap-6">
+                <div className="relative group">
+                  <div className="w-32 h-32 rounded-3xl bg-input/20 border-2 border-input/40 flex items-center justify-center overflow-hidden relative shadow-inner">
+                    {imageUrl ? (
+                      <img src={imageUrl} alt="" className="absolute inset-0 w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" />
+                    ) : (
+                      <User className="h-12 w-12 text-muted" />
+                    )}
+                    {imageLoading && (
+                      <div className="absolute inset-0 bg-white/60 backdrop-blur-sm flex items-center justify-center">
+                        <div className="w-6 h-6 border-2 border-primary border-t-transparent rounded-full animate-spin" />
+                      </div>
+                    )}
+                  </div>
+                  <button
+                    onClick={() => fileInputRef.current?.click()}
+                    disabled={imageLoading}
+                    className="absolute -bottom-2 -right-2 w-10 h-10 rounded-xl bg-primary text-white shadow-lg shadow-primary/40 flex items-center justify-center hover:scale-110 transition-transform z-10"
+                  >
+                    <Camera className="h-5 w-5" />
+                  </button>
+                </div>
+                <div className="text-center">
+                  <p className="text-xs text-muted font-medium mb-3">JPG, PNG, WebP or SVG.<br/>Max 5MB.</p>
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    onClick={() => fileInputRef.current?.click()}
+                    disabled={imageLoading}
+                    className="h-8 text-[11px] font-black uppercase tracking-widest text-primary hover:bg-primary/10"
+                  >
+                    {imageLoading ? 'Uploading...' : 'Upload New'}
+                  </Button>
+                </div>
+                <input
+                  ref={fileInputRef}
+                  type="file"
+                  accept="image/jpeg,image/png,image/webp,image/svg+xml"
+                  onChange={handleImageUpload}
+                  className="hidden"
+                />
               </div>
-              <div className="space-y-2">
-                <Label htmlFor="newPassword">New Password</Label>
-                <Input id="newPassword" type="password" autoComplete="new-password" value={newPassword} onChange={(e) => setNewPassword(e.target.value)} placeholder="Min 8 characters" />
-              </div>
-              <div className="space-y-2">
-                <Label htmlFor="confirmPassword">Confirm New Password</Label>
-                <Input id="confirmPassword" type="password" autoComplete="new-password" value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} placeholder="Confirm new password" />
-              </div>
-              <Button type="submit" disabled={passwordLoading} size="sm">
-                <Lock className="h-4 w-4 mr-2" />
-                {passwordLoading ? 'Changing...' : 'Change Password'}
-              </Button>
-            </form>
-          </CardContent>
-        </Card>
+            </CardContent>
+          </Card>
 
-        {/* System Info */}
-        <Card>
-          <CardHeader>
-            <div className="flex items-center gap-2">
-              <Database className="h-5 w-5 text-gray-500" />
-              <CardTitle className="text-base">System</CardTitle>
-            </div>
-          </CardHeader>
-          <CardContent>
-            <div className="space-y-3 text-sm">
-              <div className="flex justify-between">
-                <span className="text-gray-500">Version</span>
-                <span className="font-medium">1.0.0</span>
+          {/* System Info */}
+          <Card className="border-input/40 bg-white/40 backdrop-blur-sm overflow-hidden transition-all duration-300 hover:shadow-lg hover:shadow-black/5">
+            <CardHeader className="pb-4">
+              <CardTitle className="text-lg font-bold">Deployment</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="space-y-4">
+                <div className="p-3 rounded-xl bg-black/[0.03] border border-input/20">
+                  <div className="flex justify-between items-center mb-1">
+                    <span className="text-[10px] font-black uppercase tracking-widest text-muted">Version</span>
+                    <span className="text-xs font-bold text-foreground">1.0.0</span>
+                  </div>
+                  <div className="w-full h-1 bg-input/20 rounded-full overflow-hidden">
+                    <div className="w-full h-full bg-primary/40" />
+                  </div>
+                </div>
+                <div className="p-3 rounded-xl bg-black/[0.03] border border-input/20">
+                  <div className="text-[10px] font-black uppercase tracking-widest text-muted mb-2">API Endpoint</div>
+                  <div className="font-mono text-[10px] text-primary truncate bg-white/50 p-1.5 rounded border border-input/10">
+                    {process.env.NEXT_PUBLIC_API_URL || 'Not configured'}
+                  </div>
+                </div>
               </div>
-              <div className="h-px bg-gray-100" />
-              <div className="flex justify-between">
-                <span className="text-gray-500">API</span>
-                <span className="font-medium text-xs">{process.env.NEXT_PUBLIC_API_URL || 'Not configured'}</span>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
+            </CardContent>
+          </Card>
+        </div>
       </div>
     </div>
   );

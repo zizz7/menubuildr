@@ -175,103 +175,107 @@ export default function RestaurantsPage() {
   }
 
   return (
-    <div className="p-8">
-      <div className="flex items-center justify-between mb-8">
+    <div className="p-10 space-y-10">
+      <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-3xl font-bold">Restaurants</h1>
-          <p className="text-gray-600 mt-2">Manage your restaurants ({restaurants.length}/5)</p>
+          <h1 className="text-3xl font-bold tracking-tight text-foreground">Restaurants</h1>
+          <p className="text-muted-foreground mt-2 leading-relaxed">
+            Manage your establishments ({restaurants.length}/5)
+          </p>
         </div>
         <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
           <DialogTrigger asChild>
-            <Button onClick={() => handleOpenDialog()}>
+            <Button onClick={() => handleOpenDialog()} className="h-10 px-6 font-bold shadow-sm">
               <Plus className="h-4 w-4 mr-2" />
               Add Restaurant
             </Button>
           </DialogTrigger>
-          <DialogContent>
-            <DialogHeader>
-              <DialogTitle>
+          <DialogContent className="max-w-md w-full border-none shadow-2xl rounded-lg p-0 overflow-hidden">
+            <div className="p-8 border-b border-input/20 bg-gray-50/50">
+              <DialogTitle className="text-xl font-bold tracking-tight">
                 {editingRestaurant ? 'Edit Restaurant' : 'Create Restaurant'}
               </DialogTitle>
-              <DialogDescription>
+              <DialogDescription className="text-sm text-gray-500 mt-1">
                 {editingRestaurant
-                  ? 'Update restaurant information'
-                  : 'Add a new restaurant to manage'}
+                  ? 'Update restaurant information and branding details.'
+                  : 'Register a new establishment to manage its menus.'}
               </DialogDescription>
-            </DialogHeader>
-            <form onSubmit={handleSubmit} className="space-y-4">
+            </div>
+            <form onSubmit={handleSubmit} className="p-8 space-y-6">
               <div className="space-y-2">
-                <Label htmlFor="name">Name</Label>
+                <Label htmlFor="name" className="text-sm font-semibold">Name</Label>
                 <Input
                   id="name"
                   value={formData.name}
                   onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                  placeholder="e.g. The Green Bistro"
                   required
                 />
               </div>
               <div className="space-y-2">
-                <Label htmlFor="slug">Slug</Label>
-                  <Input
-                    id="slug"
-                    value={formData.slug}
-                    onChange={(e) =>
-                      setFormData({
-                        ...formData,
-                        slug: e.target.value.toLowerCase().replace(/\s+/g, '-'),
-                      })
-                    }
-                    required
-                  />
-                <p className="text-xs text-gray-500">
-                  URL-friendly identifier (lowercase, numbers, hyphens only)
+                <Label htmlFor="slug" className="text-sm font-semibold">Slug</Label>
+                <Input
+                  id="slug"
+                  value={formData.slug}
+                  onChange={(e) =>
+                    setFormData({
+                      ...formData,
+                      slug: e.target.value.toLowerCase().replace(/\s+/g, '-'),
+                    })
+                  }
+                  placeholder="the-green-bistro"
+                  required
+                />
+                <p className="text-[11px] text-muted-foreground font-medium uppercase tracking-wider">
+                  Lower-case, numbers, and hyphens only
                 </p>
               </div>
               <div className="grid grid-cols-2 gap-4">
                 <div className="space-y-2">
-                  <Label htmlFor="currency">Currency</Label>
+                  <Label htmlFor="currency" className="text-sm font-semibold">Currency</Label>
                   <Input
                     id="currency"
                     value={formData.currency}
                     onChange={(e) =>
                       setFormData({ ...formData, currency: e.target.value.toUpperCase() })
                     }
+                    className="h-10 border-input/50"
                     required
                     maxLength={3}
                   />
                 </div>
                 <div className="space-y-2">
-                  <Label htmlFor="defaultLanguage">Default Language</Label>
+                  <Label htmlFor="defaultLanguage" className="text-sm font-semibold">Language</Label>
                   <Input
                     id="defaultLanguage"
                     value={formData.defaultLanguage}
                     onChange={(e) =>
                       setFormData({ ...formData, defaultLanguage: e.target.value.toUpperCase() })
                     }
+                    className="h-10 border-input/50"
                     required
                     maxLength={3}
                   />
                 </div>
               </div>
-              <div className="space-y-2">
+              <div className="space-y-4">
                 <div className="flex items-center justify-between">
-                  <Label htmlFor="logoUrl">Logo (optional)</Label>
-                  <div className="flex gap-2">
-                    <Button
+                  <Label className="text-sm font-semibold">Logo (optional)</Label>
+                  <div className="flex p-1 rounded-lg bg-gray-100 border border-input/50">
+                    <button
                       type="button"
-                      variant={logoInputMode === 'upload' ? 'default' : 'outline'}
-                      size="sm"
+                      className={`px-3 py-1 text-xs font-semibold rounded-md transition-all ${logoInputMode === 'upload' ? 'bg-white text-gray-900 shadow-sm border border-input/20' : 'text-gray-500 hover:text-gray-900'}`}
                       onClick={() => setLogoInputMode('upload')}
                     >
                       Upload
-                    </Button>
-                    <Button
+                    </button>
+                    <button
                       type="button"
-                      variant={logoInputMode === 'url' ? 'default' : 'outline'}
-                      size="sm"
+                      className={`px-3 py-1 text-xs font-semibold rounded-md transition-all ${logoInputMode === 'url' ? 'bg-white text-gray-900 shadow-sm border border-input/20' : 'text-gray-500 hover:text-gray-900'}`}
                       onClick={() => setLogoInputMode('url')}
                     >
                       URL
-                    </Button>
+                    </button>
                   </div>
                 </div>
                 
@@ -287,11 +291,10 @@ export default function RestaurantsPage() {
                           await handleLogoUpload(file);
                         }
                       }}
-                      className="w-full"
                       disabled={logoUploading}
                     />
                     {logoUploading && (
-                      <p className="text-xs text-blue-500">Uploading logo...</p>
+                      <p className="text-xs text-primary font-medium">Uploading logo...</p>
                     )}
                   </div>
                 ) : (
@@ -305,59 +308,49 @@ export default function RestaurantsPage() {
                 )}
 
                 {formData.logoUrl && (
-                  <div className="p-4 border rounded-lg bg-gray-50">
-                    <Label>Preview</Label>
+                  <div className="p-4 border rounded-lg border-input bg-surface/50">
+                    <Label className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">Preview</Label>
                     <div className="mt-3 flex items-center gap-4">
                       <div
-                        className="w-24 h-24 flex items-center justify-center border-2 border-gray-300 rounded bg-white overflow-hidden"
-                        style={{ minWidth: '96px', minHeight: '96px' }}
+                        className="w-20 h-20 flex items-center justify-center border border-input rounded bg-surface overflow-hidden"
                       >
                         <img
                           src={formData.logoUrl}
                           alt="Logo preview"
                           className="w-full h-full object-contain"
-                          onError={(e) => {
-                            const target = e.target as HTMLImageElement;
-                            target.style.display = 'none';
-                            const parent = target.parentElement;
-                            if (parent) {
-                              parent.innerHTML = '<div class="w-full h-full flex items-center justify-center bg-red-100 rounded"><span class="text-xs text-red-500">Failed to load</span></div>';
-                            }
-                          }}
                         />
                       </div>
-                      <div className="flex-1">
-                        <p className="text-xs text-gray-500 break-all">
+                      <div className="flex-1 space-y-2">
+                        <p className="text-[10px] text-muted-foreground break-all leading-tight font-medium">
                           {formData.logoUrl}
                         </p>
                         <Button
                           type="button"
-                          variant="outline"
+                          variant="ghost"
                           size="sm"
-                          className="mt-2"
+                          className="h-8 text-xs text-destructive hover:bg-destructive/10"
                           onClick={() => {
                             setFormData({ ...formData, logoUrl: '' });
-                            const fileInput = document.getElementById('logoFile') as HTMLInputElement;
-                            if (fileInput) fileInput.value = '';
                           }}
                         >
-                          Clear
+                          Clear Image
                         </Button>
                       </div>
                     </div>
                   </div>
                 )}
               </div>
-              <div className="flex justify-end gap-2">
+              <div className="flex justify-end gap-3 pt-6 border-t border-input/20">
                 <Button
                   type="button"
-                  variant="outline"
+                  variant="ghost"
                   onClick={() => setDialogOpen(false)}
+                  className="h-10 px-6 font-medium"
                 >
                   Cancel
                 </Button>
-                <Button type="submit">
-                  {editingRestaurant ? 'Update' : 'Create'}
+                <Button type="submit" className="h-10 px-8 font-bold shadow-sm">
+                  {editingRestaurant ? 'Save Changes' : 'Create Restaurant'}
                 </Button>
               </div>
             </form>
@@ -365,114 +358,109 @@ export default function RestaurantsPage() {
         </Dialog>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
         {restaurants.map((restaurant) => {
           const logoPosition = restaurant.logoPosition || 'right';
           const hasLogo = restaurant.logoUrl && restaurant.logoUrl.trim().length > 0;
-          const cardStyle = hasLogo && logoPosition === 'background' 
-            ? { 
-                backgroundImage: `url('${restaurant.logoUrl}')`,
-                backgroundSize: 'cover',
-                backgroundPosition: 'center',
-                backgroundRepeat: 'no-repeat',
-                position: 'relative' as const,
-              }
-            : {};
-
+          
           return (
             <Card
               key={restaurant.id}
-              className="hover:shadow-lg transition-shadow cursor-pointer overflow-hidden"
+              className="group bg-white border-input/50 hover:border-primary/50 transition-all cursor-pointer overflow-hidden rounded-lg shadow-sm"
               onClick={() => handleSelectRestaurant(restaurant)}
-              style={cardStyle}
             >
-              {hasLogo && logoPosition === 'background' && (
-                <div className="absolute inset-0 bg-white/85 z-0" />
-              )}
-              <CardHeader className={hasLogo && logoPosition === 'background' ? 'relative z-10' : ''}>
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-3 flex-1">
-                    {hasLogo && logoPosition === 'right' ? (
-                      <div className="w-12 h-12 flex items-center justify-center border-2 border-gray-200 rounded bg-white overflow-hidden flex-shrink-0">
-                        <img
-                          src={restaurant.logoUrl}
-                          alt={`${restaurant.name} logo`}
-                          className="w-full h-full object-contain"
-                          onError={(e) => {
-                            const target = e.target as HTMLImageElement;
-                            target.style.display = 'none';
-                          }}
-                        />
-                      </div>
-                    ) : (
-                      <Store className="h-6 w-6 text-gray-600 flex-shrink-0" />
-                    )}
-                    <CardTitle className={hasLogo && logoPosition === 'background' ? 'text-shadow' : ''}>
-                      {restaurant.name}
-                    </CardTitle>
-                  </div>
-                  {restaurant.activeStatus ? (
-                    <CheckCircle className="h-5 w-5 text-green-500 flex-shrink-0" />
+              <CardHeader className="pb-4">
+                <div className="flex items-center justify-between mb-4">
+                  {hasLogo && logoPosition === 'right' ? (
+                    <div className="w-14 h-14 flex items-center justify-center border border-input/50 rounded-md bg-white overflow-hidden transition-transform group-hover:scale-105">
+                      <img
+                        src={restaurant.logoUrl}
+                        alt={`${restaurant.name} logo`}
+                        className="w-full h-full object-contain"
+                        onError={(e) => {
+                          (e.target as HTMLImageElement).style.display = 'none';
+                        }}
+                      />
+                    </div>
                   ) : (
-                    <XCircle className="h-5 w-5 text-gray-400 flex-shrink-0" />
+                    <div className="p-2.5 rounded-lg bg-gray-50 border border-input/50 text-primary">
+                      <Store className="h-5 w-5" />
+                    </div>
+                  )}
+                  {restaurant.activeStatus ? (
+                    <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-green-50 text-green-700 text-[10px] font-bold uppercase tracking-wider border border-green-200">
+                      <CheckCircle className="h-3 w-3" />
+                      Active
+                    </div>
+                  ) : (
+                    <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-gray-100 text-gray-600 text-[10px] font-bold uppercase tracking-wider border border-gray-200">
+                      <XCircle className="h-3 w-3" />
+                      Inactive
+                    </div>
                   )}
                 </div>
-                <CardDescription className={hasLogo && logoPosition === 'background' ? 'text-shadow' : ''}>
-                  {restaurant.slug}
+                <CardTitle className="text-xl font-bold tracking-tight text-foreground group-hover:text-primary transition-colors">
+                  {restaurant.name}
+                </CardTitle>
+                <CardDescription className="font-medium text-xs font-mono text-muted-foreground pt-1 opacity-60">
+                  /{restaurant.slug}
                 </CardDescription>
               </CardHeader>
-              <CardContent className={hasLogo && logoPosition === 'background' ? 'relative z-10' : ''}>
-              <div className="space-y-2 text-sm">
-                <div className="flex justify-between">
-                  <span className="text-gray-600">Currency:</span>
-                  <span className="font-medium">{restaurant.currency}</span>
+              <CardContent className="space-y-6">
+                <div className="grid grid-cols-3 gap-2 py-4 border-y border-input">
+                  <div className="space-y-1">
+                    <span className="text-[10px] text-muted-foreground font-bold uppercase tracking-widest">Currency</span>
+                    <p className="font-semibold text-foreground">{restaurant.currency}</p>
+                  </div>
+                  <div className="space-y-1">
+                    <span className="text-[10px] text-muted-foreground font-bold uppercase tracking-widest">Lang</span>
+                    <p className="font-semibold text-foreground">{restaurant.defaultLanguage}</p>
+                  </div>
+                  <div className="space-y-1">
+                    <span className="text-[10px] text-muted-foreground font-bold uppercase tracking-widest">Menus</span>
+                    <p className="font-semibold text-foreground">{restaurant._count?.menus || 0}</p>
+                  </div>
                 </div>
-                <div className="flex justify-between">
-                  <span className="text-gray-600">Language:</span>
-                  <span className="font-medium">{restaurant.defaultLanguage}</span>
+                
+                <div className="flex gap-2 pt-2" onClick={(e) => e.stopPropagation()}>
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    className="flex-1 text-xs font-bold border border-input/50 bg-white hover:bg-gray-50 h-9"
+                    onClick={() => handleOpenDialog(restaurant)}
+                  >
+                    <Edit className="h-3.5 w-3.5 mr-2 text-primary" />
+                    Edit
+                  </Button>
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    className="flex-1 text-xs font-bold border border-input/50 bg-white hover:bg-red-50 hover:text-red-600 h-9"
+                    onClick={() => handleDelete(restaurant.id)}
+                  >
+                    <Trash2 className="h-3.5 w-3.5 mr-2" />
+                    Delete
+                  </Button>
                 </div>
-                <div className="flex justify-between">
-                  <span className="text-gray-600">Menus:</span>
-                  <span className="font-medium">{restaurant._count?.menus || 0}</span>
-                </div>
-              </div>
-              <div className="flex gap-2 mt-4" onClick={(e) => e.stopPropagation()}>
-                <Button
-                  variant="outline"
-                  size="sm"
-                  onClick={() => handleOpenDialog(restaurant)}
-                >
-                  <Edit className="h-4 w-4 mr-2" />
-                  Edit
-                </Button>
-                <Button
-                  variant="outline"
-                  size="sm"
-                  onClick={() => handleDelete(restaurant.id)}
-                >
-                  <Trash2 className="h-4 w-4 mr-2" />
-                  Delete
-                </Button>
-              </div>
-            </CardContent>
-          </Card>
+              </CardContent>
+            </Card>
           );
         })}
       </div>
 
       {restaurants.length === 0 && (
-        <Card className="mt-8">
-          <CardContent className="flex flex-col items-center justify-center py-12">
-            <Store className="h-12 w-12 text-gray-400 mb-4" />
-            <h3 className="text-lg font-semibold mb-2">No restaurants yet</h3>
-            <p className="text-gray-600 text-center mb-4">
-              Get started by creating your first restaurant
-            </p>
-            <Button onClick={() => handleOpenDialog()}>
-              <Plus className="h-4 w-4 mr-2" />
-              Create Restaurant
-            </Button>
-          </CardContent>
+        <Card className="bg-surface/20 border-dashed border-2 flex flex-col items-center justify-center p-20 text-center">
+          <div className="p-6 rounded-2xl bg-surface border border-input text-muted-foreground mb-6 shadow-sm">
+            <Store className="h-10 w-10" />
+          </div>
+          <CardTitle className="text-2xl font-bold tracking-tight">Create your first restaurant</CardTitle>
+          <p className="text-muted-foreground mt-2 max-w-sm leading-relaxed font-medium">
+            Register your establishment to start building digital menus for your customers.
+          </p>
+          <Button size="lg" className="mt-8 px-10 h-12 text-base font-bold shadow-lg shadow-primary/20" onClick={() => handleOpenDialog()}>
+            <Plus className="h-5 w-5 mr-3" />
+            Get Started
+          </Button>
         </Card>
       )}
     </div>

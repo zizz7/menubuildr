@@ -1,13 +1,23 @@
 import express from 'express';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
+import rateLimit from 'express-rate-limit';
 import prisma from '../config/database';
 import { authenticateToken, AuthRequest } from '../middleware/auth';
 
 const router = express.Router();
 
+// Rate limiter: max 20 attempts per 15 minutes per IP — prevents brute-force (H3)
+const authRateLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 20,
+  standardHeaders: true,
+  legacyHeaders: false,
+  message: { error: 'Too many attempts, please try again in 15 minutes.' },
+});
+
 // Login
-router.post('/login', async (req, res) => {
+router.post('/login', authRateLimiter, async (req, res) => {
   try {
     const { email, password } = req.body;
 
@@ -19,24 +29,21 @@ router.post('/login', async (req, res) => {
       where: { email },
     });
 
-    if (!admin) {
+    // L4: Always run bcrypt.compare even if admin not found — equalizes timing to prevent email enumeration
+    const DUMMY_HASH = '$2b$10$abcdefghijklmnopqrstuuABCDEFGHIJKLMNOPQRSTUVWXYZabcde';
+    const isValid = await bcrypt.compare(password, admin ? admin.passwordHash : DUMMY_HASH);
+
+    if (!admin || !isValid) {
       return res.status(401).json({ error: 'Invalid credentials' });
     }
 
-    const isValid = await bcrypt.compare(password, admin.passwordHash);
-
-    if (!isValid) {
-      return res.status(401).json({ error: 'Invalid credentials' });
-    }
-
-    const jwtSecret = process.env.JWT_SECRET || 'secret';
+    const jwtSecret = process.env.JWT_SECRET!; // Guaranteed non-null by validateEnv()
     const expiresIn = process.env.JWT_EXPIRES_IN || '7d';
     
-    // @ts-ignore - TypeScript has issues with jsonwebtoken types
     const token = jwt.sign(
       { userId: admin.id },
       jwtSecret,
-      { expiresIn }
+      { expiresIn } as jwt.SignOptions
     );
 
     res.json({
@@ -81,12 +88,12 @@ router.get('/me', authenticateToken, async (req: AuthRequest, res) => {
     }
 
     // Return boolean presence for Stripe IDs, not the actual values
+    const { stripeCustomerId, stripeSubscriptionId, ...safeAdmin } = admin;
+
     res.json({
-      ...admin,
-      hasStripeCustomer: !!admin.stripeCustomerId,
-      hasSubscription: !!admin.stripeSubscriptionId,
-      stripeCustomerId: undefined,
-      stripeSubscriptionId: undefined,
+      ...safeAdmin,
+      hasStripeCustomer: !!stripeCustomerId,
+      hasSubscription: !!stripeSubscriptionId,
     });
   } catch (error) {
     console.error('Get admin error:', error);
@@ -125,7 +132,7 @@ router.put('/profile', authenticateToken, async (req: AuthRequest, res) => {
 });
 
 // Change password
-router.put('/password', authenticateToken, async (req: AuthRequest, res) => {
+router.put('/password', authRateLimiter, authenticateToken, async (req: AuthRequest, res) => {
   try {
     const { currentPassword, newPassword } = req.body;
 

@@ -2,6 +2,7 @@ import express from 'express';
 import multer from 'multer';
 import path from 'path';
 import fs from 'fs';
+import { fileTypeFromFile } from 'file-type';
 import { authenticateToken, AuthRequest } from '../middleware/auth';
 import { requireSubscription } from '../middleware/subscription';
 import { copyFileToPublic } from '../utils/sync-uploads';
@@ -55,6 +56,21 @@ const upload = multer({
   },
 });
 
+// M2: Helper to verify magic bytes
+const verifyMagicBytes = async (filePath: string, allowedMimeTypes: string[]) => {
+  const type = await fileTypeFromFile(filePath);
+  if (!type || !allowedMimeTypes.includes(type.mime)) {
+    // If it's SVG, file-type might not detect it easily as it's XML-based
+    // check extension/content if file-type fails on SVG
+    const isSvg = filePath.toLowerCase().endsWith('.svg');
+    if (isSvg && allowedMimeTypes.includes('image/svg+xml')) {
+      return true;
+    }
+    return false;
+  }
+  return true;
+};
+
 // Upload logo
 router.post('/logo', upload.single('logo'), async (req: AuthRequest, res) => {
   if (!req.file) {
@@ -62,6 +78,13 @@ router.post('/logo', upload.single('logo'), async (req: AuthRequest, res) => {
   }
 
   try {
+    // M2: Verify magic bytes
+    const isValid = await verifyMagicBytes(req.file.path, ['image/png', 'image/svg+xml', 'image/jpeg', 'image/webp']);
+    if (!isValid) {
+      fs.unlinkSync(req.file.path);
+      return res.status(400).json({ error: 'Invalid file content. Magic bytes do not match allowed image types.' });
+    }
+
     // Upload to Cloudinary (with retry logic built-in)
     const cloudinaryUrl = await uploadToCloudinary(req.file.path, 'menu-logos');
     
@@ -90,6 +113,13 @@ router.post('/item-image', upload.single('image'), async (req: AuthRequest, res)
   }
 
   try {
+    // M2: Verify magic bytes
+    const isValid = await verifyMagicBytes(req.file.path, ['image/png', 'image/jpeg', 'image/webp']);
+    if (!isValid) {
+      fs.unlinkSync(req.file.path);
+      return res.status(400).json({ error: 'Invalid file content. Magic bytes do not match allowed image types.' });
+    }
+
     // Upload to Cloudinary (with retry logic built-in)
     const cloudinaryUrl = await uploadToCloudinary(req.file.path, 'menu-items');
     
@@ -118,6 +148,13 @@ router.post('/illustration', upload.single('illustration'), async (req: AuthRequ
   }
 
   try {
+    // M2: Verify magic bytes
+    const isValid = await verifyMagicBytes(req.file.path, ['image/svg+xml', 'image/png', 'image/jpeg', 'image/jpg', 'image/webp']);
+    if (!isValid) {
+      fs.unlinkSync(req.file.path);
+      return res.status(400).json({ error: 'Invalid file content. Magic bytes do not match allowed image types.' });
+    }
+
     // Upload to Cloudinary (with retry logic built-in)
     const cloudinaryUrl = await uploadToCloudinary(req.file.path, 'menu-illustrations');
     
@@ -146,6 +183,13 @@ router.post('/allergen-icon', upload.single('icon'), async (req: AuthRequest, re
   }
 
   try {
+    // M2: Verify magic bytes
+    const isValid = await verifyMagicBytes(req.file.path, ['image/png', 'image/jpeg', 'image/jpg', 'image/webp']);
+    if (!isValid) {
+      fs.unlinkSync(req.file.path);
+      return res.status(400).json({ error: 'Invalid file content. Magic bytes do not match allowed image types.' });
+    }
+
     // Upload to Cloudinary (with retry logic built-in)
     const cloudinaryUrl = await uploadToCloudinary(req.file.path, 'allergen-icons');
     

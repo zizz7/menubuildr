@@ -76,88 +76,96 @@ export default function DashboardPage() {
   };
 
   return (
-    <div className="p-8">
-      <div className="mb-8">
-        <h1 className="text-3xl font-bold">Dashboard</h1>
-        <p className="text-gray-600 mt-2">Overview of your menu management system</p>
+    <div className="p-8 max-w-7xl mx-auto space-y-8">
+      <div>
+        <h1 className="text-3xl font-bold tracking-tight text-foreground">Dashboard</h1>
+        <p className="text-muted-foreground mt-2 leading-relaxed">
+          Overview of your menu management system
+        </p>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-        <Card>
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+        <Card className="bg-white border-input/50 shadow-sm rounded-lg overflow-hidden">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Restaurants</CardTitle>
-            <Store className="h-4 w-4 text-muted-foreground" />
+            <CardTitle className="text-sm font-semibold text-gray-500">Restaurants</CardTitle>
+            <Store className="h-4 w-4 text-gray-400" />
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">{stats.totalRestaurants}</div>
-            <p className="text-xs text-muted-foreground">Active restaurants</p>
+            <p className="text-xs text-muted-foreground mt-1">Active establishments</p>
           </CardContent>
         </Card>
 
-        <Card>
+        <Card className="bg-white border-input/50 shadow-sm rounded-lg overflow-hidden">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Total Menus</CardTitle>
-            <BookOpen className="h-4 w-4 text-muted-foreground" />
+            <CardTitle className="text-sm font-semibold text-gray-500">Total Menus</CardTitle>
+            <BookOpen className="h-4 w-4 text-gray-400" />
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">{stats.totalMenus}</div>
-            <p className="text-xs text-muted-foreground">All menus</p>
+            <p className="text-xs text-muted-foreground mt-1">Digital menus created</p>
           </CardContent>
         </Card>
 
-        <Card>
+        <Card className="bg-white border-input/50 shadow-sm rounded-lg overflow-hidden">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Published Menus</CardTitle>
-            <TrendingUp className="h-4 w-4 text-muted-foreground" />
+            <CardTitle className="text-sm font-semibold text-gray-500">Published</CardTitle>
+            <TrendingUp className="h-4 w-4 text-gray-400" />
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">{stats.publishedMenus}</div>
-            <p className="text-xs text-muted-foreground">Live menus</p>
+            <p className="text-xs text-muted-foreground mt-1">Live customer views</p>
           </CardContent>
         </Card>
 
-        <Card>
+        <Card className="bg-white border-input/50 shadow-sm rounded-lg overflow-hidden">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Menu Items</CardTitle>
-            <Menu className="h-4 w-4 text-muted-foreground" />
+            <CardTitle className="text-sm font-semibold text-gray-500">Items</CardTitle>
+            <Menu className="h-4 w-4 text-gray-400" />
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">{stats.totalItems}</div>
-            <p className="text-xs text-muted-foreground">Total items</p>
+            <p className="text-xs text-muted-foreground mt-1">Individual menu entries</p>
           </CardContent>
         </Card>
       </div>
 
-      <Card>
-        <CardHeader>
-          <CardTitle>Quick Actions</CardTitle>
-          <CardDescription>Common tasks and shortcuts</CardDescription>
+      <Card className="bg-white border-input/50 shadow-sm rounded-lg overflow-hidden">
+        <CardHeader className="border-b border-input/20 bg-gray-50/50 py-6">
+          <CardTitle className="text-lg font-bold">Quick Actions</CardTitle>
+          <CardDescription className="text-sm text-gray-500">Common management tasks and shortcuts</CardDescription>
         </CardHeader>
-        <CardContent>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <CardContent className="p-0">
+          <div className="grid grid-cols-1 md:grid-cols-3 divide-y md:divide-y-0 md:divide-x border-t-0">
             <button
               onClick={() => router.push('/dashboard/restaurants')}
-              className="p-4 border rounded-lg hover:bg-gray-50 text-left"
+              className="group p-8 text-left transition-colors hover:bg-gray-50 duration-100"
             >
-              <Store className="h-6 w-6 mb-2" />
-              <h3 className="font-semibold">Manage Restaurants</h3>
-              <p className="text-sm text-gray-600">Add or edit restaurants</p>
+              <div className="mb-4 inline-flex items-center justify-center p-3 rounded-md bg-gray-50 border border-input/50 text-primary">
+                <Store className="h-5 w-5" />
+              </div>
+              <h3 className="font-bold text-gray-900 text-base">Manage Restaurants</h3>
+              <p className="text-sm text-gray-500 mt-1">Add new locations or update establishment details.</p>
             </button>
             <button
               onClick={() => router.push('/dashboard/menus')}
-              className="p-4 border rounded-lg hover:bg-gray-50 text-left"
+              className="group p-8 text-left transition-colors hover:bg-gray-50 duration-100"
             >
-              <BookOpen className="h-6 w-6 mb-2" />
-              <h3 className="font-semibold">Manage Menus</h3>
-              <p className="text-sm text-gray-600">Create and edit menus</p>
+              <div className="mb-4 inline-flex items-center justify-center p-3 rounded-md bg-gray-50 border border-input/50 text-primary">
+                <BookOpen className="h-5 w-5" />
+              </div>
+              <h3 className="font-bold text-gray-900 text-base">Manage Menus</h3>
+              <p className="text-sm text-gray-500 mt-1">Create and redesign your digital menu structures.</p>
             </button>
             <button
               onClick={() => router.push('/dashboard/theme')}
-              className="p-4 border rounded-lg hover:bg-gray-50 text-left"
+              className="group p-8 text-left transition-colors hover:bg-gray-50 duration-100"
             >
-              <Palette className="h-6 w-6 mb-2" />
-              <h3 className="font-semibold">Customize Theme</h3>
-              <p className="text-sm text-gray-600">Adjust colors and styling</p>
+              <div className="mb-4 inline-flex items-center justify-center p-3 rounded-md bg-gray-50 border border-input/50 text-primary">
+                <Palette className="h-5 w-5" />
+              </div>
+              <h3 className="font-bold text-gray-900 text-base">Customize Theme</h3>
+              <p className="text-sm text-gray-500 mt-1">Adjust your brand appearance and styling options.</p>
             </button>
           </div>
         </CardContent>

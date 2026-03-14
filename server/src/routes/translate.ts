@@ -1,6 +1,7 @@
 import express from 'express';
 import { authenticateToken, AuthRequest } from '../middleware/auth';
 import { requireSubscription } from '../middleware/subscription';
+import { verifyMenuOwnership } from '../middleware/ownership';
 // Dynamic import for ESM-only 'translate' package (CommonJS compat)
 let translateFn: ((text: string, opts: { from: string; to: string }) => Promise<string>) | null = null;
 async function getTranslate() {
@@ -92,7 +93,14 @@ router.post('/', async (req: AuthRequest, res) => {
 // Batch translate entire menu
 router.post('/menu/:menuId', async (req: AuthRequest, res) => {
   try {
+    const { menuId } = req.params;
     const { targetLanguage } = req.body;
+
+    // H5: Verify the requesting admin owns this menu
+    const ownership = await verifyMenuOwnership(menuId, req.userId!);
+    if (!ownership.authorized) {
+      return res.status(404).json({ error: 'Menu not found' });
+    }
 
     // TODO: Implement batch translation
     res.json({

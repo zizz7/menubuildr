@@ -496,11 +496,33 @@ router.post('/:id/duplicate', async (req: AuthRequest, res) => {
       return res.status(400).json({ error: 'Maximum 4 menus per restaurant' });
     }
 
+    // L3: Handle slug collision by appending -copy, -copy-2, etc.
+    let slug = `${originalMenu.slug}-copy`;
+    let counter = 1;
+    let slugExists = true;
+    
+    while (slugExists) {
+      const existing = await prisma.menu.findUnique({
+        where: {
+          restaurantId_slug: {
+            restaurantId: originalMenu.restaurantId,
+            slug: counter === 1 ? slug : `${originalMenu.slug}-copy-${counter}`
+          }
+        }
+      });
+      if (!existing) {
+        if (counter > 1) slug = `${originalMenu.slug}-copy-${counter}`;
+        slugExists = false;
+      } else {
+        counter++;
+      }
+    }
+
     const newMenu = await prisma.menu.create({
       data: {
         restaurantId: originalMenu.restaurantId,
         name: { ...originalMenu.name as any },
-        slug: `${originalMenu.slug}-copy`,
+        slug,
         menuType: originalMenu.menuType,
         status: 'draft',
         orderIndex: count,

@@ -4,36 +4,37 @@ import { SmoothScrollLink } from './smooth-scroll-link';
 
 export function Footer() {
   return (
-    <footer aria-label="Site footer" className="border-t bg-gray-50">
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-12">
-        <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-4">
+    <footer aria-label="Site footer" className="border-t bg-surface/30 backdrop-blur-sm">
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-16 sm:py-24">
+        <div className="grid grid-cols-1 gap-12 sm:grid-cols-2 lg:grid-cols-4">
           {/* Brand */}
           <div className="sm:col-span-2 lg:col-span-1">
-            <Link href="/" className="flex items-center gap-2 font-bold text-lg">
+            <Link href="/" className="flex items-center gap-2 font-semibold text-lg tracking-tight">
               <UtensilsCrossed className="h-5 w-5 text-primary" aria-hidden="true" />
               <span>MenuBuildr</span>
             </Link>
-            <p className="mt-3 text-sm text-gray-500 leading-relaxed">
-              Create and manage beautiful digital menus for your restaurants. Multi-language, allergen-safe, and easy to use.
+            <p className="mt-4 text-sm text-muted-foreground leading-relaxed max-w-xs">
+              Empowering restaurants with premium, functional digital menus. 
+              Designed for humans, built for scale.
             </p>
           </div>
 
           {/* Sections */}
           <div>
-            <h3 className="text-sm font-semibold text-gray-900">Product</h3>
-            <ul className="mt-3 space-y-2" role="list">
+            <h3 className="text-sm font-semibold text-foreground tracking-tight">Product</h3>
+            <ul className="mt-4 space-y-3" role="list">
               <li>
-                <SmoothScrollLink href="#features" className="text-sm text-gray-500 hover:text-gray-700">
+                <SmoothScrollLink href="#features" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
                   Features
                 </SmoothScrollLink>
               </li>
               <li>
-                <SmoothScrollLink href="#pricing" className="text-sm text-gray-500 hover:text-gray-700">
+                <SmoothScrollLink href="#pricing" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
                   Pricing
                 </SmoothScrollLink>
               </li>
               <li>
-                <SmoothScrollLink href="#testimonials" className="text-sm text-gray-500 hover:text-gray-700">
+                <SmoothScrollLink href="#testimonials" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
                   Testimonials
                 </SmoothScrollLink>
               </li>
@@ -42,15 +43,15 @@ export function Footer() {
 
           {/* Account */}
           <div>
-            <h3 className="text-sm font-semibold text-gray-900">Account</h3>
-            <ul className="mt-3 space-y-2" role="list">
+            <h3 className="text-sm font-semibold text-foreground tracking-tight">Account</h3>
+            <ul className="mt-4 space-y-3" role="list">
               <li>
-                <Link href="/login" className="text-sm text-gray-500 hover:text-gray-700">
+                <Link href="/login" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
                   Log in
                 </Link>
               </li>
               <li>
-                <Link href="/register" className="text-sm text-gray-500 hover:text-gray-700">
+                <Link href="/register" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
                   Sign up
                 </Link>
               </li>
@@ -59,15 +60,15 @@ export function Footer() {
 
           {/* Legal */}
           <div>
-            <h3 className="text-sm font-semibold text-gray-900">Legal</h3>
-            <ul className="mt-3 space-y-2" role="list">
+            <h3 className="text-sm font-semibold text-foreground tracking-tight">Legal</h3>
+            <ul className="mt-4 space-y-3" role="list">
               <li>
-                <Link href="/terms" className="text-sm text-gray-500 hover:text-gray-700">
+                <Link href="/terms" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
                   Terms of Service
                 </Link>
               </li>
               <li>
-                <Link href="/privacy" className="text-sm text-gray-500 hover:text-gray-700">
+                <Link href="/privacy" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
                   Privacy Policy
                 </Link>
               </li>
@@ -75,9 +76,9 @@ export function Footer() {
           </div>
         </div>
 
-        <div className="mt-12 border-t pt-8 text-center">
-          <p className="text-sm text-gray-400">
-            &copy; {new Date().getFullYear()} MenuBuildr. All rights reserved.
+        <div className="mt-16 sm:mt-24 border-t border-input pt-8 text-center">
+          <p className="text-xs text-muted-foreground/60 tracking-wider font-medium">
+            &copy; {new Date().getFullYear()} MENUBUILDR. ALL RIGHTS RESERVED.
           </p>
         </div>
       </div>

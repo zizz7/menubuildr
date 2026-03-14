@@ -4,50 +4,63 @@ import { cn } from '@/lib/utils';
 
 export function PricingSection() {
   return (
-    <section id="pricing" aria-labelledby="pricing-heading" className="py-20 sm:py-28 bg-gray-50">
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="mx-auto max-w-2xl text-center">
-          <h2 id="pricing-heading" className="text-2xl font-bold tracking-tight text-gray-900 sm:text-3xl">
-            Pricing
+    <section id="pricing" aria-labelledby="pricing-heading" className="py-24 lg:py-40 bg-input/10">
+      <div className="mx-auto max-w-7xl px-6 lg:px-10">
+        <div className="flex flex-col items-center text-center max-w-3xl mx-auto mb-20 lg:mb-24">
+          <h2 id="pricing-heading" className="text-sm font-black uppercase tracking-[0.3em] text-primary mb-6">
+            Simple Pricing
           </h2>
-          <p className="mt-3 text-base text-gray-500">
-            Choose the plan that fits your restaurant business.
+          <h2 className="text-4xl lg:text-6xl font-black tracking-tight text-foreground mb-6">
+            Choose your plan
+          </h2>
+          <p className="text-lg text-muted-foreground font-medium">
+            Transparent pricing for restaurants of all sizes. No hidden fees.
           </p>
         </div>
-        <div className="mt-16 grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
+        
+        <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
           {PRICING_PLANS.map((plan) => (
             <article
               key={plan.name}
               className={cn(
-                'relative flex flex-col rounded-lg border bg-white p-8',
-                plan.recommended ? 'border-gray-900' : 'border-gray-200',
+                'relative flex flex-col rounded-[2.5rem] border p-10 transition-all duration-500 hover:scale-[1.02] hover:shadow-2xl hover:shadow-black/5',
+                plan.recommended 
+                  ? 'border-primary bg-white shadow-xl scale-105 z-10' 
+                  : 'border-input/40 bg-white/50 backdrop-blur-sm',
               )}
             >
               {plan.recommended && (
-                <span className="absolute -top-3 left-1/2 -translate-x-1/2 rounded-md bg-gray-900 px-3 py-1 text-xs font-medium text-white">
-                  Recommended
-                </span>
+                <div className="absolute -top-5 left-1/2 -translate-x-1/2 bg-primary text-primary-foreground px-6 py-1.5 rounded-full text-[10px] font-black uppercase tracking-widest shadow-xl">
+                  Best Value
+                </div>
               )}
-              <h3 className="text-lg font-semibold text-gray-900">{plan.name}</h3>
-              <div className="mt-4 flex items-baseline">
-                <span className="text-4xl font-bold text-gray-900">{plan.price}</span>
-                {plan.period && <span className="ml-1 text-gray-500">{plan.period}</span>}
+              
+              <div className="mb-8">
+                <h3 className="text-lg font-black uppercase tracking-widest text-foreground opacity-60 mb-4">{plan.name}</h3>
+                <div className="flex items-baseline">
+                  <span className="text-5xl font-black tracking-tight text-foreground">{plan.price}</span>
+                  {plan.period && <span className="ml-2 text-sm font-bold text-muted-foreground">{plan.period}</span>}
+                </div>
               </div>
-              <ul className="mt-8 flex-1 space-y-3" role="list">
+
+              <ul className="flex-1 space-y-4 mb-10" role="list">
                 {plan.features.map((feature) => (
-                  <li key={feature} className="flex items-start gap-3">
-                    <Check className="h-5 w-5 shrink-0 text-primary mt-0.5" aria-hidden="true" />
-                    <span className="text-sm text-gray-600">{feature}</span>
+                  <li key={feature} className="flex items-start gap-4">
+                    <div className="w-5 h-5 rounded-full bg-emerald-500/10 flex items-center justify-center text-emerald-500 shrink-0 mt-0.5 border border-emerald-500/10">
+                      <Check className="h-3 w-3" aria-hidden="true" />
+                    </div>
+                    <span className="text-sm font-medium text-muted-foreground">{feature}</span>
                   </li>
                 ))}
               </ul>
+
               <a
                 href={`${APP_URL}${plan.ctaHref}`}
                 className={cn(
-                  'mt-8 inline-flex h-12 items-center justify-center rounded-md px-6 text-sm font-medium transition-colors',
+                  'inline-flex h-14 items-center justify-center rounded-2xl px-8 text-sm font-black uppercase tracking-widest transition-all',
                   plan.recommended
-                    ? 'bg-gray-900 text-white hover:bg-gray-800'
-                    : 'border border-gray-200 bg-white text-gray-700 hover:bg-gray-50',
+                    ? 'bg-primary text-primary-foreground shadow-lg shadow-primary/20 hover:bg-primary/90'
+                    : 'bg-input/10 text-foreground hover:bg-input/20',
                 )}
               >
                 {plan.ctaLabel}

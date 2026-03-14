@@ -1,13 +1,22 @@
 import { z } from 'zod';
 
+// Sanitize CSS: strip </style> tags and javascript: protocol to prevent XSS (H4)
+function sanitizeCss(css: string): string {
+  return css
+    .replace(/<\/style>/gi, '')   // prevents closing the wrapping <style> tag
+    .replace(/javascript:/gi, '') // prevents JS protocol URIs
+    .replace(/expression\s*\(/gi, '') // prevents IE expression() injection
+    .replace(/<script/gi, '');   // belt-and-suspenders: strip any <script opening
+}
+
 // Restaurant validation
 export const RestaurantSchema = z.object({
-  name: z.string().min(1, 'Name is required'),
-  slug: z.string().min(1, 'Slug is required').regex(/^[a-z0-9-]+$/, 'Slug must be lowercase alphanumeric with hyphens'),
-  currency: z.string().default('USD'),
-  defaultLanguage: z.string().default('ENG'),
+  name: z.string().min(1, 'Name is required').max(200, 'Name too long'),
+  slug: z.string().min(1, 'Slug is required').max(100).regex(/^[a-z0-9-]+$/, 'Slug must be lowercase alphanumeric with hyphens'),
+  currency: z.string().max(10).default('USD'),
+  defaultLanguage: z.string().max(10).default('ENG'),
   logoUrl: z.union([
-    z.string().url('Logo URL must be a valid URL'),
+    z.string().url('Logo URL must be a valid URL').max(2000),
     z.literal(''),
     z.null()
   ]).optional().nullable(),
@@ -60,17 +69,39 @@ export const MenuItemSchema = z.object({
     z.undefined()
   ]).optional().nullable(),
   isAvailable: z.boolean().default(true),
-  preparationTime: z.number().int().positive().optional().nullable(),
-  categoryId: z.string().uuid().optional().nullable(),
+  preparationTime: z.number().int().min(0).max(1000).optional(),
+});
+
+export const BulkItemUpdateSchema = z.object({
+  price: z.number().min(0).max(1000000).optional(),
+  isAvailable: z.boolean().optional(),
+  preparationTime: z.number().int().min(0).max(1000).optional(),
+  calories: z.number().int().min(0).max(10000).optional(),
 });
 
 // Recipe validation
 export const RecipeSchema = z.object({
   ingredients: z.record(z.string()).optional().nullable(),
   ingredientsLabel: z.record(z.string()).optional().nullable(),
-  instructions: z.string().optional(),
+  instructions: z.string().max(10000).optional(),
   servings: z.number().int().positive().optional(),
-  difficultyLevel: z.string().optional(),
+  difficultyLevel: z.string().max(50).optional(),
+});
+
+// Module settings validation — explicit allowlist prevents mass assignment (H6)
+export const ModuleSettingsSchema = z.object({
+  menuEnabled: z.boolean().optional(),
+  sectionsEnabled: z.boolean().optional(),
+  itemsEnabled: z.boolean().optional(),
+  allergensEnabled: z.boolean().optional(),
+  translationsEnabled: z.boolean().optional(),
+  analyticsEnabled: z.boolean().optional(),
+  ordersEnabled: z.boolean().optional(),
+  inventoryEnabled: z.boolean().optional(),
+  reservationsEnabled: z.boolean().optional(),
+  loyaltyEnabled: z.boolean().optional(),
+  qrCodeEnabled: z.boolean().optional(),
+  onlineOrderingEnabled: z.boolean().optional(),
 });
 
 // Theme settings validation
@@ -80,7 +111,7 @@ export const ThemeSettingsSchema = z.object({
   accentColor: z.string().regex(/^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/),
   backgroundColor: z.string().regex(/^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/),
   textColor: z.string().regex(/^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/),
-  customCss: z.string().optional(),
+  customCss: z.string().optional().transform((val) => (val ? sanitizeCss(val) : val)),
   customFontsUrls: z.array(z.string().url()).optional(),
   backgroundIllustrationUrl: z.union([
     z.string().url('Background illustration URL must be a valid URL'),

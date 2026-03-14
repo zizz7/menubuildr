@@ -3,7 +3,7 @@ import prisma from '../config/database';
 import { authenticateToken, AuthRequest } from '../middleware/auth';
 import { requireSubscription } from '../middleware/subscription';
 import { verifySectionOwnership, verifyItemOwnership, verifyBulkItemOwnership } from '../middleware/ownership';
-import { MenuItemSchema, RecipeSchema } from '../utils/validation';
+import { MenuItemSchema, RecipeSchema, BulkItemUpdateSchema } from '../utils/validation';
 import { regenerateMenuIfPublished } from '../utils/regenerate-menu';
 
 const router = express.Router();
@@ -377,6 +377,9 @@ router.put('/:id/recipe', async (req: AuthRequest, res) => {
 router.post('/bulk-update', async (req: AuthRequest, res) => {
   try {
     const { itemIds, updates } = req.body;
+    
+    // Validate updates via schema to prevent unauthorized field updates (mass assignment)
+    const validatedUpdates = BulkItemUpdateSchema.parse(updates);
 
     const ownership = await verifyBulkItemOwnership(itemIds, req.userId!);
     if (!ownership.authorized) {
@@ -387,7 +390,7 @@ router.post('/bulk-update', async (req: AuthRequest, res) => {
       where: {
         id: { in: itemIds },
       },
-      data: updates,
+      data: validatedUpdates,
     });
 
     res.json({ updated: result.count });

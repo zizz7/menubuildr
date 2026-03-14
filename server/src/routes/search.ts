@@ -11,7 +11,8 @@ router.use(requireSubscription);
 // Global search
 router.get('/', async (req: AuthRequest, res) => {
   try {
-    const { q, restaurant, menu } = req.query;
+    const { q, restaurant, menu, cursor, limit } = req.query;
+    const pageSize = Math.min(Number(limit) || 20, 50); // M8: cursor-based pagination, max 50
 
     if (!q || typeof q !== 'string') {
       return res.status(400).json({ error: 'Search query required' });
@@ -74,11 +75,17 @@ router.get('/', async (req: AuthRequest, res) => {
         },
         allergens: true,
       },
-      take: 50,
+      take: pageSize + 1, // Fetch one extra to detect hasMore
+      ...(cursor ? { cursor: { id: cursor as string }, skip: 1 } : {}),
+      orderBy: { createdAt: 'desc' },
     });
 
+    const hasMore = items.length > pageSize;
+    const page = hasMore ? items.slice(0, pageSize) : items;
+    const nextCursor = hasMore ? page[page.length - 1]?.id : null;
+
     // Format results with breadcrumb
-    const results = items.map((item) => ({
+    const results = page.map((item) => ({
       id: item.id,
       name: item.name,
       description: item.description,
@@ -94,7 +101,7 @@ router.get('/', async (req: AuthRequest, res) => {
       allergens: item.allergens,
     }));
 
-    res.json(results);
+    res.json({ results, nextCursor, hasMore });
   } catch (error) {
     console.error('Search error:', error);
     res.status(500).json({ error: 'Internal server error' });

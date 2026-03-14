@@ -360,25 +360,25 @@ export default function MenusPage() {
   const currentRestaurantMenus = menus.filter((m) => m.restaurantId === selectedRestaurantId);
 
   return (
-    <div className="p-8">
-      <div className="flex items-center justify-between mb-8">
+    <div className="p-10 space-y-10">
+      <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-3xl font-bold">Menus</h1>
-          <p className="text-gray-600 mt-2">
+          <h1 className="text-3xl font-bold tracking-tight text-foreground">Menus</h1>
+          <p className="text-muted-foreground mt-2 leading-relaxed">
             Manage menus for your restaurants ({currentRestaurantMenus.length}/4)
           </p>
         </div>
-        <div className="flex gap-2">
+        <div className="flex gap-3">
           <Select
             value={selectedRestaurantId || ''}
             onValueChange={handleRestaurantChange}
           >
-            <SelectTrigger className="w-[200px]">
+            <SelectTrigger className="w-[200px] border-input/50 bg-white font-medium text-sm">
               <SelectValue placeholder="Select restaurant" />
             </SelectTrigger>
             <SelectContent>
               {restaurants.map((r) => (
-                <SelectItem key={r.id} value={r.id}>
+                <SelectItem key={r.id} value={r.id} className="text-sm">
                   {r.name}
                 </SelectItem>
               ))}
@@ -386,34 +386,34 @@ export default function MenusPage() {
           </Select>
           <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
             <DialogTrigger asChild>
-              <Button onClick={() => handleOpenDialog()} disabled={!selectedRestaurantId}>
+              <Button onClick={() => handleOpenDialog()} disabled={!selectedRestaurantId} className="h-10 px-6 font-bold shadow-sm">
                 <Plus className="h-4 w-4 mr-2" />
                 Add Menu
               </Button>
             </DialogTrigger>
-            <DialogContent className="max-w-2xl w-full">
-              <DialogHeader>
-                <DialogTitle>
-                  {editingMenu ? 'Edit Menu' : 'Create Menu'}
+            <DialogContent className="max-w-xl w-full border-none shadow-2xl rounded-lg p-0 overflow-hidden">
+              <div className="p-8 border-b border-input/20 bg-gray-50/50">
+                <DialogTitle className="text-xl font-bold tracking-tight">
+                  {editingMenu ? 'Edit Menu' : 'Create New Menu'}
                 </DialogTitle>
-                <DialogDescription>
+                <DialogDescription className="text-sm text-gray-500 mt-1">
                   {editingMenu
-                    ? 'Update menu information'
-                    : 'Add a new menu (max 4 per restaurant)'}
+                    ? 'Update menu information and visibility settings.'
+                    : 'Add a new menu to your restaurant. Maximum 4 per establishment.'}
                 </DialogDescription>
-              </DialogHeader>
-              <form onSubmit={handleSubmit} className="space-y-4">
+              </div>
+              <form onSubmit={handleSubmit} className="p-8 space-y-6">
                 <MultiLanguageInput
                   label="Menu Name"
                   value={formData.name}
                   onChange={(value) => setFormData({ ...formData, name: value })}
                   languages={languages}
                   defaultLanguage={selectedRestaurant?.defaultLanguage || 'ENG'}
-                  placeholder="Enter menu name"
+                  placeholder="e.g. Dinner Menu"
                   showTranslate={true}
                 />
                 <div className="space-y-2">
-                  <Label htmlFor="slug">Slug</Label>
+                  <Label htmlFor="slug" className="text-sm font-semibold">Slug</Label>
                   <Input
                     id="slug"
                     value={formData.slug}
@@ -423,19 +423,20 @@ export default function MenusPage() {
                         slug: e.target.value.toLowerCase().replace(/\s+/g, '-'),
                       })
                     }
+                    placeholder="dinner-menu"
                     required
                   />
-                  <p className="text-xs text-gray-500">
-                    URL-friendly identifier (lowercase, numbers, hyphens only)
+                  <p className="text-[11px] text-muted-foreground font-medium uppercase tracking-wider">
+                    URL-friendly identifier unique to this restaurant
                   </p>
                 </div>
                 <div className="space-y-2">
-                  <Label htmlFor="menuType">Menu Type</Label>
+                  <Label htmlFor="menuType" className="text-sm font-semibold">Menu Type</Label>
                   <Select
                     value={formData.menuType}
                     onValueChange={(value) => setFormData({ ...formData, menuType: value })}
                   >
-                    <SelectTrigger>
+                    <SelectTrigger className="bg-white border-input/50">
                       <SelectValue />
                     </SelectTrigger>
                     <SelectContent>
@@ -446,16 +447,17 @@ export default function MenusPage() {
                     </SelectContent>
                   </Select>
                 </div>
-                <div className="flex justify-end gap-2">
+                <div className="flex justify-end gap-3 pt-6 border-t border-input/20">
                   <Button
                     type="button"
-                    variant="outline"
+                    variant="ghost"
                     onClick={() => setDialogOpen(false)}
+                    className="h-10 px-6 font-medium"
                   >
                     Cancel
                   </Button>
-                  <Button type="submit">
-                    {editingMenu ? 'Update' : 'Create'}
+                  <Button type="submit" className="h-10 px-8 font-bold shadow-sm">
+                    {editingMenu ? 'Save Changes' : 'Create Menu'}
                   </Button>
                 </div>
               </form>
@@ -464,73 +466,76 @@ export default function MenusPage() {
         </div>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
         {currentRestaurantMenus.map((menu) => (
           <Card
             key={menu.id}
-            className="hover:shadow-lg transition-shadow cursor-pointer"
+            className="group bg-white border-input/50 hover:border-primary/50 transition-all cursor-pointer overflow-hidden rounded-lg shadow-sm"
             onClick={() => handleSelectMenu(menu)}
           >
-            <CardHeader>
-              <div className="flex items-center justify-between">
-                <div className="flex items-center gap-3">
-                  <BookOpen className="h-6 w-6 text-gray-600" />
-                  <CardTitle>
-                    {menu.name[selectedRestaurant?.defaultLanguage || 'ENG'] || 'Untitled Menu'}
-                  </CardTitle>
+            <CardHeader className="pb-4">
+              <div className="flex items-center justify-between mb-4">
+                <div className="p-2.5 rounded-lg bg-gray-50 border border-input/50 text-primary">
+                  <BookOpen className="h-5 w-5" />
                 </div>
                 {menu.status === 'published' ? (
-                  <CheckCircle className="h-5 w-5 text-green-500" />
+                  <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-green-50 text-green-700 text-[10px] font-bold uppercase tracking-wider border border-green-200">
+                    <CheckCircle className="h-3 w-3" />
+                    Published
+                  </div>
                 ) : (
-                  <XCircle className="h-5 w-5 text-gray-400" />
+                  <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-gray-100 text-gray-600 text-[10px] font-bold uppercase tracking-wider border border-gray-200">
+                    <XCircle className="h-3 w-3" />
+                    Draft
+                  </div>
                 )}
               </div>
-              <CardDescription>
+              <CardTitle className="text-xl font-bold tracking-tight text-foreground group-hover:text-primary transition-colors line-clamp-1">
+                {menu.name[selectedRestaurant?.defaultLanguage || 'ENG'] || 'Untitled Menu'}
+              </CardTitle>
+              <CardDescription className="font-medium text-[10px] uppercase tracking-widest text-muted-foreground pt-1 opacity-60">
                 {menu.slug} • {menu.menuType}
               </CardDescription>
             </CardHeader>
-            <CardContent className="overflow-hidden">
-              <div className="space-y-2 text-sm">
-                <div className="flex justify-between">
-                  <span className="text-gray-600">Status:</span>
-                  <span
-                    className={`font-medium ${
-                      menu.status === 'published' ? 'text-green-600' : 'text-gray-600'
-                    }`}
-                  >
-                    {menu.status.charAt(0).toUpperCase() + menu.status.slice(1)}
-                  </span>
+            <CardContent className="space-y-6">
+              <div className="flex justify-between py-4 border-y border-input/20">
+                <div className="space-y-0.5">
+                  <span className="text-[10px] text-gray-500 font-bold uppercase tracking-widest">Sections</span>
+                  <p className="text-lg font-bold text-gray-900">{menu._count?.sections || 0}</p>
                 </div>
-                <div className="flex justify-between">
-                  <span className="text-gray-600">Sections:</span>
-                  <span className="font-medium">{menu._count?.sections || 0}</span>
+                <div className="space-y-0.5 text-right">
+                  <span className="text-[10px] text-gray-500 font-bold uppercase tracking-widest">Type</span>
+                  <p className="text-sm font-semibold text-gray-700 capitalize">
+                    {menu.menuType}
+                  </p>
                 </div>
               </div>
-              <div className="flex flex-wrap gap-2 mt-4" onClick={(e) => e.stopPropagation()}>
+
+              <div className="flex flex-wrap gap-2 pt-2" onClick={(e) => e.stopPropagation()}>
                 <Button
-                  variant="outline"
+                  variant="ghost"
                   size="sm"
+                  className="flex-1 text-[10px] font-bold border border-input/50 bg-white hover:bg-gray-50 h-8 uppercase tracking-tight"
                   onClick={() => handleSelectMenu(menu)}
-                  className="flex-shrink-0"
                 >
-                  <Eye className="h-4 w-4 mr-2" />
+                  <Edit className="h-3.5 w-3.5 mr-2 text-primary" />
                   Edit
                 </Button>
                 <Button
-                  variant="outline"
+                  variant="ghost"
                   size="sm"
+                  className="flex-1 text-[10px] font-bold border border-input/50 bg-white hover:bg-gray-50 h-8 uppercase tracking-tight"
                   onClick={() => handleDuplicate(menu)}
-                  className="flex-shrink-0"
                 >
-                  <Copy className="h-4 w-4 mr-2" />
-                  Duplicate
+                  <Copy className="h-3.5 w-3.5 mr-2 text-primary" />
+                  Copy
                 </Button>
                 {menu.status === 'draft' && (
                   <Button
-                    variant="outline"
+                    variant="ghost"
                     size="sm"
+                    className="flex-1 text-[10px] font-bold border border-primary/20 bg-primary/5 hover:bg-primary hover:text-white h-8 uppercase tracking-tight text-primary transition-all"
                     onClick={() => handlePublish(menu)}
-                    className="flex-shrink-0"
                   >
                     Publish
                   </Button>
@@ -538,35 +543,33 @@ export default function MenusPage() {
                 {menu.status === 'published' && (
                   <>
                     <Button
-                      variant="outline"
+                      variant="ghost"
                       size="sm"
+                      className="text-[10px] font-bold border border-input/50 bg-white hover:bg-gray-50 h-8 px-3 uppercase tracking-tight"
                       onClick={() => handleRepublish(menu)}
-                      title="Regenerate static HTML menu"
-                      className="flex-shrink-0"
+                      title="Sync and Republish"
                     >
-                      <RefreshCw className="h-4 w-4 mr-2" />
-                      Republish
+                      <RefreshCw className="h-3.5 w-3.5 text-primary" />
                     </Button>
                     <Button
-                      variant="outline"
+                      variant="ghost"
                       size="sm"
+                      className="text-[10px] font-bold border border-input/50 bg-white hover:bg-gray-50 h-8 px-3 uppercase tracking-tight"
                       onClick={() => handleCopyLink(menu)}
-                      title="Copy shareable link"
-                      className="flex-shrink-0"
+                      title="Copy Menu Link"
                     >
-                      <Link2 className="h-4 w-4 mr-2" />
-                      Copy Link
+                      <Link2 className="h-3.5 w-3.5 text-primary" />
                     </Button>
                   </>
                 )}
                 <Button
-                  variant="outline"
+                  variant="ghost"
                   size="sm"
+                  className="text-[10px] font-bold border border-input/50 bg-white hover:bg-red-50 hover:text-red-600 h-8 px-3 uppercase tracking-tight"
                   onClick={() => handleDelete(menu.id)}
-                  className="flex-shrink-0"
+                  title="Delete Menu"
                 >
-                  <Trash2 className="h-4 w-4 mr-2" />
-                  Delete
+                  <Trash2 className="h-3.5 w-3.5" />
                 </Button>
               </div>
             </CardContent>
@@ -575,33 +578,33 @@ export default function MenusPage() {
       </div>
 
       {currentRestaurantMenus.length === 0 && selectedRestaurantId && (
-        <Card className="mt-8">
-          <CardContent className="flex flex-col items-center justify-center py-12">
-            <BookOpen className="h-12 w-12 text-gray-400 mb-4" />
-            <h3 className="text-lg font-semibold mb-2">No menus yet</h3>
-            <p className="text-gray-600 text-center mb-4">
-              Get started by creating your first menu
-            </p>
-            <Button onClick={() => handleOpenDialog()}>
-              <Plus className="h-4 w-4 mr-2" />
-              Create Menu
-            </Button>
-          </CardContent>
+        <Card className="bg-surface/20 border-dashed border-2 flex flex-col items-center justify-center p-20 text-center">
+          <div className="p-6 rounded-2xl bg-surface border border-input text-muted-foreground mb-6 shadow-sm">
+            <BookOpen className="h-10 w-10" />
+          </div>
+          <CardTitle className="text-2xl font-bold tracking-tight">Create your first menu</CardTitle>
+          <p className="text-muted-foreground mt-2 max-w-sm leading-relaxed font-medium">
+            Start structuring your digital menu by adding titles, sections, and items.
+          </p>
+          <Button size="lg" className="mt-8 px-10 h-12 text-base font-bold shadow-lg shadow-primary/20" onClick={() => handleOpenDialog()}>
+            <Plus className="h-5 w-5 mr-3" />
+            Get Started
+          </Button>
         </Card>
       )}
 
       {/* Publish Dialog with Template Selection */}
       <Dialog open={publishDialogOpen} onOpenChange={setPublishDialogOpen}>
-        <DialogContent className="max-w-lg w-full">
-          <DialogHeader>
-            <DialogTitle>
-              {publishingMenu?.status === 'published' ? 'Republish Menu' : 'Publish Menu'}
+        <DialogContent className="max-w-lg w-full border-none shadow-2xl rounded-lg p-0 overflow-hidden">
+          <div className="p-8 border-b border-input/20 bg-gray-50/50">
+            <DialogTitle className="text-xl font-bold tracking-tight">
+              {publishingMenu?.status === 'published' ? 'Republish Menu' : 'Ready to Publish?'}
             </DialogTitle>
-            <DialogDescription>
-              Choose a template for your HTML menu, then publish.
+            <DialogDescription className="text-sm text-gray-500 mt-1">
+              Select a template below to define the look of your live digital menu.
             </DialogDescription>
-          </DialogHeader>
-          <div className="space-y-4">
+          </div>
+          <div className="p-8 space-y-6">
             <TemplateSelector
               selectedTemplateId={selectedTemplateId}
               onTemplateSelect={(template) => setSelectedTemplateId(template.id)}
@@ -610,12 +613,16 @@ export default function MenusPage() {
                 setPreviewOpen(true);
               }}
             />
-            <div className="flex justify-end gap-2 pt-2">
-              <Button variant="outline" onClick={() => setPublishDialogOpen(false)}>
+            <div className="flex justify-end gap-3 pt-6 border-t border-input/20">
+              <Button 
+                variant="ghost" 
+                onClick={() => setPublishDialogOpen(false)}
+                className="h-10 px-6 font-medium"
+              >
                 Cancel
               </Button>
-              <Button onClick={handleConfirmPublish}>
-                {publishingMenu?.status === 'published' ? 'Republish' : 'Publish'}
+              <Button onClick={handleConfirmPublish} className="h-10 px-8 font-bold shadow-sm">
+                {publishingMenu?.status === 'published' ? 'Sync & Republish' : 'Go Live Now'}
               </Button>
             </div>
           </div>

@@ -3,7 +3,7 @@ import prisma from '../config/database';
 import { authenticateToken, AuthRequest } from '../middleware/auth';
 import { requireSubscription } from '../middleware/subscription';
 import { verifyRestaurantOwnership } from '../middleware/ownership';
-import { RestaurantSchema, ThemeSettingsSchema } from '../utils/validation';
+import { RestaurantSchema, ThemeSettingsSchema, ModuleSettingsSchema } from '../utils/validation';
 
 const router = express.Router();
 
@@ -187,16 +187,25 @@ router.put('/:id/theme', async (req: AuthRequest, res) => {
       }
     }
     
-    // Validate menuId if provided
+    // M7: Verify menuId is owned by this restaurant (not just any menu)
     if (menuId) {
       const menu = await prisma.menu.findUnique({
         where: { id: menuId },
+        select: { id: true, restaurantId: true },
       });
-      
+
       if (!menu) {
-        return res.status(404).json({ 
+        return res.status(404).json({
           error: 'Menu not found',
           code: 'MENU_NOT_FOUND'
+        });
+      }
+
+      // Ownership check: menu must belong to THIS restaurant
+      if (menu.restaurantId !== req.params.id) {
+        return res.status(403).json({
+          error: 'Menu does not belong to this restaurant',
+          code: 'MENU_OWNERSHIP_MISMATCH'
         });
       }
     }
@@ -270,7 +279,7 @@ router.put('/:id/theme', async (req: AuthRequest, res) => {
   }
 });
 
-// Update module settings (ownership verified)
+// Update module settings (ownership verified + validated through Zod, H6)
 router.put('/:id/modules', async (req: AuthRequest, res) => {
   try {
     const ownership = await verifyRestaurantOwnership(req.params.id, req.userId!);
@@ -278,17 +287,23 @@ router.put('/:id/modules', async (req: AuthRequest, res) => {
       return res.status(404).json({ error: 'Restaurant not found' });
     }
 
+    // H6: Parse through schema to prevent mass assignment of arbitrary fields
+    const data = ModuleSettingsSchema.parse(req.body);
+
     const moduleSettings = await prisma.moduleSettings.upsert({
       where: { restaurantId: req.params.id },
-      update: req.body,
+      update: data,
       create: {
         restaurantId: req.params.id,
-        ...req.body,
+        ...data,
       },
     });
 
     res.json(moduleSettings);
-  } catch (error) {
+  } catch (error: any) {
+    if (error.name === 'ZodError' || error.issues) {
+      return res.status(400).json({ error: 'Validation error', details: error.issues?.map((e: any) => `${e.path.join('.')}: ${e.message}`).join(', ') });
+    }
     console.error('Update module settings error:', error);
     res.status(500).json({ error: 'Internal server error' });
   }

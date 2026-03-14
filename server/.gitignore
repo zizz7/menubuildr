@@ -1,0 +1,13 @@
+node_modules/
+dist/
+.env
+.env.local
+
+# L8: Seed scripts contain real production data/credentials — never commit
+src/scripts/seed.ts
+src/scripts/seed-prod.ts
+src/scripts/seed-prod-fresh.ts
+
+# Uploads and generated menus are runtime artifacts
+uploads/
+menus/

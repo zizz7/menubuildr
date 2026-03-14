@@ -120,13 +120,12 @@ export function DashboardLayout({ children }: { children: ReactNode }) {
     }
     return 'Dashboard';
   };
-
   const renderSidebar = (isCollapsed: boolean) => (
     <div className="flex flex-col h-full">
       {/* User Profile Header */}
-      <div className={cn('shrink-0 pt-6 pb-6 border-b border-gray-800/50', isCollapsed ? 'px-3' : 'px-6')}>
+      <div className={cn('shrink-0 pt-6 pb-6 border-b border-sidebar-border', isCollapsed ? 'px-3' : 'px-6')}>
         <div className={cn('flex items-center', isCollapsed ? 'justify-center' : 'gap-3')}>
-          <div className="w-10 h-10 rounded-full bg-gray-700 flex items-center justify-center text-gray-300 border border-gray-600 overflow-hidden shrink-0 relative">
+          <div className="w-10 h-10 rounded-full bg-sidebar-accent flex items-center justify-center text-sidebar-foreground border border-sidebar-border overflow-hidden shrink-0 relative">
             {admin?.profileImageUrl ? (
               <img src={resolveAssetUrl(admin.profileImageUrl)} alt="" className="absolute inset-0 w-full h-full object-cover" />
             ) : (
@@ -137,11 +136,11 @@ export function DashboardLayout({ children }: { children: ReactNode }) {
             'flex flex-col min-w-0 transition-opacity duration-200',
             isCollapsed ? 'opacity-0 w-0 overflow-hidden' : 'opacity-100'
           )}>
-            <span className="font-semibold text-white text-sm leading-tight truncate">
+            <span className="font-semibold text-sidebar-foreground text-sm leading-tight truncate">
               {admin?.name || admin?.email || 'User'}
             </span>
             {selectedRestaurant && (
-              <span className="text-xs text-gray-400 truncate">{selectedRestaurant.name}</span>
+              <span className="text-xs text-sidebar-foreground/50 truncate">{selectedRestaurant.name}</span>
             )}
           </div>
         </div>
@@ -152,7 +151,7 @@ export function DashboardLayout({ children }: { children: ReactNode }) {
         {navGroups.map((group) => (
           <div key={group.label} className="space-y-1">
             <p className={cn(
-              'px-3 text-[10px] font-bold text-gray-500 uppercase tracking-widest mb-2 transition-opacity duration-200',
+              'px-3 text-xs font-semibold text-sidebar-foreground/40 mb-2 transition-opacity duration-200',
               isCollapsed ? 'opacity-0 h-0 overflow-hidden mb-0' : 'opacity-100'
             )}>
               {group.label}
@@ -165,11 +164,11 @@ export function DashboardLayout({ children }: { children: ReactNode }) {
                   <Link
                     href={item.href}
                     className={cn(
-                      'flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors',
+                      'flex items-center gap-3 px-3 py-2 rounded-md text-sm font-medium transition-colors',
                       isCollapsed && 'justify-center',
                       isActive
-                        ? 'bg-white/10 text-white'
-                        : 'text-gray-400 hover:bg-white/5 hover:text-white'
+                        ? 'bg-sidebar-accent text-sidebar-foreground shadow-sm border border-sidebar-border'
+                        : 'text-sidebar-foreground/60 hover:bg-sidebar-accent/50 hover:text-sidebar-foreground'
                     )}
                   >
                     <Icon className="h-[18px] w-[18px] shrink-0" />
@@ -180,13 +179,13 @@ export function DashboardLayout({ children }: { children: ReactNode }) {
                       {item.title}
                     </span>
                     {item.badge && !isCollapsed && (
-                      <span className="ml-auto bg-white text-gray-900 text-[10px] font-bold px-1.5 py-0.5 rounded-full">
+                      <span className="ml-auto bg-sidebar-primary text-sidebar-primary-foreground text-[10px] font-medium px-2 py-0.5 rounded-full">
                         {item.badge}
                       </span>
                     )}
                   </Link>
                   {isCollapsed && (
-                    <span className="absolute left-full top-1/2 -translate-y-1/2 ml-2 px-2 py-1 bg-gray-900 text-white text-xs rounded shadow-lg whitespace-nowrap opacity-0 group-hover/navitem:opacity-100 pointer-events-none transition-opacity z-50">
+                    <span className="absolute left-full top-1/2 -translate-y-1/2 ml-2 px-2 py-1 bg-popover text-popover-foreground text-xs rounded shadow-lg whitespace-nowrap opacity-0 group-hover/navitem:opacity-100 pointer-events-none transition-opacity z-50">
                       {item.title}
                     </span>
                   )}
@@ -198,11 +197,11 @@ export function DashboardLayout({ children }: { children: ReactNode }) {
       </nav>
 
       {/* Footer */}
-      <div className="shrink-0 p-4 border-t border-gray-800/50 overflow-hidden">
+      <div className="shrink-0 p-4 border-t border-sidebar-border overflow-hidden">
         <button
           onClick={handleLogout}
           className={cn(
-            'flex items-center gap-3 text-gray-500 hover:text-white transition-colors text-sm font-medium w-full px-3 py-2 rounded-lg hover:bg-white/5',
+            'flex items-center gap-3 text-sidebar-foreground/50 hover:text-sidebar-foreground transition-colors text-sm font-medium w-full px-3 py-2 rounded-lg hover:bg-sidebar-accent',
             isCollapsed && 'justify-center'
           )}
         >
@@ -215,7 +214,7 @@ export function DashboardLayout({ children }: { children: ReactNode }) {
           </span>
         </button>
         <p className={cn(
-          'mt-3 px-3 text-[10px] text-gray-600 font-medium transition-opacity duration-200',
+          'mt-3 px-3 text-[10px] text-sidebar-foreground/30 font-normal transition-opacity duration-200',
           isCollapsed ? 'opacity-0 h-0 overflow-hidden mt-0' : 'opacity-100'
         )}>
           MenuBuildr v1.0.0
@@ -224,22 +223,23 @@ export function DashboardLayout({ children }: { children: ReactNode }) {
     </div>
   );
 
+
   return (
-    <div className="flex h-screen overflow-hidden bg-gray-50">
+    <div className="flex h-screen overflow-hidden bg-background text-foreground">
       {/* Desktop Sidebar — always visible on lg+ */}
       {/* Desktop Sidebar wrapper — relative so toggle button can overflow */}
       <div className={cn(
-        'hidden lg:flex shrink-0 relative transition-all duration-200',
+        'hidden lg:flex shrink-0 relative transition-all duration-200 border-r border-sidebar-border',
         collapsed ? 'w-[68px]' : 'w-[260px]'
       )}>
-        <aside className="w-full bg-gray-900 text-white flex flex-col overflow-hidden">
+        <aside className="w-full bg-sidebar text-sidebar-foreground flex flex-col overflow-hidden">
           {renderSidebar(collapsed)}
         </aside>
         {/* Toggle Button — vertically centered on the right edge */}
         <button
           onClick={toggle}
           aria-label={collapsed ? 'Expand sidebar' : 'Collapse sidebar'}
-          className="absolute top-1/2 -translate-y-1/2 -right-3 w-6 h-6 flex items-center justify-center rounded-full bg-gray-800 border border-gray-700 text-gray-400 hover:text-white hover:bg-gray-700 transition-colors z-10"
+          className="absolute top-8 -right-3 w-6 h-6 flex items-center justify-center rounded-md bg-sidebar border border-sidebar-border text-sidebar-foreground/50 hover:text-sidebar-foreground hover:bg-sidebar-accent transition-colors z-10 shadow-sm"
         >
           {collapsed ? <ChevronsRight className="h-3.5 w-3.5" /> : <ChevronsLeft className="h-3.5 w-3.5" />}
         </button>
@@ -255,7 +255,7 @@ export function DashboardLayout({ children }: { children: ReactNode }) {
         {/* Backdrop */}
         <div
           className={cn(
-            'absolute inset-0 bg-black/40 backdrop-blur-[2px] transition-opacity duration-300',
+            'absolute inset-0 bg-black/20 transition-opacity duration-300',
             drawerOpen ? 'opacity-100' : 'opacity-0'
           )}
           onClick={() => setDrawerOpen(false)}
@@ -264,14 +264,14 @@ export function DashboardLayout({ children }: { children: ReactNode }) {
         {/* Drawer Panel */}
         <div
           className={cn(
-            'relative w-[82%] max-w-[300px] bg-gray-900 text-white h-full shadow-2xl flex flex-col transform transition-transform duration-300 ease-out',
+            'relative w-[280px] bg-sidebar text-sidebar-foreground h-full border-r border-sidebar-border flex flex-col transform transition-transform duration-300 ease-out',
             drawerOpen ? 'translate-x-0' : '-translate-x-full'
           )}
         >
           {/* Close button inside drawer */}
           <button
             onClick={() => setDrawerOpen(false)}
-            className="absolute top-4 right-4 w-8 h-8 rounded-full bg-white/10 flex items-center justify-center text-gray-400 hover:text-white hover:bg-white/20 transition-colors"
+            className="absolute top-4 right-4 w-8 h-8 rounded-md bg-sidebar-accent flex items-center justify-center text-sidebar-foreground/50 hover:text-sidebar-foreground hover:bg-sidebar-accent/80 transition-colors"
           >
             <X className="h-4 w-4" />
           </button>
@@ -282,22 +282,22 @@ export function DashboardLayout({ children }: { children: ReactNode }) {
       </div>
 
       {/* Main Content Area */}
-      <div className="flex-1 flex flex-col min-w-0">
+      <div className="flex-1 flex flex-col min-w-0 bg-background">
         {/* Top Header Bar */}
-        <header className="shrink-0 h-14 px-4 lg:px-6 flex items-center justify-between border-b border-gray-200 bg-white">
+        <header className="shrink-0 h-14 px-4 lg:px-6 flex items-center justify-between border-b border-border bg-background sticky top-0 z-20">
           <div className="flex items-center gap-3">
             <button
               onClick={() => setDrawerOpen(true)}
-              className="lg:hidden w-9 h-9 -ml-1 flex items-center justify-center rounded-lg hover:bg-gray-100 text-gray-700 transition-colors"
+              className="lg:hidden w-9 h-9 -ml-1 flex items-center justify-center rounded-md border border-input hover:bg-accent text-accent-foreground transition-colors"
             >
               <MenuIcon className="h-5 w-5" />
             </button>
-            <h1 className="text-base font-semibold text-gray-900 tracking-tight">
+            <h1 className="text-sm font-semibold text-foreground">
               {getPageTitle()}
             </h1>
           </div>
           <div className="flex items-center gap-2">
-            <button className="w-9 h-9 flex items-center justify-center rounded-lg hover:bg-gray-100 text-gray-500 transition-colors">
+            <button className="w-9 h-9 flex items-center justify-center rounded-md border border-input hover:bg-accent text-accent-foreground/70 transition-colors">
               <Bell className="h-[18px] w-[18px]" />
             </button>
           </div>

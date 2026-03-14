@@ -62,12 +62,34 @@ interface MenuItem {
   imageUrl?: string;
   orderIndex: number;
   isAvailable: boolean;
-  allergens?: Array<{ id: string; name: string; label: Record<string, string> }>;
+  allergens?: Array<Allergen>;
   recipeDetails?: {
-    ingredients: Array<{ name: string; quantity: number; unit: string }>;
+    ingredients: Record<string, string>;
+    ingredientsLabel?: Record<string, string>;
     instructions?: string;
     servings?: number;
   };
+}
+
+interface Allergen {
+  id: string;
+  name: string;
+  imageUrl: string;
+  label: Record<string, string>;
+}
+
+interface Menu {
+  id: string;
+  name: Record<string, string>;
+  slug: string;
+  description?: Record<string, string>;
+  sections?: Section[];
+}
+
+interface Language {
+  code: string;
+  name: string;
+  isActive: boolean;
 }
 
 function SortableSection({
@@ -103,88 +125,110 @@ function SortableSection({
   const style = {
     transform: CSS.Transform.toString(transform),
     transition,
-    opacity: isDragging ? 0.5 : 1,
+    opacity: isDragging ? 0.3 : 1,
+    zIndex: isDragging ? 50 : 'auto',
   };
 
   return (
     <div ref={setNodeRef} style={style}>
-      <Card className="mb-4 shadow-sm">
-        <CardHeader className="pb-3">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-3 flex-1">
+      <Card className="mb-6 border border-border bg-card overflow-hidden transition-colors">
+        <CardHeader className="p-6">
+          <div className="flex items-center justify-between gap-4">
+            <div className="flex items-center gap-4 flex-1 min-w-0">
               <div
                 {...attributes}
                 {...listeners}
-                className="cursor-grab active:cursor-grabbing flex-shrink-0"
+                className="cursor-grab active:cursor-grabbing p-2 hover:bg-input/50 rounded-md transition-colors text-muted hover:text-foreground"
               >
-                <GripVertical className="h-5 w-5 text-gray-400 hover:text-gray-600" />
+                <GripVertical className="h-5 w-5" />
               </div>
               <Button
                 variant="ghost"
                 size="sm"
                 onClick={onToggle}
-                className="flex items-center gap-2 p-0 h-auto hover:bg-transparent"
+                className="h-8 w-8 p-0 flex-shrink-0 hover:bg-input/50 transition-colors"
               >
                 {isExpanded ? (
-                  <ChevronUp className="h-4 w-4 text-gray-500" />
+                  <ChevronUp className="h-4 w-4" />
                 ) : (
-                  <ChevronDown className="h-4 w-4 text-gray-500" />
+                  <ChevronDown className="h-4 w-4" />
                 )}
               </Button>
-              <CardTitle className="text-lg cursor-pointer" onClick={onToggle}>
-                {section.title['ENG'] || 'Untitled Section'}
-              </CardTitle>
-              {section.items && section.items.length > 0 && (
-                <span className="text-sm text-gray-500 bg-gray-100 px-2 py-1 rounded">
-                  {section.items.length} {section.items.length === 1 ? 'item' : 'items'}
-                </span>
-              )}
+              <div className="flex items-center gap-3 overflow-hidden">
+                <CardTitle 
+                  className="text-xl font-bold truncate cursor-pointer hover:text-primary transition-colors"
+                  onClick={onToggle}
+                >
+                  {section.title['ENG'] || 'Untitled Section'}
+                </CardTitle>
+                {section.items && section.items.length > 0 && (
+                  <span className="text-[10px] font-medium tracking-tight bg-primary/10 text-primary px-2 py-0.5 rounded border border-primary/20 flex-shrink-0">
+                    {section.items.length} {section.items.length === 1 ? 'item' : 'items'}
+                  </span>
+                )}
+              </div>
             </div>
-            <div className="flex gap-2">
-              <Button
-                variant="outline"
-                size="sm"
-                onClick={() => onEdit(section)}
-              >
-                <Edit className="h-4 w-4 mr-2" />
-                Edit
-              </Button>
-              <Button
-                variant="outline"
-                size="sm"
-                onClick={() => onAddSubSection(section.id)}
-              >
-                <Plus className="h-4 w-4 mr-2" />
-                Add Sub-Section
-              </Button>
-              <Button
-                variant="outline"
-                size="sm"
-                onClick={() => onAddItem(section.id)}
-              >
-                <Plus className="h-4 w-4 mr-2" />
-                Add Item
-              </Button>
-              <Button
-                variant="outline"
-                size="sm"
-                onClick={() => onCopy(section.id)}
-              >
-                <Copy className="h-4 w-4 mr-2" />
-                Copy to...
-              </Button>
-              <Button
-                variant="outline"
-                size="sm"
-                onClick={() => onDelete(section.id)}
-              >
-                <Trash2 className="h-4 w-4 mr-2" />
-                Delete
-              </Button>
+            <div className="flex items-center gap-2">
+              <div className="hidden lg:flex gap-2">
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={() => onEdit(section)}
+                  className="h-9 px-4 border-input/50 hover:bg-input/50 font-medium"
+                >
+                  <Edit className="h-4 w-4 mr-2 text-primary" />
+                  Edit
+                </Button>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={() => onAddSubSection(section.id)}
+                  className="h-9 px-4 border-input/50 hover:bg-input/50 font-medium"
+                >
+                  <Plus className="h-4 w-4 mr-2 text-green-500" />
+                  Add Sub-Section
+                </Button>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={() => onAddItem(section.id)}
+                  className="h-9 px-4 border-input/50 hover:bg-input/50 font-medium"
+                >
+                  <Plus className="h-4 w-4 mr-2 text-primary" />
+                  Add Item
+                </Button>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={() => onCopy(section.id)}
+                  className="h-9 px-4 border-input/50 hover:bg-input/50 font-medium"
+                >
+                  <Copy className="h-4 w-4 mr-2 text-muted" />
+                  Copy
+                </Button>
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={() => onDelete(section.id)}
+                  className="h-9 w-9 p-0 text-destructive hover:bg-destructive/5"
+                >
+                  <Trash2 className="h-4 w-4" />
+                </Button>
+              </div>
+              <div className="lg:hidden">
+                 {/* Mobile dropdown could go here, for now keeping buttons simple or icons only */}
+                 <Button variant="ghost" size="sm" onClick={() => onEdit(section)}><Edit className="h-4 w-4" /></Button>
+              </div>
             </div>
           </div>
         </CardHeader>
-        {isExpanded && <CardContent className="pt-4">{children}</CardContent>}
+        {isExpanded && (
+          <CardContent className="px-6 pb-6 pt-0 border-t border-border bg-muted/20">
+            <div className="mt-6">
+              {children}
+            </div>
+          </CardContent>
+        )}
       </Card>
     </div>
   );
@@ -196,8 +240,8 @@ function SortableItem({
   onDelete,
 }: {
   item: MenuItem;
-  onEdit: (item: MenuItem) => void;
-  onDelete: (id: string) => void;
+  onEdit: (item: MenuItem) => void | Promise<void>;
+  onDelete: (id: string) => void | Promise<void>;
 }) {
   const {
     attributes,
@@ -211,62 +255,90 @@ function SortableItem({
   const style = {
     transform: CSS.Transform.toString(transform),
     transition,
-    opacity: isDragging ? 0.5 : 1,
+    opacity: isDragging ? 0.3 : 1,
   };
 
   return (
     <div ref={setNodeRef} style={style}>
-      <div className="flex items-center gap-3 p-4 border rounded-lg mb-2 hover:bg-gray-50 transition-colors">
+      <div className="group flex items-center gap-4 p-4 border border-border bg-card rounded-md mb-3 transition-colors">
         <div
           {...attributes}
           {...listeners}
-          className="cursor-grab active:cursor-grabbing flex-shrink-0"
+          className="cursor-grab active:cursor-grabbing p-2 hover:bg-input/50 rounded-md transition-colors text-muted hover:text-foreground"
         >
-          <GripVertical className="h-5 w-5 text-gray-400" />
+          <GripVertical className="h-5 w-5" />
         </div>
-        <div className="flex-1 min-w-0">
-          <div className="font-semibold text-base mb-1">
-            {item.name['ENG'] || 'Untitled Item'}
+        
+        {item.imageUrl && (
+          <div className="w-16 h-16 rounded border border-border bg-muted overflow-hidden flex-shrink-0">
+            <img 
+              src={resolveAssetUrl(item.imageUrl)} 
+              alt={item.name['ENG']} 
+              className="w-full h-full object-cover" 
+            />
           </div>
-          {item.description?.['ENG'] && (
-            <div className="text-sm text-gray-600 mb-2 line-clamp-2">
-              {item.description['ENG']}
+        )}
+
+        <div className="flex-1 min-w-0">
+          <div className="flex items-center gap-2 mb-1">
+            <div className="font-bold text-lg truncate group-hover:text-primary transition-colors">
+              {item.name['ENG'] || 'Untitled Item'}
             </div>
-          )}
-          <div className="flex items-center gap-4 text-sm">
-            {item.price && item.price > 0 && (
-              <span className="font-semibold text-green-600">
-                ${item.price.toFixed(2)}
-              </span>
-            )}
-            {typeof item.calories === 'number' && item.calories > 0 && (
-              <span className="text-xs text-gray-600 bg-gray-100 px-2 py-1 rounded">
-                {Math.round(item.calories)} kcal
-              </span>
-            )}
             {!item.isAvailable && (
-              <span className="text-xs bg-gray-100 text-gray-600 px-2 py-1 rounded">
+              <span className="text-[10px] font-medium tracking-tight bg-destructive/10 text-destructive px-2 py-0.5 rounded border border-destructive/20">
                 Unavailable
               </span>
             )}
           </div>
+          {item.description?.['ENG'] && (
+            <div className="text-sm text-muted mb-2 line-clamp-1 group-hover:line-clamp-none transition-all duration-300">
+              {item.description['ENG']}
+            </div>
+          )}
+          <div className="flex items-center gap-3">
+            {item.price && item.price > 0 && (
+              <span className="font-black text-primary text-base">
+                ${item.price.toFixed(2)}
+              </span>
+            )}
+            {typeof item.calories === 'number' && item.calories > 0 && (
+              <span className="text-[11px] font-medium text-muted-foreground bg-muted px-2 py-0.5 rounded flex items-center gap-1 transition-colors">
+                <span className="w-1 h-1 rounded-full bg-orange-500" />
+                {Math.round(item.calories)} kcal
+              </span>
+            )}
+            {item.allergens && item.allergens.length > 0 && (
+              <div className="flex gap-1 ml-auto">
+                {item.allergens.slice(0, 3).map((a) => (
+                  <div key={a.id} className="w-5 h-5 opacity-60 hover:opacity-100 transition-opacity" title={a.name}>
+                    <img src={resolveAssetUrl(a.imageUrl || '')} alt={a.name} className="w-full h-full object-contain grayscale hover:grayscale-0 transition-all" />
+                  </div>
+                ))}
+                {item.allergens.length > 3 && (
+                  <span className="text-[10px] font-bold text-muted self-center">+{item.allergens.length - 3}</span>
+                )}
+              </div>
+            )}
+          </div>
         </div>
-        <div className="flex gap-2 flex-shrink-0">
+        
+        <div className="flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
           <Button
             variant="outline"
             size="sm"
             onClick={() => onEdit(item)}
+            className="h-9 px-4 border-border hover:bg-accent font-medium"
           >
             <Edit className="h-4 w-4 mr-2" />
             Edit
           </Button>
           <Button
-            variant="outline"
+            variant="ghost"
             size="sm"
             onClick={() => onDelete(item.id)}
+            className="h-9 w-9 p-0 text-destructive hover:bg-destructive/5"
           >
-            <Trash2 className="h-4 w-4 mr-2" />
-            Delete
+            <Trash2 className="h-4 w-4" />
           </Button>
         </div>
       </div>
@@ -279,8 +351,8 @@ export default function MenuDetailPage() {
   const params = useParams();
   const menuId = params.id as string;
   const { isAuthenticated } = useAuthStore();
-  const { selectedMenu, setSelectedMenu } = useMenuStore();
-  const [menu, setMenu] = useState<any>(null);
+  const { setSelectedMenu } = useMenuStore();
+  const [menu, setMenu] = useState<Menu | null>(null);
   const [sections, setSections] = useState<Section[]>([]);
   const [expandedSections, setExpandedSections] = useState<Set<string>>(new Set());
   const [expandedSubSections, setExpandedSubSections] = useState<Set<string>>(new Set());
@@ -293,8 +365,8 @@ export default function MenuDetailPage() {
   const [editingItem, setEditingItem] = useState<MenuItem | null>(null);
   const [selectedSectionId, setSelectedSectionId] = useState<string | null>(null);
   const [copySectionId, setCopySectionId] = useState<string | null>(null);
-  const [languages, setLanguages] = useState<Array<{ code: string; name: string }>>([]);
-  const [allergens, setAllergens] = useState<Array<{ id: string; name: string; imageUrl: string; label: Record<string, string> }>>([]);
+  const [languages, setLanguages] = useState<Language[]>([]);
+  const [allergens, setAllergens] = useState<Allergen[]>([]);
   const [sectionForm, setSectionForm] = useState({
     title: {} as Record<string, string>,
     description: {} as Record<string, string>,
@@ -869,392 +941,418 @@ export default function MenuDetailPage() {
   }
 
   return (
-    <div className="p-8">
-      <div className="flex items-center gap-4 mb-8">
-        <Button variant="outline" onClick={() => router.push('/dashboard/menus')}>
-          <ArrowLeft className="h-4 w-4 mr-2" />
-          Back
-        </Button>
-        <div>
-          <h1 className="text-3xl font-bold">
-            {menu.name['ENG'] || 'Menu Editor'}
-          </h1>
-          <p className="text-gray-600 mt-2">{menu.slug}</p>
+    <div className="p-8 max-w-7xl mx-auto">
+      <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12">
+        <div className="flex items-start gap-5">
+          <Button 
+            variant="outline" 
+            onClick={() => router.push('/dashboard/menus')}
+            className="h-10 w-10 p-0 rounded-md border-border hover:bg-accent transition-colors shrink-0"
+          >
+            <ArrowLeft className="h-4 w-4" />
+          </Button>
+          <div className="space-y-1">
+            <h1 className="text-3xl font-bold tracking-tight text-foreground">
+              {menu.name['ENG'] || 'Menu Editor'}
+            </h1>
+            <div className="flex items-center gap-2">
+              <span className="text-[10px] font-medium tracking-tight text-muted-foreground py-1 px-2 rounded bg-muted border border-border">
+                Slug: {menu.slug}
+              </span>
+              <span className="w-1 h-1 rounded-full bg-input" />
+              <span className="text-xs font-medium text-muted">
+                {sections.length} {sections.length === 1 ? 'Section' : 'Sections'}
+              </span>
+            </div>
+          </div>
         </div>
-      </div>
-
-      <div className="mb-6 flex items-center justify-between">
-        <div>
-          <h2 className="text-xl font-semibold">Sections</h2>
-          <p className="text-sm text-gray-600 mt-1">
-            Organize your menu items into sections. Drag to reorder.
-          </p>
-        </div>
-        <Dialog open={sectionDialogOpen} onOpenChange={setSectionDialogOpen}>
-          <DialogTrigger asChild>
-            <Button onClick={() => handleOpenSectionDialog()}>
-              <Plus className="h-4 w-4 mr-2" />
-              Add Section
-            </Button>
-          </DialogTrigger>
-          <DialogContent className="max-w-2xl w-full">
-            <DialogHeader>
-              <DialogTitle>
-                {editingSection ? 'Edit Section' : 'Create Section'}
-              </DialogTitle>
-              <DialogDescription>
-                {editingSection
-                  ? 'Update section information'
-                  : 'Add a new section to organize menu items'}
-              </DialogDescription>
-            </DialogHeader>
-            <form onSubmit={handleSectionSubmit} className="space-y-4">
-              <MultiLanguageInput
-                label="Section Title"
-                value={sectionForm.title}
-                onChange={(value) => setSectionForm({ ...sectionForm, title: value })}
-                languages={languages}
-                defaultLanguage="ENG"
-                placeholder="Enter section title"
-                showTranslate={true}
-              />
-              <MultiLanguageInput
-                label="Section Description (optional)"
-                value={sectionForm.description}
-                onChange={(value) => setSectionForm({ ...sectionForm, description: value })}
-                languages={languages}
-                defaultLanguage="ENG"
-                placeholder="Enter section description"
-                showTranslate={true}
-              />
-              <div className="space-y-2">
-                <div className="flex items-center justify-between">
-                  <Label htmlFor="illustrationUrl">Illustration (optional)</Label>
-                  <div className="flex gap-2">
-                    <Button
-                      type="button"
-                      variant={illustrationInputMode === 'upload' ? 'default' : 'outline'}
-                      size="sm"
-                      onClick={() => setIllustrationInputMode('upload')}
-                    >
-                      Upload
-                    </Button>
-                    <Button
-                      type="button"
-                      variant={illustrationInputMode === 'url' ? 'default' : 'outline'}
-                      size="sm"
-                      onClick={() => setIllustrationInputMode('url')}
-                    >
-                      URL
-                    </Button>
-                  </div>
-                </div>
-                
-                {illustrationInputMode === 'upload' ? (
-                  <div className="space-y-3">
-                    <Input
-                      id="illustrationFile"
-                      type="file"
-                      accept=".png,.svg,.jpg,.jpeg,.webp,image/png,image/svg+xml,image/jpeg,image/jpg,image/webp"
-                      onChange={async (e) => {
-                        const file = e.target.files?.[0];
-                        if (file) {
-                          await handleIllustrationUpload(file);
-                        }
-                      }}
-                      className="w-full"
-                      disabled={illustrationUploading}
-                    />
-                    {illustrationUploading && (
-                      <p className="text-xs text-blue-500">Uploading illustration...</p>
-                    )}
-                  </div>
-                ) : (
-                  <Input
-                    id="illustrationUrl"
-                    type="url"
-                    value={sectionForm.illustrationUrl}
-                    onChange={(e) =>
-                      setSectionForm({ ...sectionForm, illustrationUrl: e.target.value })
-                    }
-                    placeholder="https://example.com/illustration.svg"
+        
+        <div className="flex items-center gap-3">
+          <Button 
+            variant="outline" 
+            className="h-11 px-6 border-input/50 font-bold hover:bg-input/30"
+            onClick={() => window.open(`${getServerUrl()}/m/${menu.slug}`, '_blank')}
+          >
+            Preview
+          </Button>
+          <Dialog open={sectionDialogOpen} onOpenChange={setSectionDialogOpen}>
+            <DialogTrigger asChild>
+              <Button 
+                onClick={() => handleOpenSectionDialog()}
+                className="h-11 px-6 font-bold"
+              >
+                <Plus className="h-5 w-5 mr-2" />
+                New Section
+              </Button>
+            </DialogTrigger>
+            {/* Dialog contents follow... */}
+          <DialogContent className="max-w-2xl p-0 overflow-hidden border-none shadow-2xl rounded-lg">
+            <div className="flex flex-col h-full bg-white">
+              <div className="p-8 border-b border-input/20 bg-gray-50/50">
+                <h2 className="text-2xl font-bold tracking-tight text-gray-900">
+                  {editingSection ? 'Edit Section' : 'Add New Section'}
+                </h2>
+                <p className="text-sm text-gray-500 mt-1">
+                  Configure the details and visibility for this category.
+                </p>
+              </div>
+              <div className="p-8">
+                <form onSubmit={handleSectionSubmit} className="space-y-6">
+                  <MultiLanguageInput
+                    label="Section Title"
+                    value={sectionForm.title}
+                    onChange={(value) => setSectionForm({ ...sectionForm, title: value })}
+                    languages={languages}
+                    defaultLanguage="ENG"
+                    placeholder="Enter section title"
+                    showTranslate={true}
                   />
-                )}
-
-                {sectionForm.illustrationUrl && (
-                  <div className="p-4 border rounded-lg bg-gray-50">
-                    <Label>Preview</Label>
-                    <div className="mt-3 flex items-center gap-4">
-                      <div
-                        className="w-24 h-24 flex items-center justify-center border-2 border-gray-300 rounded bg-white overflow-hidden"
-                        style={{ minWidth: '96px', minHeight: '96px' }}
-                      >
-                        <img
-                          src={sectionForm.illustrationUrl}
-                          alt="Illustration preview"
-                          className="w-full h-full object-contain"
-                          onError={(e) => {
-                            const target = e.target as HTMLImageElement;
-                            target.style.display = 'none';
-                            const parent = target.parentElement;
-                            if (parent) {
-                              parent.innerHTML = '<div class="w-full h-full flex items-center justify-center bg-red-100 rounded"><span class="text-xs text-red-500">Failed to load</span></div>';
-                            }
-                          }}
-                        />
-                      </div>
-                      <div className="flex-1">
-                        <p className="text-xs text-gray-500 break-all">
-                          {sectionForm.illustrationUrl}
-                        </p>
+                  <MultiLanguageInput
+                    label="Section Description (optional)"
+                    value={sectionForm.description}
+                    onChange={(value) => setSectionForm({ ...sectionForm, description: value })}
+                    languages={languages}
+                    defaultLanguage="ENG"
+                    placeholder="Enter section description"
+                    showTranslate={true}
+                  />
+                  <div className="space-y-2">
+                    <div className="flex items-center justify-between">
+                      <Label htmlFor="illustrationUrl">Illustration (optional)</Label>
+                      <div className="flex gap-2">
                         <Button
                           type="button"
-                          variant="outline"
+                          variant={illustrationInputMode === 'upload' ? 'secondary' : 'outline'}
                           size="sm"
-                          className="mt-2"
-                          onClick={() => {
-                            setSectionForm({ ...sectionForm, illustrationUrl: '' });
-                            const fileInput = document.getElementById('illustrationFile') as HTMLInputElement;
-                            if (fileInput) fileInput.value = '';
-                          }}
+                          onClick={() => setIllustrationInputMode('upload')}
                         >
-                          Clear
+                          Upload
+                        </Button>
+                        <Button
+                          type="button"
+                          variant={illustrationInputMode === 'url' ? 'secondary' : 'outline'}
+                          size="sm"
+                          onClick={() => setIllustrationInputMode('url')}
+                        >
+                          URL
                         </Button>
                       </div>
                     </div>
-                  </div>
-                )}
-                
-                {!sectionForm.illustrationUrl && (
-                  <p className="text-xs text-gray-500">
-                    Leave empty if you don't have an illustration
-                  </p>
-                )}
-
-                {sectionForm.illustrationUrl && (
-                  <div className="space-y-4 pt-4 border-t">
-                    <div className="flex items-center space-x-2">
-                      <Checkbox
-                        id="illustrationAsBackground"
-                        checked={sectionForm.illustrationAsBackground}
-                        onCheckedChange={(checked) =>
-                          setSectionForm({ ...sectionForm, illustrationAsBackground: checked as boolean })
+                    
+                    {illustrationInputMode === 'upload' ? (
+                      <div className="space-y-3">
+                        <Input
+                          id="illustrationFile"
+                          type="file"
+                          accept=".png,.svg,.jpg,.jpeg,.webp,image/png,image/svg+xml,image/jpeg,image/jpg,image/webp"
+                          onChange={async (e) => {
+                            const file = e.target.files?.[0];
+                            if (file) {
+                              await handleIllustrationUpload(file);
+                            }
+                          }}
+                          className="w-full h-11 border-input/50 focus:border-primary focus:ring-1 focus:ring-primary"
+                          disabled={illustrationUploading}
+                        />
+                        {illustrationUploading && (
+                          <p className="text-xs text-blue-500">Uploading illustration...</p>
+                        )}
+                      </div>
+                    ) : (
+                      <Input
+                        id="illustrationUrl"
+                        type="url"
+                        value={sectionForm.illustrationUrl}
+                        onChange={(e) =>
+                          setSectionForm({ ...sectionForm, illustrationUrl: e.target.value })
                         }
+                        placeholder="https://example.com/illustration.svg"
+                        className="h-11 border-input/50 focus:border-primary focus:ring-1 focus:ring-primary"
                       />
-                      <Label htmlFor="illustrationAsBackground" className="cursor-pointer">
-                        Use as background
-                      </Label>
-                    </div>
+                    )}
 
-                    {sectionForm.illustrationAsBackground && (
-                      <>
-                        <div className="space-y-2">
-                          <Label htmlFor="illustrationPosition">Background Position</Label>
-                          <Select
-                            value={sectionForm.illustrationPosition}
-                            onValueChange={(value: 'center' | 'left' | 'right') =>
-                              setSectionForm({ ...sectionForm, illustrationPosition: value })
-                            }
+                    {sectionForm.illustrationUrl && (
+                      <div className="p-4 border border-input/50 rounded-lg bg-gray-50/50">
+                        <Label className="text-xs font-semibold uppercase tracking-wider text-gray-500">Preview</Label>
+                        <div className="mt-3 flex items-center gap-4">
+                          <div
+                            className="w-24 h-24 flex items-center justify-center border border-input/50 rounded bg-white overflow-hidden shadow-sm"
+                            style={{ minWidth: '96px', minHeight: '96px' }}
                           >
-                            <SelectTrigger id="illustrationPosition">
-                              <SelectValue />
-                            </SelectTrigger>
-                            <SelectContent>
-                              <SelectItem value="center">Center</SelectItem>
-                              <SelectItem value="left">Left</SelectItem>
-                              <SelectItem value="right">Right</SelectItem>
-                            </SelectContent>
-                          </Select>
+                            <img
+                              src={sectionForm.illustrationUrl}
+                              alt="Illustration preview"
+                              className="w-full h-full object-contain"
+                              onError={(e) => {
+                                const target = e.target as HTMLImageElement;
+                                target.style.display = 'none';
+                                const parent = target.parentElement;
+                                if (parent) {
+                                  parent.innerHTML = '<div class="w-full h-full flex items-center justify-center bg-red-100 rounded text-[10px] text-red-500 font-bold uppercase">Failed to load</div>';
+                                }
+                              }}
+                            />
+                          </div>
+                          <div className="flex-1">
+                            <p className="text-xs text-gray-500 break-all font-mono">
+                              {sectionForm.illustrationUrl}
+                            </p>
+                            <Button
+                              type="button"
+                              variant="outline"
+                              size="sm"
+                              className="mt-2 text-red-600 border-red-200 hover:bg-red-50 hover:text-red-700 hover:border-red-300"
+                              onClick={() => {
+                                setSectionForm({ ...sectionForm, illustrationUrl: '' });
+                                const fileInput = document.getElementById('illustrationFile') as HTMLInputElement;
+                                if (fileInput) fileInput.value = '';
+                              }}
+                            >
+                              Clear
+                            </Button>
+                          </div>
+                        </div>
+                      </div>
+                    )}
+                    
+                    {!sectionForm.illustrationUrl && (
+                      <p className="text-xs text-gray-500">
+                        Leave empty if you don't have an illustration
+                      </p>
+                    )}
+
+                    {sectionForm.illustrationUrl && (
+                      <div className="space-y-4 pt-4 border-t border-input/20 mt-4">
+                        <div className="flex items-center space-x-2">
+                          <Checkbox
+                            id="illustrationAsBackground"
+                            checked={sectionForm.illustrationAsBackground}
+                            onCheckedChange={(checked) =>
+                              setSectionForm({ ...sectionForm, illustrationAsBackground: checked as boolean })
+                            }
+                          />
+                          <Label htmlFor="illustrationAsBackground" className="cursor-pointer text-sm font-medium">
+                            Use as background
+                          </Label>
                         </div>
 
-                        <div className="space-y-2">
-                          <Label htmlFor="illustrationSize">Background Size</Label>
-                          <Select
-                            value={sectionForm.illustrationSize}
-                            onValueChange={(value: 'fit' | 'fullscreen') =>
-                              setSectionForm({ ...sectionForm, illustrationSize: value })
-                            }
-                          >
-                            <SelectTrigger id="illustrationSize">
-                              <SelectValue />
-                            </SelectTrigger>
-                            <SelectContent>
-                              <SelectItem value="fit">Fit to Section</SelectItem>
-                              <SelectItem value="fullscreen">Fullscreen</SelectItem>
-                            </SelectContent>
-                          </Select>
-                        </div>
-                      </>
+                        {sectionForm.illustrationAsBackground && (
+                          <div className="grid grid-cols-2 gap-4 animate-in fade-in slide-in-from-top-1 duration-200">
+                            <div className="space-y-2">
+                              <Label htmlFor="illustrationPosition">Position</Label>
+                              <Select
+                                value={sectionForm.illustrationPosition}
+                                onValueChange={(value: 'center' | 'left' | 'right') =>
+                                  setSectionForm({ ...sectionForm, illustrationPosition: value })
+                                }
+                              >
+                                <SelectTrigger id="illustrationPosition" className="h-10">
+                                  <SelectValue />
+                                </SelectTrigger>
+                                <SelectContent>
+                                  <SelectItem value="center">Center</SelectItem>
+                                  <SelectItem value="left">Left</SelectItem>
+                                  <SelectItem value="right">Right</SelectItem>
+                                </SelectContent>
+                              </Select>
+                            </div>
+
+                            <div className="space-y-2">
+                              <Label htmlFor="illustrationSize">Size</Label>
+                              <Select
+                                value={sectionForm.illustrationSize}
+                                onValueChange={(value: 'fit' | 'fullscreen') =>
+                                  setSectionForm({ ...sectionForm, illustrationSize: value })
+                                }
+                              >
+                                <SelectTrigger id="illustrationSize" className="h-10">
+                                  <SelectValue />
+                                </SelectTrigger>
+                                <SelectContent>
+                                  <SelectItem value="fit">Fit to Section</SelectItem>
+                                  <SelectItem value="fullscreen">Fullscreen</SelectItem>
+                                </SelectContent>
+                              </Select>
+                            </div>
+                          </div>
+                        )}
+                      </div>
                     )}
                   </div>
-                )}
+                  <div className="flex justify-end gap-3 pt-6 border-t border-input/20 mt-8">
+                    <Button
+                      type="button"
+                      variant="ghost"
+                      onClick={() => setSectionDialogOpen(false)}
+                      className="h-11 px-6 font-medium"
+                    >
+                      Cancel
+                    </Button>
+                    <Button type="submit" className="h-11 px-8 font-bold shadow-sm">
+                      {editingSection ? 'Save Changes' : 'Create Section'}
+                    </Button>
+                  </div>
+                </form>
               </div>
-              <div className="flex justify-end gap-2">
-                <Button
-                  type="button"
-                  variant="outline"
-                  onClick={() => setSectionDialogOpen(false)}
-                >
-                  Cancel
-                </Button>
-                <Button type="submit">
-                  {editingSection ? 'Update' : 'Create'}
-                </Button>
-              </div>
-            </form>
+            </div>
           </DialogContent>
         </Dialog>
         
         {/* Sub-Section Dialog */}
         <Dialog open={subSectionDialogOpen} onOpenChange={setSubSectionDialogOpen}>
-          <DialogContent className="max-w-2xl w-full">
-            <DialogHeader>
-              <DialogTitle>
-                {editingSection ? 'Edit Sub-Section' : 'Create Sub-Section'}
-              </DialogTitle>
-              <DialogDescription>
-                {editingSection
-                  ? 'Update sub-section information'
-                  : 'Add a new sub-section under this section'}
-              </DialogDescription>
-            </DialogHeader>
-            <form onSubmit={handleSubSectionSubmit} className="space-y-4">
-              <MultiLanguageInput
-                label="Sub-Section Title"
-                value={sectionForm.title}
-                onChange={(value) => setSectionForm({ ...sectionForm, title: value })}
-                languages={languages}
-                defaultLanguage="ENG"
-                placeholder="Enter sub-section title"
-                showTranslate={true}
-              />
-              <MultiLanguageInput
-                label="Sub-Section Description (optional)"
-                value={sectionForm.description}
-                onChange={(value) => setSectionForm({ ...sectionForm, description: value })}
-                languages={languages}
-                defaultLanguage="ENG"
-                placeholder="Enter sub-section description"
-                showTranslate={true}
-              />
-              <div className="space-y-2">
-                <div className="flex items-center justify-between">
-                  <Label htmlFor="subSectionIllustrationUrl">Illustration (optional)</Label>
-                  <div className="flex gap-2">
-                    <Button
-                      type="button"
-                      variant={illustrationInputMode === 'upload' ? 'default' : 'outline'}
-                      size="sm"
-                      onClick={() => setIllustrationInputMode('upload')}
-                    >
-                      Upload
-                    </Button>
-                    <Button
-                      type="button"
-                      variant={illustrationInputMode === 'url' ? 'default' : 'outline'}
-                      size="sm"
-                      onClick={() => setIllustrationInputMode('url')}
-                    >
-                      URL
-                    </Button>
-                  </div>
-                </div>
-                
-                {illustrationInputMode === 'upload' ? (
-                  <div className="space-y-3">
-                    <Input
-                      id="subSectionIllustrationFile"
-                      type="file"
-                      accept=".png,.svg,.jpg,.jpeg,.webp,image/png,image/svg+xml,image/jpeg,image/jpg,image/webp"
-                      onChange={async (e) => {
-                        const file = e.target.files?.[0];
-                        if (file) {
-                          await handleIllustrationUpload(file);
-                        }
-                      }}
-                      className="w-full"
-                      disabled={illustrationUploading}
-                    />
-                    {illustrationUploading && (
-                      <p className="text-xs text-blue-500">Uploading illustration...</p>
-                    )}
-                  </div>
-                ) : (
-                  <Input
-                    id="subSectionIllustrationUrl"
-                    type="url"
-                    value={sectionForm.illustrationUrl}
-                    onChange={(e) =>
-                      setSectionForm({ ...sectionForm, illustrationUrl: e.target.value })
-                    }
-                    placeholder="https://example.com/illustration.svg"
+          <DialogContent className="max-w-2xl p-0 overflow-hidden border-none shadow-2xl rounded-lg">
+            <div className="flex flex-col h-full bg-white">
+              <div className="p-8 border-b border-input/20 bg-gray-50/50">
+                <h2 className="text-2xl font-bold tracking-tight text-gray-900">
+                  {editingSection ? 'Edit Sub-Section' : 'Add New Sub-Section'}
+                </h2>
+                <p className="text-sm text-gray-500 mt-1">
+                  Configure the details and visibility for this category.
+                </p>
+              </div>
+              <div className="p-8">
+                <form onSubmit={handleSubSectionSubmit} className="space-y-6">
+                  <MultiLanguageInput
+                    label="Sub-Section Title"
+                    value={sectionForm.title}
+                    onChange={(value) => setSectionForm({ ...sectionForm, title: value })}
+                    languages={languages}
+                    defaultLanguage="ENG"
+                    placeholder="Enter sub-section title"
+                    showTranslate={true}
                   />
-                )}
-
-                {sectionForm.illustrationUrl && (
-                  <div className="p-4 border rounded-lg bg-gray-50">
-                    <Label>Preview</Label>
-                    <div className="mt-3 flex items-center gap-4">
-                      <div
-                        className="w-24 h-24 flex items-center justify-center border-2 border-gray-300 rounded bg-white overflow-hidden"
-                        style={{ minWidth: '96px', minHeight: '96px' }}
-                      >
-                        <img
-                          src={sectionForm.illustrationUrl}
-                          alt="Illustration preview"
-                          className="w-full h-full object-contain"
-                          onError={(e) => {
-                            const target = e.target as HTMLImageElement;
-                            target.style.display = 'none';
-                            const parent = target.parentElement;
-                            if (parent) {
-                              parent.innerHTML = '<div class="w-full h-full flex items-center justify-center bg-red-100 rounded"><span class="text-xs text-red-500">Failed to load</span></div>';
-                            }
-                          }}
-                        />
-                      </div>
-                      <div className="flex-1">
-                        <p className="text-xs text-gray-500 break-all">
-                          {sectionForm.illustrationUrl}
-                        </p>
+                  <MultiLanguageInput
+                    label="Sub-Section Description (optional)"
+                    value={sectionForm.description}
+                    onChange={(value) => setSectionForm({ ...sectionForm, description: value })}
+                    languages={languages}
+                    defaultLanguage="ENG"
+                    placeholder="Enter sub-section description"
+                    showTranslate={true}
+                  />
+                  <div className="space-y-2">
+                    <div className="flex items-center justify-between">
+                      <Label htmlFor="subSectionIllustrationUrl">Illustration (optional)</Label>
+                      <div className="flex gap-2">
                         <Button
                           type="button"
-                          variant="outline"
+                          variant={illustrationInputMode === 'upload' ? 'secondary' : 'outline'}
                           size="sm"
-                          className="mt-2"
-                          onClick={() => {
-                            setSectionForm({ ...sectionForm, illustrationUrl: '' });
-                            const fileInput = document.getElementById('subSectionIllustrationFile') as HTMLInputElement;
-                            if (fileInput) fileInput.value = '';
-                          }}
+                          onClick={() => setIllustrationInputMode('upload')}
                         >
-                          Clear
+                          Upload
+                        </Button>
+                        <Button
+                          type="button"
+                          variant={illustrationInputMode === 'url' ? 'secondary' : 'outline'}
+                          size="sm"
+                          onClick={() => setIllustrationInputMode('url')}
+                        >
+                          URL
                         </Button>
                       </div>
                     </div>
-                  </div>
-                )}
-              </div>
+                    
+                    {illustrationInputMode === 'upload' ? (
+                      <div className="space-y-3">
+                        <Input
+                          id="subSectionIllustrationFile"
+                          type="file"
+                          accept=".png,.svg,.jpg,.jpeg,.webp,image/png,image/svg+xml,image/jpeg,image/jpg,image/webp"
+                          onChange={async (e) => {
+                            const file = e.target.files?.[0];
+                            if (file) {
+                              await handleIllustrationUpload(file);
+                            }
+                          }}
+                          className="w-full h-11 border-input/50 focus:border-primary focus:ring-1 focus:ring-primary"
+                          disabled={illustrationUploading}
+                        />
+                        {illustrationUploading && (
+                          <p className="text-xs text-blue-500">Uploading illustration...</p>
+                        )}
+                      </div>
+                    ) : (
+                      <Input
+                        id="subSectionIllustrationUrl"
+                        type="url"
+                        value={sectionForm.illustrationUrl}
+                        onChange={(e) =>
+                          setSectionForm({ ...sectionForm, illustrationUrl: e.target.value })
+                        }
+                        placeholder="https://example.com/illustration.svg"
+                        className="h-11 border-input/50 focus:border-primary focus:ring-1 focus:ring-primary"
+                      />
+                    )}
 
-              <div className="flex justify-end gap-2 pt-4">
-                <Button
-                  type="button"
-                  variant="outline"
-                  onClick={() => {
-                    setSubSectionDialogOpen(false);
-                    setParentSectionIdForSubSection(null);
-                  }}
-                >
-                  Cancel
-                </Button>
-                <Button type="submit">
-                  {editingSection ? 'Update' : 'Create'} Sub-Section
-                </Button>
+                    {sectionForm.illustrationUrl && (
+                      <div className="p-4 border border-input/50 rounded-lg bg-gray-50/50">
+                        <Label className="text-xs font-semibold uppercase tracking-wider text-gray-500">Preview</Label>
+                        <div className="mt-3 flex items-center gap-4">
+                          <div
+                            className="w-24 h-24 flex items-center justify-center border border-input/50 rounded bg-white overflow-hidden shadow-sm"
+                            style={{ minWidth: '96px', minHeight: '96px' }}
+                          >
+                            <img
+                              src={sectionForm.illustrationUrl}
+                              alt="Illustration preview"
+                              className="w-full h-full object-contain"
+                              onError={(e) => {
+                                const target = e.target as HTMLImageElement;
+                                target.style.display = 'none';
+                                const parent = target.parentElement;
+                                if (parent) {
+                                  parent.innerHTML = '<div class="w-full h-full flex items-center justify-center bg-red-100 rounded text-[10px] text-red-500 font-bold uppercase">Failed to load</div>';
+                                }
+                              }}
+                            />
+                          </div>
+                          <div className="flex-1">
+                            <p className="text-xs text-gray-500 break-all font-mono">
+                              {sectionForm.illustrationUrl}
+                            </p>
+                            <Button
+                              type="button"
+                              variant="outline"
+                              size="sm"
+                              className="mt-2 text-red-600 border-red-200 hover:bg-red-50 hover:text-red-700 hover:border-red-300"
+                              onClick={() => {
+                                setSectionForm({ ...sectionForm, illustrationUrl: '' });
+                                const fileInput = document.getElementById('subSectionIllustrationFile') as HTMLInputElement;
+                                if (fileInput) fileInput.value = '';
+                              }}
+                            >
+                              Clear
+                            </Button>
+                          </div>
+                        </div>
+                      </div>
+                    )}
+                  </div>
+
+                  <div className="flex justify-end gap-3 pt-6 border-t border-input/20 mt-8">
+                    <Button
+                      type="button"
+                      variant="ghost"
+                      onClick={() => {
+                        setSubSectionDialogOpen(false);
+                        setParentSectionIdForSubSection(null);
+                      }}
+                      className="h-11 px-6 font-medium"
+                    >
+                      Cancel
+                    </Button>
+                    <Button type="submit" className="h-11 px-8 font-bold shadow-sm">
+                      {editingSection ? 'Save Changes' : 'Create Sub-Section'}
+                    </Button>
+                  </div>
+                </form>
               </div>
-            </form>
+            </div>
           </DialogContent>
         </Dialog>
       </div>
+    </div>
 
       <DndContext
         sensors={sensors}
@@ -1286,7 +1384,7 @@ export default function MenuDetailPage() {
                   items={(section.items || []).map((i) => i.id)}
                   strategy={verticalListSortingStrategy}
                 >
-                  {(section.items || []).map((item) => (
+                  {section.items.map((item: MenuItem) => (
                     <SortableItem
                       key={item.id}
                       item={item}
@@ -1314,98 +1412,110 @@ export default function MenuDetailPage() {
               
               {/* Sub-Sections */}
               {section.subSections && section.subSections.length > 0 && (
-                <div className="mt-6 space-y-4">
-                  <h4 className="text-sm font-semibold text-gray-700 mb-3">Sub-Sections</h4>
-                  {section.subSections.map((subSection) => (
-                    <Card key={subSection.id} className="ml-6 border-l-4 border-l-blue-500">
-                      <CardHeader className="pb-3">
-                        <div className="flex items-center justify-between">
-                          <div className="flex items-center gap-3 flex-1">
+                <div className="mt-8 space-y-4 pt-6 border-t border-input/30">
+                  <div className="flex items-center gap-2 mb-4">
+                    <div className="h-px flex-1 bg-input/30" />
+                    <span className="text-[10px] font-medium tracking-widest text-muted-foreground">
+                      SUB-SECTIONS
+                    </span>
+                    <div className="h-px flex-1 bg-input/30" />
+                  </div>
+                  {section.subSections.map((subSection: Section) => (
+                    <Card key={subSection.id} className="ml-8 border border-input/40 bg-white/40 backdrop-blur-sm overflow-hidden transition-all duration-300 hover:shadow-md">
+                      <CardHeader className="p-4">
+                        <div className="flex items-center justify-between gap-4">
+                          <div className="flex items-center gap-3 flex-1 min-w-0">
                             <Button
                               variant="ghost"
                               size="sm"
                               onClick={() => toggleSubSection(subSection.id)}
-                              className="flex items-center gap-2 p-0 h-auto hover:bg-transparent"
+                              className="h-8 w-8 p-0 hover:bg-input/50 transition-colors"
                             >
                               {expandedSubSections.has(subSection.id) ? (
-                                <ChevronUp className="h-4 w-4 text-gray-500" />
+                                <ChevronUp className="h-4 w-4 text-primary" />
                               ) : (
-                                <ChevronDown className="h-4 w-4 text-gray-500" />
+                                <ChevronDown className="h-4 w-4" />
                               )}
                             </Button>
-                            <CardTitle className="text-base cursor-pointer" onClick={() => toggleSubSection(subSection.id)}>
+                            <CardTitle 
+                              className="text-base font-bold truncate cursor-pointer hover:text-primary transition-colors" 
+                              onClick={() => toggleSubSection(subSection.id)}
+                            >
                               {subSection.title['ENG'] || 'Untitled Sub-Section'}
                             </CardTitle>
                             {subSection.items && subSection.items.length > 0 && (
-                              <span className="text-xs text-gray-500 bg-gray-100 px-2 py-1 rounded">
+                              <span className="text-[10px] font-bold tracking-wider uppercase bg-primary/5 text-primary/70 px-2 py-0.5 rounded-full border border-primary/10">
                                 {subSection.items.length} {subSection.items.length === 1 ? 'item' : 'items'}
                               </span>
                             )}
                           </div>
-                          <div className="flex gap-2">
+                          <div className="flex items-center gap-2">
                             <Button
                               variant="outline"
                               size="sm"
                               onClick={() => handleEditSubSection(subSection)}
+                              className="h-8 px-3 text-xs border-input/50 hover:bg-input/50"
                             >
-                              <Edit className="h-4 w-4 mr-2" />
+                              <Edit className="h-3 w-3 mr-1.5" />
                               Edit
                             </Button>
                             <Button
                               variant="outline"
                               size="sm"
                               onClick={() => handleOpenItemDialog(subSection.id)}
+                              className="h-8 px-3 text-xs border-input/50 hover:bg-input/50"
                             >
-                              <Plus className="h-4 w-4 mr-2" />
+                              <Plus className="h-3 w-3 mr-1.5 text-primary" />
                               Add Item
                             </Button>
                             <Button
-                              variant="outline"
+                              variant="ghost"
                               size="sm"
                               onClick={() => handleDeleteSection(subSection.id)}
+                              className="h-8 w-8 p-0 text-destructive hover:bg-destructive/10"
                             >
-                              <Trash2 className="h-4 w-4 mr-2" />
-                              Delete
+                              <Trash2 className="h-3 w-3" />
                             </Button>
                           </div>
                         </div>
                       </CardHeader>
                       {expandedSubSections.has(subSection.id) && (
-                        <CardContent className="pt-4">
-                          <DndContext
-                            sensors={sensors}
-                            collisionDetection={closestCenter}
-                            onDragEnd={(e) => handleItemDragEnd(e, subSection.id)}
-                          >
-                            <SortableContext
-                              items={(subSection.items || []).map((i) => i.id)}
-                              strategy={verticalListSortingStrategy}
+                        <CardContent className="px-4 pb-4 pt-0 border-t border-input/20 bg-black/[0.02]">
+                          <div className="mt-4">
+                            <DndContext
+                              sensors={sensors}
+                              collisionDetection={closestCenter}
+                              onDragEnd={(e) => handleItemDragEnd(e, subSection.id)}
                             >
-                              {(subSection.items || []).map((item) => (
-                                <SortableItem
-                                  key={item.id}
-                                  item={item}
-                                  onEdit={(item) => handleOpenItemDialog(subSection.id, item)}
-                                  onDelete={handleDeleteItem}
-                                />
-                              ))}
-                            </SortableContext>
-                          </DndContext>
-                          {(!subSection.items || subSection.items.length === 0) && (
-                            <div className="text-center py-6 border-2 border-dashed border-gray-200 rounded-lg">
-                              <p className="text-gray-500 text-sm mb-2">
-                                No items in this sub-section yet.
-                              </p>
-                              <Button
-                                variant="outline"
-                                size="sm"
-                                onClick={() => handleOpenItemDialog(subSection.id)}
+                              <SortableContext
+                                items={(subSection.items || []).map((i) => i.id)}
+                                strategy={verticalListSortingStrategy}
                               >
-                                <Plus className="h-4 w-4 mr-2" />
-                                Add First Item
-                              </Button>
-                            </div>
-                          )}
+                                {subSection.items.map((item: MenuItem) => (
+                                  <SortableItem
+                                    key={item.id}
+                                    item={item}
+                                    onEdit={(item) => handleOpenItemDialog(subSection.id, item)}
+                                    onDelete={handleDeleteItem}
+                                  />
+                                ))}
+                              </SortableContext>
+                            </DndContext>
+                            {(!subSection.items || subSection.items.length === 0) && (
+                              <div className="text-center py-6 border border-dashed border-input/50 rounded-lg bg-surface/30">
+                                <p className="text-muted text-xs mb-3">No items in this sub-section.</p>
+                                <Button
+                                  variant="outline"
+                                  size="sm"
+                                  onClick={() => handleOpenItemDialog(subSection.id)}
+                                  className="h-8 text-xs border-input/50"
+                                >
+                                  <Plus className="h-3 w-3 mr-1.5" />
+                                  Add First Item
+                                </Button>
+                              </div>
+                            )}
+                          </div>
                         </CardContent>
                       )}
                     </Card>
@@ -1438,17 +1548,18 @@ export default function MenuDetailPage() {
       )}
 
       <Dialog open={itemDialogOpen} onOpenChange={setItemDialogOpen}>
-        <DialogContent className="max-w-2xl w-full">
-          <DialogHeader>
-            <DialogTitle>
-              {editingItem ? 'Edit Menu Item' : 'Create Menu Item'}
-            </DialogTitle>
-            <DialogDescription>
-              {editingItem
-                ? 'Update menu item information'
-                : 'Add a new item to this section. Type in the default language and it will auto-translate.'}
-            </DialogDescription>
-          </DialogHeader>
+        <DialogContent className="max-w-3xl p-0 overflow-hidden border-none shadow-2xl rounded-lg">
+          <div className="flex flex-col h-full bg-white">
+            <div className="p-8 border-b border-input/20 bg-gray-50/50">
+              <h2 className="text-2xl font-bold tracking-tight text-gray-900">
+                {editingItem ? 'Edit Menu Item' : 'Add New Menu Item'}
+              </h2>
+              <p className="text-sm text-gray-500 mt-1">
+                Configure pricing, descriptions, and dietary information.
+              </p>
+            </div>
+            <div className="flex-1 overflow-y-auto p-8 pt-6 max-h-[70vh]">
+              {/* Form starts below... */}
           <form onSubmit={handleItemSubmit} className="space-y-4">
             <MultiLanguageInput
               label="Item Name"
@@ -1573,9 +1684,9 @@ export default function MenuDetailPage() {
                         }
                       }}
                       className={`
-                        relative flex flex-col items-center justify-center gap-2 p-3 rounded-lg border-2 transition-all
+                        relative flex flex-col items-center justify-center gap-2 p-3 rounded-lg border transition-colors
                         ${isSelected 
-                          ? 'border-blue-600 bg-blue-50 shadow-sm' 
+                          ? 'border-primary bg-primary/5' 
                           : 'border-gray-200 bg-white hover:border-gray-300 hover:bg-gray-50'
                         }
                         cursor-pointer min-h-[90px] group
@@ -1595,11 +1706,11 @@ export default function MenuDetailPage() {
                           }
                         }}
                       />
-                      <span className={`text-xs font-medium text-center leading-tight ${isSelected ? 'text-blue-600 font-semibold' : 'text-gray-700'}`}>
+                      <span className={`text-xs font-medium text-center leading-tight ${isSelected ? 'text-primary font-semibold' : 'text-gray-700'}`}>
                         {defaultLabel}
                       </span>
                       {isSelected && (
-                        <div className="absolute top-1 right-1 w-5 h-5 bg-blue-600 rounded-full flex items-center justify-center shadow-sm">
+                        <div className="absolute top-1 right-1 w-5 h-5 bg-primary rounded-full flex items-center justify-center shadow-sm">
                           <svg className="w-3 h-3 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
                           </svg>
@@ -1616,21 +1727,24 @@ export default function MenuDetailPage() {
               </div>
             </div>
             
-            <div className="flex justify-end gap-2">
-              <Button
-                type="button"
-                variant="outline"
-                onClick={() => setItemDialogOpen(false)}
-              >
-                Cancel
-              </Button>
-              <Button type="submit">
-                {editingItem ? 'Update' : 'Create'}
-              </Button>
-            </div>
-          </form>
-        </DialogContent>
-      </Dialog>
+              <div className="flex justify-end gap-3 pt-8 border-t border-input/20 mt-8">
+                <Button
+                  type="button"
+                  variant="ghost"
+                  onClick={() => setItemDialogOpen(false)}
+                  className="h-11 px-6 font-medium"
+                >
+                  Cancel
+                </Button>
+                <Button type="submit" className="h-11 px-8 font-bold shadow-sm">
+                  {editingItem ? 'Save Changes' : 'Add Item to Menu'}
+                </Button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </DialogContent>
+    </Dialog>
 
       <CopySectionModal
         sectionId={copySectionId || ''}
