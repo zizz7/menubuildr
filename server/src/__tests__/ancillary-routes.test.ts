@@ -240,8 +240,8 @@ describe('Search — GET /api/search', () => {
     const result = await makeRequest(app, 'get', '/api/search?q=burger', undefined, OWNER_ID);
 
     expect(result.status).toBe(200);
-    expect(result.body).toHaveLength(1);
-    expect(result.body[0].id).toBe(ITEM_ID);
+    expect(result.body.results).toHaveLength(1);
+    expect(result.body.results[0].id).toBe(ITEM_ID);
     // Verify restaurant.findMany was called with adminId filter
     expect(mockedPrisma.restaurant.findMany).toHaveBeenCalledWith(
       expect.objectContaining({

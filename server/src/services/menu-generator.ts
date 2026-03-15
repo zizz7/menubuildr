@@ -3,6 +3,7 @@ import path from 'path';
 import prisma from '../config/database';
 import { syncUploadsToPublic } from '../utils/sync-uploads';
 import { getTemplateGenerator } from './template-registry';
+import { escapeHtml } from '../utils/html-escape';
 
 interface MenuData {
   id: string;
@@ -410,14 +411,14 @@ export function generateHTML(
       const imageUrl = normalizeUrl(allergen.imageUrl);
       return `
       <div class="allergen-item" data-allergen="${allergen.name}">
-        <button class="allergen-close-btn" onclick="event.stopPropagation(); filterByAllergen('${allergen.name}')" aria-label="Remove ${allergen.label['ENG'] || allergen.name} filter">×</button>
-        <div class="allergen-icon"><img src="${imageUrl}" alt="${allergen.label['ENG'] || allergen.name}" /></div>
-        <span class="allergen-label" data-lang="ENG">${allergen.label['ENG'] || allergen.name}</span>
+        <button class="allergen-close-btn" onclick="event.stopPropagation(); filterByAllergen('${allergen.name}')" aria-label="Remove ${escapeHtml(allergen.label['ENG'] ?? allergen.name)} filter">×</button>
+        <div class="allergen-icon"><img src="${imageUrl}" alt="${escapeHtml(allergen.label['ENG'] ?? allergen.name)}" /></div>
+        <span class="allergen-label" data-lang="ENG">${escapeHtml(allergen.label['ENG'] ?? allergen.name)}</span>
         ${languages
           .filter((l) => l.code !== 'ENG')
           .map(
             (lang) =>
-              `<span class="allergen-label" data-lang="${lang.code}" style="display: none;">${allergen.label[lang.code] || allergen.name}</span>`
+              `<span class="allergen-label" data-lang="${lang.code}" style="display: none;">${escapeHtml(allergen.label[lang.code] ?? allergen.name)}</span>`
           )
           .join('')}
       </div>`;
@@ -438,7 +439,7 @@ export function generateHTML(
       const sectionTitle = Object.keys(section.title)
         .map(
           (lang) =>
-            `<span data-lang="${lang}" ${lang === 'ENG' ? '' : 'style="display: none;"'}>${section.title[lang]}</span>`
+            `<span data-lang="${lang}" ${lang === 'ENG' ? '' : 'style="display: none;"'}>${escapeHtml(section.title[lang] ?? '')}</span>`
         )
         .join('');
       return `
@@ -458,7 +459,7 @@ export function generateHTML(
                 .filter((allergen: any) => allergen.imageUrl && allergen.imageUrl.trim())
                 .map((allergen: any) => {
                   const imageUrl = normalizeUrl(allergen.imageUrl.trim());
-                  return `<span class="item-allergen" data-allergen="${allergen.name}" title="${allergen.label?.['ENG'] || allergen.name}"><img src="${imageUrl}" alt="${allergen.label?.['ENG'] || allergen.name}" /></span>`;
+                  return `<span class="item-allergen" data-allergen="${allergen.name}" title="${escapeHtml(allergen.label?.['ENG'] ?? allergen.name)}"><img src="${imageUrl}" alt="${escapeHtml(allergen.label?.['ENG'] ?? allergen.name)}" /></span>`;
                 })
                 .join('')
             : '';
@@ -468,7 +469,7 @@ export function generateHTML(
               ? `<div class="price-variations">
                   ${item.priceVariations
                     .map(
-                      (pv: any) => `<span class="price-variation">${pv.variationName}: $${pv.price.toFixed(2)}</span>`
+                      (pv: any) => `<span class="price-variation">${escapeHtml(pv.variationName)}: $${pv.price.toFixed(2)}</span>`
                     )
                     .join(' ')}
                 </div>`
@@ -477,7 +478,7 @@ export function generateHTML(
               : '';
 
           const itemName = Object.keys(item.name)
-            .map((lang) => `<span data-lang="${lang}" ${lang === 'ENG' ? '' : 'style="display: none;"'}>${item.name[lang]}</span>`)
+            .map((lang) => `<span data-lang="${lang}" ${lang === 'ENG' ? '' : 'style="display: none;"'}>${escapeHtml(item.name[lang] ?? '')}</span>`)
             .join('');
 
           const caloriesHtml =
@@ -489,7 +490,7 @@ export function generateHTML(
             ? Object.keys(item.description)
                 .map(
                   (lang) =>
-                    `<span data-lang="${lang}" ${lang === 'ENG' ? '' : 'style="display: none;"'}>${item.description![lang]}</span>`
+                    `<span data-lang="${lang}" ${lang === 'ENG' ? '' : 'style="display: none;"'}>${escapeHtml(item.description![lang] ?? '')}</span>`
                 )
                 .join('')
             : '';
@@ -509,8 +510,8 @@ export function generateHTML(
                 ${ing.map((ingItem: any) => {
                   const parts = [];
                   if (ingItem.quantity != null) parts.push(ingItem.quantity);
-                  if (ingItem.unit) parts.push(ingItem.unit);
-                  if (ingItem.name) parts.push(ingItem.name);
+                  if (ingItem.unit) parts.push(escapeHtml(String(ingItem.unit)));
+                  if (ingItem.name) parts.push(escapeHtml(String(ingItem.name)));
                   return `<li>${parts.join(' ')}</li>`;
                 }).join('')}
               </ul>`;
@@ -576,7 +577,7 @@ export function generateHTML(
           const subSectionTitle = Object.keys(subSection.title)
             .map(
               (lang) =>
-                `<span data-lang="${lang}" ${lang === 'ENG' ? '' : 'style="display: none;"'}>${subSection.title[lang]}</span>`
+                `<span data-lang="${lang}" ${lang === 'ENG' ? '' : 'style="display: none;"'}>${escapeHtml(subSection.title[lang] ?? '')}</span>`
             )
             .join('');
           
@@ -595,7 +596,7 @@ export function generateHTML(
       const sectionTitle = Object.keys(section.title)
         .map(
           (lang) =>
-            `<span data-lang="${lang}" ${lang === 'ENG' ? '' : 'style="display: none;"'}>${section.title[lang]}</span>`
+            `<span data-lang="${lang}" ${lang === 'ENG' ? '' : 'style="display: none;"'}>${escapeHtml(section.title[lang] ?? '')}</span>`
         )
         .join('');
 
@@ -655,7 +656,7 @@ export function generateHTML(
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>${menu.name['ENG'] || 'Menu'}</title>
+  <title>${escapeHtml(menu.name['ENG'] ?? 'Menu')}</title>
   ${fontLinks}
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -1751,12 +1752,12 @@ export function generateHTML(
   <div class="container">
     <div class="header">
       ${logoUrl ? `<img src="${logoUrl}" alt="${menu.restaurant.name}" class="restaurant-logo" />` : ''}
-      <h1 data-lang="ENG" id="menu-title">${menu.name['ENG'] || 'Menu'}</h1>
+      <h1 data-lang="ENG" id="menu-title">${escapeHtml(menu.name['ENG'] ?? 'Menu')}</h1>
       ${languages
         .filter((l) => l.code !== 'ENG')
         .map(
           (lang) =>
-            `<h1 data-lang="${lang.code}" id="menu-title" style="display: none;">${menu.name[lang.code] || menu.name['ENG']}</h1>`
+            `<h1 data-lang="${lang.code}" id="menu-title" style="display: none;">${escapeHtml(menu.name[lang.code] ?? menu.name['ENG'] ?? '')}</h1>`
         )
         .join('')}
       <div class="language-switcher">

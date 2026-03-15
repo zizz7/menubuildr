@@ -23,16 +23,17 @@ export const useAuthStore = create<AuthState>()(
       admin: null,
       token: null,
       setAuth: (admin, token) => {
+        // C1.15: Store token only in Zustand (persisted via persist middleware)
+        // Do NOT write to localStorage.auth_token — single source of truth
         set({ admin, token });
-        localStorage.setItem('auth_token', token);
       },
       updateAdmin: (data) => {
         const current = get().admin;
         if (current) set({ admin: { ...current, ...data } });
       },
       logout: () => {
+        // C1.15: Clear only Zustand store — no separate localStorage.auth_token to remove
         set({ admin: null, token: null });
-        localStorage.removeItem('auth_token');
         window.location.href = '/login';
       },
       isAuthenticated: () => {

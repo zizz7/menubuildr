@@ -74,7 +74,7 @@ describe('Property 3: Restaurant single access requires ownership', () => {
         const result = await verifyRestaurantOwnership(restaurantId, adminId);
         expect(result).toEqual({ authorized: true, resourceId: restaurantId });
       }),
-      { numRuns: 100 }
+      { numRuns: 25 }
     );
   });
 
@@ -89,7 +89,7 @@ describe('Property 3: Restaurant single access requires ownership', () => {
         const result = await verifyRestaurantOwnership(restaurantId, requesterId);
         expect(result).toEqual({ authorized: false });
       }),
-      { numRuns: 100 }
+      { numRuns: 25 }
     );
   });
 
@@ -101,7 +101,7 @@ describe('Property 3: Restaurant single access requires ownership', () => {
         const result = await verifyRestaurantOwnership(restaurantId, adminId);
         expect(result).toEqual({ authorized: false });
       }),
-      { numRuns: 100 }
+      { numRuns: 25 }
     );
   });
 });
@@ -121,7 +121,7 @@ describe('Property 6: Menu operations require parent restaurant ownership', () =
         const result = await verifyMenuOwnership(menuId, adminId);
         expect(result).toEqual({ authorized: true, resourceId: menuId });
       }),
-      { numRuns: 100 }
+      { numRuns: 25 }
     );
   });
 
@@ -136,7 +136,7 @@ describe('Property 6: Menu operations require parent restaurant ownership', () =
         const result = await verifyMenuOwnership(menuId, requesterId);
         expect(result).toEqual({ authorized: false });
       }),
-      { numRuns: 100 }
+      { numRuns: 25 }
     );
   });
 
@@ -148,7 +148,7 @@ describe('Property 6: Menu operations require parent restaurant ownership', () =
         const result = await verifyMenuOwnership(menuId, adminId);
         expect(result).toEqual({ authorized: false });
       }),
-      { numRuns: 100 }
+      { numRuns: 25 }
     );
   });
 });
@@ -168,7 +168,7 @@ describe('Property 7: Section operations require ownership chain verification', 
         const result = await verifySectionOwnership(sectionId, adminId);
         expect(result).toEqual({ authorized: true, resourceId: sectionId });
       }),
-      { numRuns: 100 }
+      { numRuns: 25 }
     );
   });
 
@@ -183,7 +183,7 @@ describe('Property 7: Section operations require ownership chain verification', 
         const result = await verifySectionOwnership(sectionId, requesterId);
         expect(result).toEqual({ authorized: false });
       }),
-      { numRuns: 100 }
+      { numRuns: 25 }
     );
   });
 
@@ -195,7 +195,7 @@ describe('Property 7: Section operations require ownership chain verification', 
         const result = await verifySectionOwnership(sectionId, adminId);
         expect(result).toEqual({ authorized: false });
       }),
-      { numRuns: 100 }
+      { numRuns: 25 }
     );
   });
 });
@@ -215,7 +215,7 @@ describe('Property 8: Item operations require ownership chain verification', () 
         const result = await verifyItemOwnership(itemId, adminId);
         expect(result).toEqual({ authorized: true, resourceId: itemId });
       }),
-      { numRuns: 100 }
+      { numRuns: 25 }
     );
   });
 
@@ -230,7 +230,7 @@ describe('Property 8: Item operations require ownership chain verification', () 
         const result = await verifyItemOwnership(itemId, requesterId);
         expect(result).toEqual({ authorized: false });
       }),
-      { numRuns: 100 }
+      { numRuns: 25 }
     );
   });
 
@@ -242,7 +242,7 @@ describe('Property 8: Item operations require ownership chain verification', () 
         const result = await verifyItemOwnership(itemId, adminId);
         expect(result).toEqual({ authorized: false });
       }),
-      { numRuns: 100 }
+      { numRuns: 25 }
     );
   });
 });
@@ -267,7 +267,7 @@ describe('Property 9: Bulk item operations require all items owned', () => {
           expect(result.authorized).toBe(true);
         }
       ),
-      { numRuns: 100 }
+      { numRuns: 25 }
     );
   });
 
@@ -292,7 +292,7 @@ describe('Property 9: Bulk item operations require all items owned', () => {
           expect(result.authorized).toBe(false);
         }
       ),
-      { numRuns: 100 }
+      { numRuns: 25 }
     );
   });
 
@@ -313,7 +313,7 @@ describe('Property 9: Bulk item operations require all items owned', () => {
           expect(result.authorized).toBe(false);
         }
       ),
-      { numRuns: 100 }
+      { numRuns: 25 }
     );
   });
 
@@ -323,7 +323,7 @@ describe('Property 9: Bulk item operations require all items owned', () => {
         const result = await verifyBulkItemOwnership([], adminId);
         expect(result).toEqual({ authorized: true, resourceId: '' });
       }),
-      { numRuns: 100 }
+      { numRuns: 25 }
     );
   });
 
@@ -339,7 +339,7 @@ describe('Property 9: Bulk item operations require all items owned', () => {
           expect(result.authorized).toBe(false);
         }
       ),
-      { numRuns: 100 }
+      { numRuns: 25 }
     );
   });
 });

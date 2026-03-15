@@ -1,6 +1,7 @@
 import express from 'express';
 import cors from 'cors';
 import helmet from 'helmet';
+import rateLimit from 'express-rate-limit';
 import dotenv from 'dotenv';
 import path from 'path';
 import { syncUploadsToPublic } from './utils/sync-uploads';
@@ -13,11 +14,12 @@ validateEnv();
 const app = express();
 const PORT = process.env.PORT || 5000;
 
-// CORS configuration: locked down in production, permissive in development
 const isProduction = process.env.NODE_ENV === 'production';
 
-// Trust proxy headers from Cloudflare (production only, prevents IP spoofing in dev)
+// Trust proxy headers from Cloudflare (production only)
 if (isProduction) app.set('trust proxy', 1);
+
+// C1.8: Always use explicit allowlist — no wildcard origin in any environment
 const allowedOrigins = isProduction
   ? [
       process.env.FRONTEND_URL,
@@ -36,12 +38,32 @@ const allowedOrigins = isProduction
     ];
 
 app.use(cors({
-  origin: isProduction ? allowedOrigins : true,
+  origin: allowedOrigins, // C1.8: always use allowlist, never `true`
   credentials: true,
 }));
 
-// L5: Set secure HTTP headers
-app.use(helmet());
+// C1.13: Configure Helmet with explicit CSP
+app.use(helmet({
+  contentSecurityPolicy: {
+    directives: {
+      defaultSrc: ["'self'"],
+      scriptSrc: ["'self'"],
+      styleSrc: ["'self'", "'unsafe-inline'", 'https://fonts.googleapis.com'],
+      imgSrc: ["'self'", 'data:', 'https://res.cloudinary.com'],
+      fontSrc: ["'self'", 'https://fonts.gstatic.com'],
+      connectSrc: ["'self'"],
+    },
+  },
+}));
+
+// C1.9: Rate limiter for write endpoints (20 req / 15 min per IP)
+const writeLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000,
+  max: 20,
+  standardHeaders: true,
+  legacyHeaders: false,
+  message: { error: 'Too many requests, please try again later.' },
+});
 
 // Raw body middleware for Stripe webhook (MUST come before express.json)
 app.use('/api/billing/webhook', express.raw({ type: 'application/json' }));
@@ -50,10 +72,16 @@ app.use('/api/billing/webhook', express.raw({ type: 'application/json' }));
 app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ extended: true, limit: '10mb' }));
 
-// Static files for uploads
-app.use('/uploads', express.static(path.join(__dirname, '../uploads')));
+// C1.11: Split static file mounts — protect /uploads/profile with auth
+// Public upload paths (logos, item images, illustrations, icons)
+app.use('/uploads/logo', express.static(path.join(__dirname, '../uploads/logo')));
+app.use('/uploads/item-image', express.static(path.join(__dirname, '../uploads/item-image')));
+app.use('/uploads/illustration', express.static(path.join(__dirname, '../uploads/illustration')));
+app.use('/uploads/icon', express.static(path.join(__dirname, '../uploads/icon')));
+// Protected: profile images require authentication
+app.use('/uploads/profile', authenticateToken, express.static(path.join(__dirname, '../uploads/profile')));
 
-// Static files for generated menu HTML
+// Static files for generated menu HTML (public)
 app.use('/menus', express.static(path.join(__dirname, '../menus')));
 
 // Health check (before auth-protected routes)
@@ -113,21 +141,23 @@ app.use('/api/items', itemRoutes);
 app.use('/api/allergens', allergenRoutes);
 app.use('/api/languages', languageRoutes);
 app.use('/api/translate', translateRoutes);
-app.use('/api/upload', uploadRoutes);
+
+// C1.9: Apply write rate limiter to upload and import endpoints
+app.use('/api/upload', writeLimiter, uploadRoutes);
 app.use('/api/search', searchRoutes);
-app.use('/api', importExportRoutes);
+app.use('/api', writeLimiter, importExportRoutes); // covers /restaurants/import and /restaurants/:id/import-menu
 app.use('/api/templates', templateRoutes);
 app.use('/api/menu-items', translationRoutes);
 app.use('/api/billing', billingRoutes);
 
-// L1: Global error handler to prevent leaking sensitive information
-app.use((err: any, req: express.Request, res: express.Response, next: express.NextFunction) => {
+// Global error handler — prevents leaking sensitive information
+app.use((err: any, _req: express.Request, res: express.Response, _next: express.NextFunction) => {
   console.error('Unhandled error:', err);
-  
+
   if (isProduction) {
     return res.status(500).json({ error: 'Internal server error' });
   }
-  
+
   res.status(err.status || 500).json({
     error: err.message || 'Internal server error',
     stack: err.stack,
@@ -136,12 +166,9 @@ app.use((err: any, req: express.Request, res: express.Response, next: express.Ne
 
 app.listen(Number(PORT), '0.0.0.0', () => {
   console.log(`Server running on 0.0.0.0:${PORT}`);
-  // Sync existing uploads to public directory on startup
   console.log('Syncing uploads to public directory...');
   syncUploadsToPublic();
 
-  // Regenerate all published menu HTML files on startup
-  // (menus directory is ephemeral and lost on redeploy)
   (async () => {
     try {
       const prismaModule = await import('./config/database');
@@ -167,4 +194,3 @@ app.listen(Number(PORT), '0.0.0.0', () => {
     }
   })();
 });
-

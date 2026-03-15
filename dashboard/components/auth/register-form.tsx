@@ -1,10 +1,8 @@
 'use client';
 
 import { useState } from 'react';
-import { useRouter } from 'next/navigation';
 import Link from 'next/link';
-import apiClient from '@/lib/api/client';
-import { useAuthStore } from '@/lib/store/auth-store';
+import { useAuthForm } from '@/lib/hooks/useAuthForm';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -14,32 +12,11 @@ export function RegisterForm() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
-  const [error, setError] = useState('');
-  const [loading, setLoading] = useState(false);
-  const router = useRouter();
-  const { setAuth } = useAuthStore();
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setError('');
-
-    if (password !== confirmPassword) {
-      setError('Passwords do not match');
-      return;
-    }
-
-    setLoading(true);
-    try {
-      const response = await apiClient.post('/auth/register', { name, email, password });
-      setAuth(response.data.admin, response.data.token);
-      router.push('/dashboard');
-    } catch (err: unknown) {
-      const axiosErr = err as { response?: { data?: { error?: string } } };
-      setError(axiosErr.response?.data?.error || 'Registration failed');
-    } finally {
-      setLoading(false);
-    }
-  };
+  const { error, loading, handleSubmit } = useAuthForm({
+    endpoint: '/auth/register',
+    extraValidation: () => password !== confirmPassword ? 'Passwords do not match' : null,
+  });
 
   return (
     <div className="w-full max-w-sm">
@@ -48,7 +25,7 @@ export function RegisterForm() {
         <p className="mt-2 text-sm text-gray-500">Start building beautiful menus today</p>
       </div>
 
-      <form onSubmit={handleSubmit} className="space-y-4">
+      <form onSubmit={(e) => handleSubmit(e, { name, email, password })} className="space-y-4">
         <div className="space-y-2">
           <Label htmlFor="name">Name</Label>
           <Input

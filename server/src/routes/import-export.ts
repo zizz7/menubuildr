@@ -3,6 +3,10 @@ import prisma from '../config/database';
 import { authenticateToken, AuthRequest } from '../middleware/auth';
 import { requireSubscription } from '../middleware/subscription';
 import { verifyRestaurantOwnership, verifyMenuOwnership } from '../middleware/ownership';
+import { RestaurantImportSchema, MenuImportSchema } from '../utils/validation';
+import { sendError } from '../utils/errors';
+import { handleZodError } from '../utils/zod-error';
+import { RESTAURANT_LIMIT, MENU_LIMIT } from '../config/limits';
 
 const router = express.Router();
 
@@ -14,7 +18,7 @@ router.post('/restaurants/:id/export', async (req: AuthRequest, res) => {
   try {
     const ownership = await verifyRestaurantOwnership(req.params.id, req.userId!);
     if (!ownership.authorized) {
-      return res.status(404).json({ error: 'Restaurant not found' });
+      return sendError(res, 404, 'Restaurant not found');
     }
 
     const restaurant = await prisma.restaurant.findUnique({
@@ -43,7 +47,7 @@ router.post('/restaurants/:id/export', async (req: AuthRequest, res) => {
     });
 
     if (!restaurant) {
-      return res.status(404).json({ error: 'Restaurant not found' });
+      return sendError(res, 404, 'Restaurant not found');
     }
 
     res.setHeader('Content-Type', 'application/json');
@@ -51,16 +55,16 @@ router.post('/restaurants/:id/export', async (req: AuthRequest, res) => {
     res.json(restaurant);
   } catch (error) {
     console.error('Export restaurant error:', error);
-    res.status(500).json({ error: 'Internal server error' });
+    return sendError(res, 500, 'Internal server error');
   }
 });
 
 // Export menu data
 router.post('/menus/:id/export', async (req: AuthRequest, res) => {
   try {
-    const ownership = await verifyMenuOwnership(req.params.id, req.userId!);
-    if (!ownership.authorized) {
-      return res.status(404).json({ error: 'Menu not found' });
+    const menuOwnership = await verifyMenuOwnership(req.params.id, req.userId!);
+    if (!menuOwnership.authorized) {
+      return sendError(res, 404, 'Menu not found');
     }
 
     const { format = 'json' } = req.body;
@@ -84,7 +88,7 @@ router.post('/menus/:id/export', async (req: AuthRequest, res) => {
     });
 
     if (!menu) {
-      return res.status(404).json({ error: 'Menu not found' });
+      return sendError(res, 404, 'Menu not found');
     }
 
     if (format === 'csv') {
@@ -119,113 +123,42 @@ router.post('/menus/:id/export', async (req: AuthRequest, res) => {
     }
   } catch (error) {
     console.error('Export menu error:', error);
-    res.status(500).json({ error: 'Internal server error' });
+    return sendError(res, 500, 'Internal server error');
   }
 });
 
 // Import restaurant data (same format as Export Restaurant / excel-to-restaurant-json output)
 router.post('/restaurants/import', async (req: AuthRequest, res) => {
   try {
-    const body = req.body as {
-      name: string;
-      logoUrl?: string | null;
-      logoPosition?: string | null;
-      slug: string;
-      currency?: string;
-      defaultLanguage?: string;
-      activeStatus?: boolean;
-      themeSettings?: {
-        primaryColor?: string;
-        secondaryColor?: string;
-        accentColor?: string;
-        backgroundColor?: string;
-        textColor?: string;
-        customCss?: string | null;
-        customFontsUrls?: string[];
-        backgroundIllustrationUrl?: string | null;
-      };
-      moduleSettings?: {
-        enablePriceVariations?: boolean;
-        enableAvailabilitySchedule?: boolean;
-        enableSeasonalItems?: boolean;
-        enableQrGeneration?: boolean;
-        enableSubcategories?: boolean;
-      };
-      menus?: Array<{
-        name: Record<string, string>;
-        slug: string;
-        menuType: string;
-        status?: string;
-        orderIndex?: number;
-        themeSettings?: unknown;
-        sections?: Array<{
-          title: Record<string, string>;
-          orderIndex?: number;
-          parentSectionId?: string | null;
-          illustrationUrl?: string | null;
-          illustrationAsBackground?: boolean;
-          illustrationPosition?: string | null;
-          illustrationSize?: string | null;
-          items?: Array<{
-            name: Record<string, string>;
-            description?: Record<string, string> | null;
-            price?: number | null;
-            calories?: number | null;
-            imageUrl?: string | null;
-            orderIndex?: number;
-            isAvailable?: boolean;
-            preparationTime?: number | null;
-            allergens?: unknown[];
-            recipeDetails?: {
-              ingredients?: Record<string, string> | Array<{ name: string; quantity?: number | null; unit?: string | null }>;
-              instructions?: string | null;
-              servings?: number | null;
-              difficultyLevel?: string | null;
-            } | null;
-            priceVariations?: unknown[];
-            availabilitySchedule?: unknown;
-          }>;
-          categories?: unknown[];
-        }>;
-      }>;
-    };
+    // C1.7: Validate body with Zod before any DB write
+    let body: ReturnType<typeof RestaurantImportSchema.parse>;
+    try {
+      body = RestaurantImportSchema.parse(req.body);
+    } catch (err) {
+      return handleZodError(res, err);
+    }
 
-    // M5: Add count limits to prevent resource exhaustion
-    const MAX_MENUS = 4;
+    // Count limits using shared constants (C1.24)
     const MAX_SECTIONS_PER_MENU = 20;
     const MAX_ITEMS_PER_SECTION = 50;
 
-    if (body.menus && body.menus.length > MAX_MENUS) {
-      return res.status(400).json({ error: `Maximum ${MAX_MENUS} menus allowed per restaurant` });
+    if (body.menus && body.menus.length > MENU_LIMIT) {
+      return sendError(res, 400, `Maximum ${MENU_LIMIT} menus allowed per restaurant`);
     }
 
     if (body.menus) {
       for (const menu of body.menus) {
         if (menu.sections && menu.sections.length > MAX_SECTIONS_PER_MENU) {
-          return res.status(400).json({ 
-            error: `Maximum ${MAX_SECTIONS_PER_MENU} sections allowed per menu (at menu: ${menu.slug})` 
-          });
+          return sendError(res, 400, `Maximum ${MAX_SECTIONS_PER_MENU} sections allowed per menu (at menu: ${menu.slug})`);
         }
         if (menu.sections) {
           for (const section of menu.sections) {
             if (section.items && section.items.length > MAX_ITEMS_PER_SECTION) {
-              return res.status(400).json({ 
-                error: `Maximum ${MAX_ITEMS_PER_SECTION} items allowed per section (at section: ${section.title?.ENG || 'unnamed'})` 
-              });
+              return sendError(res, 400, `Maximum ${MAX_ITEMS_PER_SECTION} items allowed per section`);
             }
           }
         }
       }
-    }
-
-    if (!body.name || !body.slug) {
-      return res.status(400).json({ error: 'name and slug are required' });
-    }
-
-    // M1: Validate slug format — only alphanumeric + hyphens allowed
-    const slugPattern = /^[a-z0-9-]+$/;
-    if (!slugPattern.test(body.slug)) {
-      return res.status(400).json({ error: 'Slug must contain only lowercase letters, numbers, and hyphens' });
     }
 
     let restaurant = await prisma.restaurant.findUnique({
@@ -387,7 +320,7 @@ router.post('/restaurants/import', async (req: AuthRequest, res) => {
     res.status(201).json(created);
   } catch (error) {
     console.error('Import restaurant error:', error);
-    res.status(500).json({ error: 'Internal server error' });
+    return sendError(res, 500, 'Internal server error');
   }
 });
 
@@ -395,37 +328,23 @@ router.post('/restaurants/import', async (req: AuthRequest, res) => {
 router.post('/restaurants/:restaurantId/import-menu', async (req: AuthRequest, res) => {
   try {
     const { restaurantId } = req.params;
-    const body = req.body as {
-      menuName: Record<string, string>;
-      menuSlug: string;
-      menuType: 'breakfast' | 'lunch' | 'dinner' | 'drinks';
-      sections: Array<{
-        title: Record<string, string>;
-        orderIndex: number;
-        items: Array<{
-          name: Record<string, string>;
-          description?: Record<string, string> | null;
-          price: number | null;
-          calories?: number | null;
-          orderIndex: number;
-          recipeDetails?: {
-            ingredients: Array<{ name: string; quantity: number | null; unit: string | null }>;
-            instructions: string | null;
-            servings: number | null;
-            difficultyLevel: string | null;
-          } | null;
-        }>;
-      }>;
-    };
+
+    // C1.7: Validate body with Zod before any DB write
+    let body: ReturnType<typeof MenuImportSchema.parse>;
+    try {
+      body = MenuImportSchema.parse(req.body);
+    } catch (err) {
+      return handleZodError(res, err);
+    }
 
     const ownership = await verifyRestaurantOwnership(restaurantId, req.userId!);
     if (!ownership.authorized) {
-      return res.status(404).json({ error: 'Restaurant not found' });
+      return sendError(res, 404, 'Restaurant not found');
     }
 
     const menuCount = await prisma.menu.count({ where: { restaurantId } });
-    if (menuCount >= 4) {
-      return res.status(400).json({ error: 'Maximum 4 menus per restaurant' });
+    if (menuCount >= MENU_LIMIT) {
+      return sendError(res, 400, `Maximum ${MENU_LIMIT} menus per restaurant`);
     }
 
     const menu = await prisma.menu.create({
@@ -485,10 +404,10 @@ router.post('/restaurants/:restaurantId/import-menu', async (req: AuthRequest, r
       },
     });
 
-    res.status(201).json(created);
+    return res.status(201).json(created);
   } catch (error) {
     console.error('Import menu error:', error);
-    res.status(500).json({ error: 'Internal server error' });
+    return sendError(res, 500, 'Internal server error');
   }
 });
 

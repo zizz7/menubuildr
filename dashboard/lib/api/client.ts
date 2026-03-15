@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { getApiUrl } from '@/lib/utils';
+import { useAuthStore } from '@/lib/store/auth-store';
 
 const apiClient = axios.create({
   baseURL: getApiUrl(),
@@ -8,9 +9,9 @@ const apiClient = axios.create({
   },
 });
 
-// Add auth token to requests
+// C1.23: Read token exclusively from Zustand store — never from localStorage.auth_token
 apiClient.interceptors.request.use((config) => {
-  const token = localStorage.getItem('auth_token');
+  const token = useAuthStore.getState().token;
   if (token) {
     config.headers.Authorization = `Bearer ${token}`;
   }
@@ -22,10 +23,8 @@ apiClient.interceptors.response.use(
   (response) => response,
   (error) => {
     if (error.response?.status === 401) {
-      localStorage.removeItem('auth_token');
-      if (typeof window !== 'undefined' && !window.location.pathname.startsWith('/login')) {
-        window.location.href = '/login';
-      }
+      // Clear Zustand store (single source of truth)
+      useAuthStore.getState().logout();
     }
 
     if (error.response?.status === 403 && error.response?.data?.code === 'SUBSCRIPTION_REQUIRED') {

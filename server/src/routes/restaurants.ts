@@ -4,6 +4,9 @@ import { authenticateToken, AuthRequest } from '../middleware/auth';
 import { requireSubscription } from '../middleware/subscription';
 import { verifyRestaurantOwnership } from '../middleware/ownership';
 import { RestaurantSchema, ThemeSettingsSchema, ModuleSettingsSchema } from '../utils/validation';
+import { sendError } from '../utils/errors';
+import { handleZodError } from '../utils/zod-error';
+import { RESTAURANT_LIMIT } from '../config/limits';
 
 const router = express.Router();
 
@@ -29,7 +32,7 @@ router.get('/', async (req: AuthRequest, res) => {
     res.json(restaurants);
   } catch (error) {
     console.error('Get restaurants error:', error);
-    res.status(500).json({ error: 'Internal server error' });
+    sendError(res, 500, 'Internal server error');
   }
 });
 
@@ -38,7 +41,7 @@ router.get('/:id', async (req: AuthRequest, res) => {
   try {
     const ownership = await verifyRestaurantOwnership(req.params.id, req.userId!);
     if (!ownership.authorized) {
-      return res.status(404).json({ error: 'Restaurant not found' });
+      return sendError(res, 404, 'Restaurant not found');
     }
 
     const restaurant = await prisma.restaurant.findUnique({
@@ -55,7 +58,7 @@ router.get('/:id', async (req: AuthRequest, res) => {
     res.json(restaurant);
   } catch (error) {
     console.error('Get restaurant error:', error);
-    res.status(500).json({ error: 'Internal server error' });
+    sendError(res, 500, 'Internal server error');
   }
 });
 
@@ -66,8 +69,8 @@ router.post('/', async (req: AuthRequest, res) => {
     const count = await prisma.restaurant.count({
       where: { adminId: req.userId },
     });
-    if (count >= 5) {
-      return res.status(400).json({ error: 'Maximum 5 restaurants allowed' });
+    if (count >= RESTAURANT_LIMIT) {
+      return sendError(res, 400, `Maximum ${RESTAURANT_LIMIT} restaurants allowed`);
     }
 
     const data = RestaurantSchema.parse(req.body);
@@ -97,14 +100,10 @@ router.post('/', async (req: AuthRequest, res) => {
     res.status(201).json(restaurant);
   } catch (error: any) {
     if (error.name === 'ZodError' || error.issues) {
-      const zodError = error.issues || error.errors || [];
-      return res.status(400).json({ 
-        error: 'Validation error', 
-        details: zodError.map((e: any) => `${e.path.join('.')}: ${e.message}`).join(', ')
-      });
+      return handleZodError(res, error);
     }
     console.error('Create restaurant error:', error);
-    res.status(500).json({ error: 'Internal server error' });
+    sendError(res, 500, 'Internal server error');
   }
 });
 
@@ -113,7 +112,7 @@ router.put('/:id', async (req: AuthRequest, res) => {
   try {
     const ownership = await verifyRestaurantOwnership(req.params.id, req.userId!);
     if (!ownership.authorized) {
-      return res.status(404).json({ error: 'Restaurant not found' });
+      return sendError(res, 404, 'Restaurant not found');
     }
 
     const data = RestaurantSchema.partial().parse(req.body);
@@ -128,12 +127,12 @@ router.put('/:id', async (req: AuthRequest, res) => {
     });
 
     res.json(restaurant);
-  } catch (error) {
-    if (error instanceof Error && error.name === 'ZodError') {
-      return res.status(400).json({ error: 'Validation error', details: error });
+  } catch (error: any) {
+    if (error.name === 'ZodError' || error.issues) {
+      return handleZodError(res, error);
     }
     console.error('Update restaurant error:', error);
-    res.status(500).json({ error: 'Internal server error' });
+    sendError(res, 500, 'Internal server error');
   }
 });
 
@@ -142,7 +141,7 @@ router.delete('/:id', async (req: AuthRequest, res) => {
   try {
     const ownership = await verifyRestaurantOwnership(req.params.id, req.userId!);
     if (!ownership.authorized) {
-      return res.status(404).json({ error: 'Restaurant not found' });
+      return sendError(res, 404, 'Restaurant not found');
     }
 
     await prisma.restaurant.delete({
@@ -152,7 +151,7 @@ router.delete('/:id', async (req: AuthRequest, res) => {
     res.json({ message: 'Restaurant deleted successfully' });
   } catch (error) {
     console.error('Delete restaurant error:', error);
-    res.status(500).json({ error: 'Internal server error' });
+    sendError(res, 500, 'Internal server error');
   }
 });
 
@@ -161,7 +160,7 @@ router.put('/:id/theme', async (req: AuthRequest, res) => {
   try {
     const ownership = await verifyRestaurantOwnership(req.params.id, req.userId!);
     if (!ownership.authorized) {
-      return res.status(404).json({ error: 'Restaurant not found' });
+      return sendError(res, 404, 'Restaurant not found');
     }
 
     const { menuId, templateId, ...themeData } = req.body;
@@ -173,17 +172,11 @@ router.put('/:id/theme', async (req: AuthRequest, res) => {
       });
       
       if (!template) {
-        return res.status(404).json({ 
-          error: 'Template not found',
-          code: 'TEMPLATE_NOT_FOUND'
-        });
+        return sendError(res, 404, 'Template not found', undefined, 'TEMPLATE_NOT_FOUND');
       }
       
       if (!template.isActive) {
-        return res.status(400).json({ 
-          error: 'Template is not active',
-          code: 'TEMPLATE_INACTIVE'
-        });
+        return sendError(res, 400, 'Template is not active', undefined, 'TEMPLATE_INACTIVE');
       }
     }
     
@@ -195,18 +188,12 @@ router.put('/:id/theme', async (req: AuthRequest, res) => {
       });
 
       if (!menu) {
-        return res.status(404).json({
-          error: 'Menu not found',
-          code: 'MENU_NOT_FOUND'
-        });
+        return sendError(res, 404, 'Menu not found', undefined, 'MENU_NOT_FOUND');
       }
 
       // Ownership check: menu must belong to THIS restaurant
       if (menu.restaurantId !== req.params.id) {
-        return res.status(403).json({
-          error: 'Menu does not belong to this restaurant',
-          code: 'MENU_OWNERSHIP_MISMATCH'
-        });
+        return sendError(res, 403, 'Menu does not belong to this restaurant', undefined, 'MENU_OWNERSHIP_MISMATCH');
       }
     }
     
@@ -263,19 +250,19 @@ router.put('/:id/theme', async (req: AuthRequest, res) => {
     }
   } catch (error: any) {
     if (error.name === 'ZodError' || error.issues) {
-      const zodError = error.issues || error.errors || [];
-      console.error('Theme validation error:', JSON.stringify(zodError, null, 2));
+      console.error('Theme validation error:', JSON.stringify(error.issues, null, 2));
       console.error('Theme data received:', JSON.stringify(req.body, null, 2));
-      return res.status(400).json({ 
-        error: 'Validation error', 
-        details: Array.isArray(zodError) 
-          ? zodError.map((e: any) => `${e.path?.join('.') || 'unknown'}: ${e.message}`).join(', ')
-          : String(zodError)
-      });
+      return handleZodError(res, error);
     }
     console.error('Update theme error:', error);
     console.error('Error stack:', error.stack);
-    res.status(500).json({ error: 'Internal server error', message: error.message });
+    // C1.10: Gate error.message behind NODE_ENV check — never expose in production
+    return sendError(
+      res,
+      500,
+      'Internal server error',
+      process.env.NODE_ENV === 'development' ? error.message : undefined
+    );
   }
 });
 
@@ -284,7 +271,7 @@ router.put('/:id/modules', async (req: AuthRequest, res) => {
   try {
     const ownership = await verifyRestaurantOwnership(req.params.id, req.userId!);
     if (!ownership.authorized) {
-      return res.status(404).json({ error: 'Restaurant not found' });
+      return sendError(res, 404, 'Restaurant not found');
     }
 
     // H6: Parse through schema to prevent mass assignment of arbitrary fields
@@ -292,7 +279,7 @@ router.put('/:id/modules', async (req: AuthRequest, res) => {
 
     const moduleSettings = await prisma.moduleSettings.upsert({
       where: { restaurantId: req.params.id },
-      update: data,
+      update: data as any,
       create: {
         restaurantId: req.params.id,
         ...data,
@@ -302,10 +289,10 @@ router.put('/:id/modules', async (req: AuthRequest, res) => {
     res.json(moduleSettings);
   } catch (error: any) {
     if (error.name === 'ZodError' || error.issues) {
-      return res.status(400).json({ error: 'Validation error', details: error.issues?.map((e: any) => `${e.path.join('.')}: ${e.message}`).join(', ') });
+      return handleZodError(res, error);
     }
     console.error('Update module settings error:', error);
-    res.status(500).json({ error: 'Internal server error' });
+    sendError(res, 500, 'Internal server error');
   }
 });
 

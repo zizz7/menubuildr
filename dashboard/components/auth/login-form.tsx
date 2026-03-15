@@ -1,10 +1,8 @@
 'use client';
 
 import { useState } from 'react';
-import { useRouter } from 'next/navigation';
 import Link from 'next/link';
-import { useAuthStore } from '@/lib/store/auth-store';
-import apiClient from '@/lib/api/client';
+import { useAuthForm } from '@/lib/hooks/useAuthForm';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -12,27 +10,7 @@ import { Label } from '@/components/ui/label';
 export function LoginForm() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [error, setError] = useState('');
-  const [loading, setLoading] = useState(false);
-  const router = useRouter();
-  const { setAuth } = useAuthStore();
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setError('');
-    setLoading(true);
-
-    try {
-      const response = await apiClient.post('/auth/login', { email, password });
-      setAuth(response.data.admin, response.data.token);
-      router.push('/dashboard');
-    } catch (err: unknown) {
-      const axiosErr = err as { response?: { data?: { error?: string } } };
-      setError(axiosErr.response?.data?.error || 'Login failed');
-    } finally {
-      setLoading(false);
-    }
-  };
+  const { error, loading, handleSubmit } = useAuthForm({ endpoint: '/auth/login' });
 
   return (
     <div className="w-full max-w-sm">
@@ -41,7 +19,7 @@ export function LoginForm() {
         <p className="mt-2 text-sm text-gray-500">Sign in to your MenuBuildr account</p>
       </div>
 
-      <form onSubmit={handleSubmit} className="space-y-4">
+      <form onSubmit={(e) => handleSubmit(e, { email, password })} className="space-y-4">
         <div className="space-y-2">
           <Label htmlFor="email">Email</Label>
           <Input

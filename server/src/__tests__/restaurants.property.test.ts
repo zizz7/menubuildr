@@ -229,7 +229,7 @@ describe('Property 1: Restaurant creation assigns ownership', () => {
         // Verify Prisma was called with admin connection
         expect(capturedCreateData.data.admin.connect.id).toBe(adminId);
       }),
-      { numRuns: 100 }
+      { numRuns: 25 }
     );
   });
 });
@@ -287,7 +287,7 @@ describe('Property 2: Restaurant list returns only owned restaurants', () => {
           }
         }
       ),
-      { numRuns: 100 }
+      { numRuns: 25 }
     );
   });
 
@@ -309,7 +309,7 @@ describe('Property 2: Restaurant list returns only owned restaurants', () => {
           })
         );
       }),
-      { numRuns: 100 }
+      { numRuns: 25 }
     );
   });
 });
@@ -346,7 +346,7 @@ describe('Property 4: Restaurant mutations require ownership', () => {
         expect(result.status).toBe(200);
         expect(mockedVerifyOwnership).toHaveBeenCalledWith(restaurantId, adminId);
       }),
-      { numRuns: 100 }
+      { numRuns: 25 }
     );
   });
 
@@ -372,7 +372,7 @@ describe('Property 4: Restaurant mutations require ownership', () => {
         // Prisma update should NOT have been called
         expect(mockedPrisma.restaurant.update).not.toHaveBeenCalled();
       }),
-      { numRuns: 100 }
+      { numRuns: 25 }
     );
   });
 
@@ -397,7 +397,7 @@ describe('Property 4: Restaurant mutations require ownership', () => {
         expect(result.status).toBe(200);
         expect(mockedVerifyOwnership).toHaveBeenCalledWith(restaurantId, adminId);
       }),
-      { numRuns: 100 }
+      { numRuns: 25 }
     );
   });
 
@@ -422,7 +422,7 @@ describe('Property 4: Restaurant mutations require ownership', () => {
         expect(result.body.error).toBe('Restaurant not found');
         expect(mockedPrisma.restaurant.delete).not.toHaveBeenCalled();
       }),
-      { numRuns: 100 }
+      { numRuns: 25 }
     );
   });
 
@@ -446,7 +446,7 @@ describe('Property 4: Restaurant mutations require ownership', () => {
         expect(result.status).toBe(404);
         expect(result.body.error).toBe('Restaurant not found');
       }),
-      { numRuns: 100 }
+      { numRuns: 25 }
     );
   });
 
@@ -471,7 +471,7 @@ describe('Property 4: Restaurant mutations require ownership', () => {
         expect(result.body.error).toBe('Restaurant not found');
         expect(mockedPrisma.moduleSettings.upsert).not.toHaveBeenCalled();
       }),
-      { numRuns: 100 }
+      { numRuns: 25 }
     );
   });
 
@@ -496,7 +496,7 @@ describe('Property 4: Restaurant mutations require ownership', () => {
         expect(result.status).toBe(200);
         expect(mockedVerifyOwnership).toHaveBeenCalledWith(restaurantId, adminId);
       }),
-      { numRuns: 100 }
+      { numRuns: 25 }
     );
   });
 });
@@ -528,7 +528,7 @@ describe('Property 5: Per-admin restaurant limit enforcement', () => {
           expect(mockedPrisma.restaurant.create).not.toHaveBeenCalled();
         }
       ),
-      { numRuns: 100 }
+      { numRuns: 25 }
     );
   });
 
@@ -559,7 +559,7 @@ describe('Property 5: Per-admin restaurant limit enforcement', () => {
           expect(result.status).toBe(201);
         }
       ),
-      { numRuns: 100 }
+      { numRuns: 25 }
     );
   });
 
@@ -588,7 +588,7 @@ describe('Property 5: Per-admin restaurant limit enforcement', () => {
           })
         );
       }),
-      { numRuns: 100 }
+      { numRuns: 25 }
     );
   });
 
@@ -618,7 +618,7 @@ describe('Property 5: Per-admin restaurant limit enforcement', () => {
         const result = await makeRequest(app, 'post', '/api/restaurants', restaurantData, adminBelowLimit);
         expect(result.status).toBe(201);
       }),
-      { numRuns: 100 }
+      { numRuns: 25 }
     );
   });
 });

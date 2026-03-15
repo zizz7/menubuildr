@@ -100,7 +100,11 @@ describe('Property 2: Preservation - Existing Auth & Profile Behavior', () => {
       expect(passwordSection).toContain('bcrypt.compare');
 
       // Must enforce minimum length
-      expect(passwordSection).toContain('newPassword.length < 8');
+      // complexPasswordSchema is defined at file level and used in ChangePasswordSchema
+      const hasComplexityCheck = passwordSection.includes('complexPasswordSchema') ||
+        passwordSection.includes('ChangePasswordSchema') ||
+        authSource.includes('complexPasswordSchema');
+      expect(hasComplexityCheck).toBe(true);
     });
   });
 
@@ -118,11 +122,10 @@ describe('Property 2: Preservation - Existing Auth & Profile Behavior', () => {
       // Must validate file size (5MB)
       expect(uploadSection).toContain('5 * 1024 * 1024');
 
-      // Must validate allowed extensions
+      // Must validate allowed extensions (no SVG for profile images — security fix C1.5)
       expect(uploadSection).toContain('.jpg');
       expect(uploadSection).toContain('.png');
       expect(uploadSection).toContain('.webp');
-      expect(uploadSection).toContain('.svg');
 
       // Must update profileImageUrl in database
       expect(uploadSection).toContain('profileImageUrl');

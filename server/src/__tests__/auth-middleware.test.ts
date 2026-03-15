@@ -101,6 +101,7 @@ describe('Property 14: Auth middleware rejects unauthenticated requests', () => 
 // ============================================================
 describe('Property 15: Auth middleware extracts userId from valid token', () => {
   it('sets req.userId from a valid JWT token', () => {
+    process.env.JWT_SECRET = JWT_SECRET;
     const token = signToken({ userId: 'user-123' });
     const req = createMockReq(`Bearer ${token}`);
     const res = createMockRes();
@@ -114,6 +115,7 @@ describe('Property 15: Auth middleware extracts userId from valid token', () => 
   });
 
   it('sets req.userId correctly for different user IDs', () => {
+    process.env.JWT_SECRET = JWT_SECRET;
     const token = signToken({ userId: 'admin-abc-999' });
     const req = createMockReq(`Bearer ${token}`);
     const res = createMockRes();
