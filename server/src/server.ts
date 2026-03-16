@@ -81,8 +81,13 @@ app.use('/uploads/icon', express.static(path.join(__dirname, '../uploads/icon'))
 // Protected: profile images require authentication
 app.use('/uploads/profile', authenticateToken, express.static(path.join(__dirname, '../uploads/profile')));
 
-// Static files for generated menu HTML (public)
-app.use('/menus', express.static(path.join(__dirname, '../menus')));
+// Static files for generated menu HTML (public) - no CSP restrictions for menu pages
+// Menu HTML files contain inline scripts for language switching and allergen filtering
+app.use('/menus', (_req, res, next) => {
+  // Remove CSP headers for menu pages to allow inline scripts and external fonts
+  res.removeHeader('Content-Security-Policy');
+  next();
+}, express.static(path.join(__dirname, '../menus')));
 
 // Health check (before auth-protected routes)
 app.get('/api/health', (_req, res) => {
