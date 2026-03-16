@@ -38,3 +38,6 @@ npm-debug.log*
 # Railway deploy scripts
 railway-*.ps1
 railway-*.mjs
+
+# Seed/utility scripts (contain tokens)
+seed-*.mjs
