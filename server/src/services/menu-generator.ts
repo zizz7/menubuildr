@@ -533,10 +533,40 @@ export function generateHTML(
           const onClickHandler = hasIngredients ? 'onclick="toggleItemCard(this)"' : '';
 
           // Resolve ingredients label (multi-language or default "Ingredients:")
+          // Default translations for "Ingredients" label
+          const defaultIngLabels: Record<string, string> = {
+            'ENG': 'Ingredients',
+            'RUS': 'Ингредиенты',
+            'ARA': 'المكونات',
+            'FRA': 'Ingrédients',
+            'FRE': 'Ingrédients',
+            'SPA': 'Ingredientes',
+            'ITA': 'Ingredienti',
+            'CHN': '配料',
+            'GER': 'Zutaten',
+            'JAP': '材料',
+            'POR': 'Ingredientes',
+            'KOR': '재료',
+            'HIN': 'सामग्री',
+            'TUR': 'Malzemeler',
+            'POL': 'Składniki',
+            'DUT': 'Ingrediënten',
+          };
           const ingLabel = item.recipeDetails?.ingredientsLabel;
-          const ingredientsLabelHtml = (ingLabel && typeof ingLabel === 'object' && Object.keys(ingLabel).length > 0)
-            ? Object.keys(ingLabel).map((lang: string) => `<span data-lang="${lang}" ${lang === 'ENG' ? '' : 'style="display: none;"'}>${(ingLabel as any)[lang] || 'Ingredients:'}</span>`).join('')
-            : 'Ingredients:';
+          let ingredientsLabelHtml: string;
+          if (ingLabel && typeof ingLabel === 'object' && Object.keys(ingLabel).length > 0) {
+            // Use custom label with fallback to defaults
+            ingredientsLabelHtml = languages.map((lang) => {
+              const labelText = (ingLabel as any)[lang.code] || defaultIngLabels[lang.code] || 'Ingredients';
+              return `<span data-lang="${lang.code}" ${lang.code === 'ENG' ? '' : 'style="display: none;"'}>${escapeHtml(labelText)}</span>`;
+            }).join('');
+          } else {
+            // Use default labels for all languages
+            ingredientsLabelHtml = languages.map((lang) => {
+              const labelText = defaultIngLabels[lang.code] || 'Ingredients';
+              return `<span data-lang="${lang.code}" ${lang.code === 'ENG' ? '' : 'style="display: none;"'}>${escapeHtml(labelText)}</span>`;
+            }).join('');
+          }
           
           return `
           <div class="menu-item ${expandableClass}" data-allergens="${item.allergens && item.allergens.length > 0 ? item.allergens.map((a: any) => a.name).join(',') : ''}" ${onClickHandler}>
