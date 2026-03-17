@@ -173,8 +173,14 @@ export function generateCoraFlowHTML(
     if (typeof ing === 'object' && ing !== null && !Array.isArray(ing)) {
       const values = Object.values(ing);
       if (values.some((v: any) => v && typeof v === 'string' && v.trim().length > 0)) {
-        const html = Object.keys(ing)
-          .map(lang => `<div data-lang="${lang}" ${lang === 'ENG' ? '' : 'style="display:none;"'}>${(ing as any)[lang] || ''}</div>`)
+        // Get the English content as fallback
+        const engContent = (ing as any)['ENG'] || Object.values(ing).find((v: any) => v && typeof v === 'string' && v.trim().length > 0) || '';
+        // Generate content for all active languages, using English as fallback
+        const html = languages
+          .map(lang => {
+            const content = (ing as any)[lang.code] || engContent;
+            return `<div data-lang="${lang.code}" ${lang.code === 'ENG' ? '' : 'style="display:none;"'}>${content}</div>`;
+          })
           .join('');
         return { hasIngredients: true, ingredientsHtml: html };
       }

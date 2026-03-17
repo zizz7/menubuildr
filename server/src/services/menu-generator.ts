@@ -520,8 +520,14 @@ export function generateHTML(
               const values = Object.values(ing);
               if (values.some((v: any) => v && typeof v === 'string' && v.trim().length > 0)) {
                 hasIngredients = true;
-                ingredientsContent = Object.keys(ing)
-                  .map((lang) => `<div data-lang="${lang}" ${lang === 'ENG' ? '' : 'style="display: none;"'}>${(ing as any)[lang] || ''}</div>`)
+                // Get the English content as fallback
+                const engContent = (ing as any)['ENG'] || Object.values(ing).find((v: any) => v && typeof v === 'string' && v.trim().length > 0) || '';
+                // Generate content for all active languages, using English as fallback
+                ingredientsContent = languages
+                  .map((lang) => {
+                    const content = (ing as any)[lang.code] || engContent;
+                    return `<div data-lang="${lang.code}" ${lang.code === 'ENG' ? '' : 'style="display: none;"'}>${escapeHtml(content)}</div>`;
+                  })
                   .join('');
               }
             }
