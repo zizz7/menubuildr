@@ -2,8 +2,11 @@ import type { Metadata } from 'next';
 import { Navbar } from '@/components/landing/navbar';
 import { HeroSection } from '@/components/landing/hero-section';
 import { FeaturesSection } from '@/components/landing/features-section';
-import { PricingSection } from '@/components/landing/pricing-section';
+import { HowItWorksSection } from '@/components/landing/how-it-works-section';
+import { TemplatesSection } from '@/components/landing/templates-section';
 import { TestimonialsSection } from '@/components/landing/testimonials-section';
+import { PricingSection } from '@/components/landing/pricing-section';
+import { CtaSection } from '@/components/landing/cta-section';
 import { Footer } from '@/components/landing/footer';
 import { JsonLd } from '@/components/landing/json-ld';
 import { BASE_URL, PRICING_PLANS } from '@/lib/constants/landing';
@@ -39,7 +42,6 @@ const organizationJsonLd = {
   name: 'MenuBuildr',
   url: BASE_URL,
   logo: `${BASE_URL}/og-image.png`,
-  sameAs: [],
 };
 
 const websiteJsonLd = {
@@ -53,7 +55,8 @@ const productJsonLd = {
   '@context': 'https://schema.org',
   '@type': 'Product',
   name: 'MenuBuildr',
-  description: 'Digital menu builder for restaurants with multi-language support, allergen management, and beautiful templates.',
+  description:
+    'Digital menu builder for restaurants with multi-language support, allergen management, and beautiful templates.',
   offers: {
     '@type': 'AggregateOffer',
     priceCurrency: 'USD',
@@ -65,18 +68,21 @@ const productJsonLd = {
 
 export default function LandingPage() {
   return (
-    <>
+    <div className="grain-overlay">
       <Navbar />
       <main>
         <HeroSection />
         <FeaturesSection />
-        <PricingSection />
+        <HowItWorksSection />
+        <TemplatesSection />
         <TestimonialsSection />
+        <PricingSection />
+        <CtaSection />
       </main>
       <Footer />
       <JsonLd data={organizationJsonLd} />
       <JsonLd data={websiteJsonLd} />
       <JsonLd data={productJsonLd} />
-    </>
+    </div>
   );
 }

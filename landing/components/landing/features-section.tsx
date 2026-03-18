@@ -1,42 +1,50 @@
-import { Store, LayoutTemplate, Languages, ShieldAlert } from 'lucide-react';
+import { Store, LayoutTemplate, Languages, ShieldAlert, QrCode, Palette } from 'lucide-react';
 import { FEATURES } from '@/lib/constants/landing';
 
 const ICON_MAP: Record<string, React.ComponentType<{ className?: string }>> = {
-  Store, LayoutTemplate, Languages, ShieldAlert,
+  Store, LayoutTemplate, Languages, ShieldAlert, QrCode, Palette,
 };
 
 export function FeaturesSection() {
   return (
-    <section id="features" aria-labelledby="features-heading" className="py-24 lg:py-40 bg-background relative overflow-hidden">
+    <section
+      id="features"
+      aria-labelledby="features-heading"
+      className="py-24 lg:py-32 bg-cream relative"
+    >
       <div className="mx-auto max-w-7xl px-6 lg:px-10">
-        <div className="flex flex-col items-center text-center max-w-3xl mx-auto mb-20 lg:mb-24">
-          <h2 id="features-heading" className="text-sm font-black uppercase tracking-[0.3em] text-primary mb-6">
-            Core Features
-          </h2>
-          <h2 className="text-4xl lg:text-6xl font-black tracking-tight text-foreground mb-6">
+        <div className="text-center max-w-2xl mx-auto mb-16">
+          <p className="font-mono text-xs tracking-widest text-amber uppercase mb-4">
+            Features
+          </p>
+          <h2
+            id="features-heading"
+            className="font-serif text-4xl lg:text-5xl font-bold text-forest mb-4"
+          >
             Everything you need
           </h2>
-          <p className="text-lg text-muted-foreground font-medium">
-            Powerful tools built for restaurant owners and managers.
+          <p className="text-warm-gray">
+            Powerful tools designed for restaurant owners and managers.
           </p>
         </div>
 
-        <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {FEATURES.map((feature) => {
             const Icon = ICON_MAP[feature.icon];
             return (
-              <article 
-                key={feature.title} 
-                className="group relative rounded-lg border border-input bg-white p-8 transition-colors hover:border-border"
+              <article
+                key={feature.title}
+                className="feature-card group rounded-2xl border border-forest/5 bg-white p-8"
               >
-                <div className="w-12 h-12 rounded-md bg-input/10 flex items-center justify-center text-primary mb-6 transition-colors group-hover:bg-primary group-hover:text-primary-foreground">
-                  {Icon && <Icon className="h-6 w-6" aria-hidden="true" />}
+                <div className="w-12 h-12 rounded-xl bg-forest/5 flex items-center justify-center text-forest mb-6 group-hover:bg-forest group-hover:text-cream transition-colors duration-300">
+                  {Icon && <Icon className="h-5 w-5" aria-hidden="true" />}
                 </div>
-                <h3 className="text-lg font-black tracking-tight text-foreground mb-3">{feature.title}</h3>
-                <p className="text-sm font-medium text-muted-foreground leading-relaxed">{feature.description}</p>
-                
-                {/* Subtle underline animation */}
-                <div className="absolute bottom-6 left-8 right-8 h-px bg-primary/20 scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left" />
+                <h3 className="font-serif text-xl font-semibold text-forest mb-2">
+                  {feature.title}
+                </h3>
+                <p className="text-sm text-warm-gray leading-relaxed">
+                  {feature.description}
+                </p>
               </article>
             );
           })}

@@ -4,52 +4,67 @@ import { cn } from '@/lib/utils';
 
 export function PricingSection() {
   return (
-    <section id="pricing" aria-labelledby="pricing-heading" className="py-24 lg:py-40 bg-input/10">
+    <section
+      id="pricing"
+      aria-labelledby="pricing-heading"
+      className="py-24 lg:py-32 bg-cream-dark"
+    >
       <div className="mx-auto max-w-7xl px-6 lg:px-10">
-        <div className="flex flex-col items-center text-center max-w-3xl mx-auto mb-20 lg:mb-24">
-          <h2 id="pricing-heading" className="text-sm font-black uppercase tracking-[0.3em] text-primary mb-6">
-            Simple Pricing
+        <div className="text-center max-w-2xl mx-auto mb-16">
+          <p className="font-mono text-xs tracking-widest text-amber uppercase mb-4">
+            Pricing
+          </p>
+          <h2
+            id="pricing-heading"
+            className="font-serif text-4xl lg:text-5xl font-bold text-forest mb-4"
+          >
+            Simple, transparent pricing
           </h2>
-          <h2 className="text-4xl lg:text-6xl font-black tracking-tight text-foreground mb-6">
-            Choose your plan
-          </h2>
-          <p className="text-lg text-muted-foreground font-medium">
-            Transparent pricing for restaurants of all sizes. No hidden fees.
+          <p className="text-warm-gray">
+            No hidden fees. Start free, upgrade when you&apos;re ready.
           </p>
         </div>
-        
-        <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
+
+        <div className="grid grid-cols-1 gap-8 md:grid-cols-3 max-w-5xl mx-auto">
           {PRICING_PLANS.map((plan) => (
             <article
               key={plan.name}
               className={cn(
-                'relative flex flex-col rounded-lg border p-8 bg-white transition-colors hover:border-border',
-                plan.recommended 
-                  ? 'border-primary border-2 z-10' 
-                  : 'border-input',
+                'pricing-card relative flex flex-col rounded-2xl p-8 bg-white',
+                plan.recommended
+                  ? 'border-2 border-amber ring-1 ring-amber/20'
+                  : 'border border-forest/5'
               )}
             >
               {plan.recommended && (
-                <div className="absolute -top-3 left-1/2 -translate-x-1/2 bg-primary text-primary-foreground px-4 py-1 rounded-md text-[10px] font-bold uppercase tracking-widest">
-                  Best Value
+                <div className="absolute -top-3 left-1/2 -translate-x-1/2 bg-amber text-forest px-4 py-1 rounded-full text-xs font-semibold">
+                  Most Popular
                 </div>
               )}
-              
+
               <div className="mb-8">
-                <h3 className="text-lg font-black uppercase tracking-widest text-foreground opacity-60 mb-4">{plan.name}</h3>
+                <h3 className="font-mono text-xs tracking-widest text-warm-gray uppercase mb-4">
+                  {plan.name}
+                </h3>
                 <div className="flex items-baseline">
-                  <span className="text-5xl font-black tracking-tight text-foreground">{plan.price}</span>
-                  {plan.period && <span className="ml-2 text-sm font-bold text-muted-foreground">{plan.period}</span>}
+                  <span className="font-serif text-5xl font-bold text-forest">
+                    {plan.price}
+                  </span>
+                  {plan.period && (
+                    <span className="ml-1 text-sm text-warm-gray">
+                      {plan.period}
+                    </span>
+                  )}
                 </div>
               </div>
 
-              <ul className="flex-1 space-y-4 mb-10" role="list">
+              <ul className="flex-1 space-y-4 mb-8" role="list">
                 {plan.features.map((feature) => (
-                  <li key={feature} className="flex items-start gap-4">
-                    <div className="w-5 h-5 rounded-full bg-emerald-500/10 flex items-center justify-center text-emerald-500 shrink-0 mt-0.5 border border-emerald-500/10">
+                  <li key={feature} className="flex items-start gap-3">
+                    <div className="w-5 h-5 rounded-full bg-forest/5 flex items-center justify-center text-forest shrink-0 mt-0.5">
                       <Check className="h-3 w-3" aria-hidden="true" />
                     </div>
-                    <span className="text-sm font-medium text-muted-foreground">{feature}</span>
+                    <span className="text-sm text-warm-gray">{feature}</span>
                   </li>
                 ))}
               </ul>
@@ -57,10 +72,10 @@ export function PricingSection() {
               <a
                 href={`${APP_URL}${plan.ctaHref}`}
                 className={cn(
-                  'inline-flex h-10 items-center justify-center rounded-md px-8 text-sm font-bold uppercase tracking-widest transition-colors',
+                  'inline-flex h-12 items-center justify-center rounded-full px-8 text-sm font-medium transition-colors',
                   plan.recommended
-                    ? 'bg-primary text-primary-foreground hover:bg-primary/90'
-                    : 'bg-muted text-foreground hover:bg-muted/80',
+                    ? 'bg-forest text-cream hover:bg-forest-light'
+                    : 'border border-forest/20 text-forest hover:bg-forest hover:text-cream'
                 )}
               >
                 {plan.ctaLabel}
