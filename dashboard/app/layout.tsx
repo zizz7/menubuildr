@@ -38,7 +38,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={`${cormorant.variable} ${dmSans.variable} ${dmMono.variable}`}>
-      <body className={inter.className}>
+      <body className={dmSans.className}>
         {children}
         <Toaster />
       </body>

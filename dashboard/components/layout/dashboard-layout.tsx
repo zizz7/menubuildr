@@ -167,7 +167,7 @@ export function DashboardLayout({ children }: { children: ReactNode }) {
                       'flex items-center gap-3 px-3 py-2 rounded-md text-sm font-medium transition-colors',
                       isCollapsed && 'justify-center',
                       isActive
-                        ? 'bg-sidebar-accent text-sidebar-foreground shadow-sm border border-sidebar-border'
+                        ? 'bg-sidebar-accent text-sidebar-primary shadow-sm'
                         : 'text-sidebar-foreground/60 hover:bg-sidebar-accent/50 hover:text-sidebar-foreground'
                     )}
                   >
@@ -232,8 +232,19 @@ export function DashboardLayout({ children }: { children: ReactNode }) {
         'hidden lg:flex shrink-0 relative transition-all duration-200 border-r border-sidebar-border',
         collapsed ? 'w-[68px]' : 'w-[260px]'
       )}>
-        <aside className="w-full bg-sidebar text-sidebar-foreground flex flex-col overflow-hidden">
-          {renderSidebar(collapsed)}
+        <aside className="w-full bg-sidebar text-sidebar-foreground flex flex-col overflow-hidden relative">
+          {/* Grid texture */}
+          <div className="absolute inset-0 pointer-events-none" style={{
+            backgroundImage: 'linear-gradient(rgba(249,246,240,0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(249,246,240,0.04) 1px, transparent 1px)',
+            backgroundSize: '48px 48px',
+          }} />
+          {/* Grain */}
+          <div className="absolute inset-0 pointer-events-none opacity-[0.03]" style={{
+            backgroundImage: "url(\"data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E\")",
+          }} />
+          <div className="relative z-10 flex flex-col h-full">
+            {renderSidebar(collapsed)}
+          </div>
         </aside>
         {/* Toggle Button — vertically centered on the right edge */}
         <button

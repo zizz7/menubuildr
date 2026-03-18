@@ -373,7 +373,7 @@ export default function MenusPage() {
             value={selectedRestaurantId || ''}
             onValueChange={handleRestaurantChange}
           >
-            <SelectTrigger className="w-[200px] border-input/50 bg-white font-medium text-sm">
+            <SelectTrigger className="w-[200px] border-border/50 font-medium text-sm">
               <SelectValue placeholder="Select restaurant" />
             </SelectTrigger>
             <SelectContent>
@@ -392,11 +392,11 @@ export default function MenusPage() {
               </Button>
             </DialogTrigger>
             <DialogContent className="max-w-xl w-full border border-border shadow-md rounded-lg p-0 overflow-hidden">
-              <div className="p-8 border-b border-input/20 bg-gray-50/50">
+              <div className="p-8 border-b border-border/30 bg-muted/50">
                 <DialogTitle className="text-xl font-bold tracking-tight">
                   {editingMenu ? 'Edit Menu' : 'Create New Menu'}
                 </DialogTitle>
-                <DialogDescription className="text-sm text-gray-500 mt-1">
+                <DialogDescription className="text-sm text-muted-foreground mt-1">
                   {editingMenu
                     ? 'Update menu information and visibility settings.'
                     : 'Add a new menu to your restaurant. Maximum 4 per establishment.'}
@@ -470,12 +470,12 @@ export default function MenusPage() {
         {currentRestaurantMenus.map((menu) => (
           <Card
             key={menu.id}
-            className="group bg-white border-input/50 hover:border-primary/50 transition-all cursor-pointer overflow-hidden rounded-lg shadow-sm"
+            className="group border-border/50 hover:border-primary/50 transition-all cursor-pointer overflow-hidden rounded-lg shadow-sm"
             onClick={() => handleSelectMenu(menu)}
           >
             <CardHeader className="pb-4">
               <div className="flex items-center justify-between mb-4">
-                <div className="p-2.5 rounded-lg bg-gray-50 border border-input/50 text-primary">
+                <div className="p-2.5 rounded-lg bg-muted border border-border/50 text-primary">
                   <BookOpen className="h-5 w-5" />
                 </div>
                 {menu.status === 'published' ? (
@@ -498,14 +498,14 @@ export default function MenusPage() {
               </CardDescription>
             </CardHeader>
             <CardContent className="space-y-6">
-              <div className="flex justify-between py-4 border-y border-input/20">
+              <div className="flex justify-between py-4 border-y border-border/30">
                 <div className="space-y-0.5">
-                  <span className="text-[10px] text-gray-500 font-bold uppercase tracking-widest">Sections</span>
-                  <p className="text-lg font-bold text-gray-900">{menu._count?.sections || 0}</p>
+                  <span className="text-[10px] text-muted-foreground font-bold uppercase tracking-widest">Sections</span>
+                  <p className="text-lg font-bold text-foreground">{menu._count?.sections || 0}</p>
                 </div>
                 <div className="space-y-0.5 text-right">
-                  <span className="text-[10px] text-gray-500 font-bold uppercase tracking-widest">Type</span>
-                  <p className="text-sm font-semibold text-gray-700 capitalize">
+                  <span className="text-[10px] text-muted-foreground font-bold uppercase tracking-widest">Type</span>
+                  <p className="text-sm font-semibold text-foreground capitalize">
                     {menu.menuType}
                   </p>
                 </div>
@@ -515,7 +515,7 @@ export default function MenusPage() {
                 <Button
                   variant="ghost"
                   size="sm"
-                  className="flex-1 text-[10px] font-bold border border-input/50 bg-white hover:bg-gray-50 h-8 uppercase tracking-tight"
+                  className="flex-1 text-[10px] font-bold border border-border/50 hover:bg-muted h-8 uppercase tracking-tight"
                   onClick={() => handleSelectMenu(menu)}
                 >
                   <Edit className="h-3.5 w-3.5 mr-2 text-primary" />
@@ -524,7 +524,7 @@ export default function MenusPage() {
                 <Button
                   variant="ghost"
                   size="sm"
-                  className="flex-1 text-[10px] font-bold border border-input/50 bg-white hover:bg-gray-50 h-8 uppercase tracking-tight"
+                  className="flex-1 text-[10px] font-bold border border-border/50 hover:bg-muted h-8 uppercase tracking-tight"
                   onClick={() => handleDuplicate(menu)}
                 >
                   <Copy className="h-3.5 w-3.5 mr-2 text-primary" />
@@ -534,7 +534,7 @@ export default function MenusPage() {
                   <Button
                     variant="ghost"
                     size="sm"
-                    className="flex-1 text-[10px] font-bold border border-primary/20 bg-primary/5 hover:bg-primary hover:text-white h-8 uppercase tracking-tight text-primary transition-all"
+                    className="flex-1 text-[10px] font-bold border border-primary/20 bg-primary/5 hover:bg-primary hover:text-primary-foreground h-8 uppercase tracking-tight text-primary transition-all"
                     onClick={() => handlePublish(menu)}
                   >
                     Publish
@@ -545,7 +545,7 @@ export default function MenusPage() {
                     <Button
                       variant="ghost"
                       size="sm"
-                      className="text-[10px] font-bold border border-input/50 bg-white hover:bg-gray-50 h-8 px-3 uppercase tracking-tight"
+                      className="text-[10px] font-bold border border-border/50 hover:bg-muted h-8 px-3 uppercase tracking-tight"
                       onClick={() => handleRepublish(menu)}
                       title="Sync and Republish"
                     >
@@ -554,7 +554,7 @@ export default function MenusPage() {
                     <Button
                       variant="ghost"
                       size="sm"
-                      className="text-[10px] font-bold border border-input/50 bg-white hover:bg-gray-50 h-8 px-3 uppercase tracking-tight"
+                      className="text-[10px] font-bold border border-border/50 hover:bg-muted h-8 px-3 uppercase tracking-tight"
                       onClick={() => handleCopyLink(menu)}
                       title="Copy Menu Link"
                     >
@@ -565,7 +565,7 @@ export default function MenusPage() {
                 <Button
                   variant="ghost"
                   size="sm"
-                  className="text-[10px] font-bold border border-input/50 bg-white hover:bg-red-50 hover:text-red-600 h-8 px-3 uppercase tracking-tight"
+                  className="text-[10px] font-bold border border-border/50 hover:bg-red-50 hover:text-red-600 h-8 px-3 uppercase tracking-tight"
                   onClick={() => handleDelete(menu.id)}
                   title="Delete Menu"
                 >
@@ -596,11 +596,11 @@ export default function MenusPage() {
       {/* Publish Dialog with Template Selection */}
       <Dialog open={publishDialogOpen} onOpenChange={setPublishDialogOpen}>
         <DialogContent className="max-w-lg w-full border border-border shadow-md rounded-lg p-0 overflow-hidden">
-          <div className="p-8 border-b border-input/20 bg-gray-50/50">
+          <div className="p-8 border-b border-border/30 bg-muted/50">
             <DialogTitle className="text-xl font-bold tracking-tight">
               {publishingMenu?.status === 'published' ? 'Republish Menu' : 'Ready to Publish?'}
             </DialogTitle>
-            <DialogDescription className="text-sm text-gray-500 mt-1">
+            <DialogDescription className="text-sm text-muted-foreground mt-1">
               Select a template below to define the look of your live digital menu.
             </DialogDescription>
           </div>

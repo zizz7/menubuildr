@@ -191,11 +191,11 @@ export default function RestaurantsPage() {
             </Button>
           </DialogTrigger>
           <DialogContent className="max-w-md w-full border border-border shadow-md rounded-lg p-0 overflow-hidden">
-            <div className="p-8 border-b border-input/20 bg-gray-50/50">
+            <div className="p-8 border-b border-border/30 bg-muted/50">
               <DialogTitle className="text-xl font-bold tracking-tight">
                 {editingRestaurant ? 'Edit Restaurant' : 'Create Restaurant'}
               </DialogTitle>
-              <DialogDescription className="text-sm text-gray-500 mt-1">
+              <DialogDescription className="text-sm text-muted-foreground mt-1">
                 {editingRestaurant
                   ? 'Update restaurant information and branding details.'
                   : 'Register a new establishment to manage its menus.'}
@@ -261,17 +261,17 @@ export default function RestaurantsPage() {
               <div className="space-y-4">
                 <div className="flex items-center justify-between">
                   <Label className="text-sm font-semibold">Logo (optional)</Label>
-                  <div className="flex p-1 rounded-lg bg-gray-100 border border-input/50">
+                  <div className="flex p-1 rounded-lg bg-muted border border-border/50">
                     <button
                       type="button"
-                      className={`px-3 py-1 text-xs font-semibold rounded-md transition-all ${logoInputMode === 'upload' ? 'bg-white text-gray-900 shadow-sm border border-input/20' : 'text-gray-500 hover:text-gray-900'}`}
+                      className={`px-3 py-1 text-xs font-semibold rounded-md transition-all ${logoInputMode === 'upload' ? 'bg-card text-foreground shadow-sm border border-border/20' : 'text-muted-foreground hover:text-foreground'}`}
                       onClick={() => setLogoInputMode('upload')}
                     >
                       Upload
                     </button>
                     <button
                       type="button"
-                      className={`px-3 py-1 text-xs font-semibold rounded-md transition-all ${logoInputMode === 'url' ? 'bg-white text-gray-900 shadow-sm border border-input/20' : 'text-gray-500 hover:text-gray-900'}`}
+                      className={`px-3 py-1 text-xs font-semibold rounded-md transition-all ${logoInputMode === 'url' ? 'bg-card text-foreground shadow-sm border border-border/20' : 'text-muted-foreground hover:text-foreground'}`}
                       onClick={() => setLogoInputMode('url')}
                     >
                       URL
@@ -366,7 +366,7 @@ export default function RestaurantsPage() {
           return (
             <Card
               key={restaurant.id}
-              className="group bg-white border-input/50 hover:border-primary/50 transition-all cursor-pointer overflow-hidden rounded-lg shadow-sm"
+              className="group border-border/50 hover:border-primary/50 transition-all cursor-pointer overflow-hidden rounded-lg shadow-sm"
               onClick={() => handleSelectRestaurant(restaurant)}
             >
               <CardHeader className="pb-4">
@@ -383,7 +383,7 @@ export default function RestaurantsPage() {
                       />
                     </div>
                   ) : (
-                    <div className="p-2.5 rounded-lg bg-gray-50 border border-input/50 text-primary">
+                    <div className="p-2.5 rounded-lg bg-muted border border-border/50 text-primary">
                       <Store className="h-5 w-5" />
                     </div>
                   )}
@@ -426,7 +426,7 @@ export default function RestaurantsPage() {
                   <Button
                     variant="ghost"
                     size="sm"
-                    className="flex-1 text-xs font-bold border border-input/50 bg-white hover:bg-gray-50 h-9"
+                    className="flex-1 text-xs font-bold border border-border/50 hover:bg-muted h-9"
                     onClick={() => handleOpenDialog(restaurant)}
                   >
                     <Edit className="h-3.5 w-3.5 mr-2 text-primary" />
@@ -435,7 +435,7 @@ export default function RestaurantsPage() {
                   <Button
                     variant="ghost"
                     size="sm"
-                    className="flex-1 text-xs font-bold border border-input/50 bg-white hover:bg-red-50 hover:text-red-600 h-9"
+                    className="flex-1 text-xs font-bold border border-border/50 hover:bg-red-50 hover:text-red-600 h-9"
                     onClick={() => handleDelete(restaurant.id)}
                   >
                     <Trash2 className="h-3.5 w-3.5 mr-2" />
