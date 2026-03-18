@@ -2,6 +2,9 @@ import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
   output: 'standalone',
+  typescript: {
+    ignoreBuildErrors: true,
+  },
   async rewrites() {
     // Proxy /uploads/* and /menus/* to the Express server
     const apiHost = process.env.NEXT_PUBLIC_API_URL

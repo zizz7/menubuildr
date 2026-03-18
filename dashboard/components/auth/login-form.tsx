@@ -85,9 +85,9 @@ export function LoginForm() {
       </div>
 
       <div className="mt-4 text-center">
-        <Link href="/" className="text-sm text-gray-400 hover:text-gray-600">
+        <a href="https://menubuildr.com" className="text-sm text-gray-400 hover:text-gray-600">
           &larr; Back to home
-        </Link>
+        </a>
       </div>
     </div>
   );
