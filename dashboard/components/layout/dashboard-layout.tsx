@@ -127,7 +127,7 @@ export function DashboardLayout({ children }: { children: ReactNode }) {
         <div className={cn('flex items-center', isCollapsed ? 'justify-center' : 'gap-3')}>
           <div className="w-10 h-10 rounded-full bg-sidebar-accent flex items-center justify-center text-sidebar-foreground border border-sidebar-border overflow-hidden shrink-0 relative">
             {admin?.profileImageUrl ? (
-              <img src={resolveAssetUrl(admin.profileImageUrl)} alt="" className="absolute inset-0 w-full h-full object-cover" />
+              <img src={resolveAssetUrl(admin.profileImageUrl)} alt="" key={admin.profileImageUrl} className="absolute inset-0 w-full h-full object-cover" />
             ) : (
               <User className="h-5 w-5" />
             )}

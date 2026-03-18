@@ -25,11 +25,15 @@ export function getServerUrl(): string {
 
 /**
  * Resolves an asset URL. External URLs are returned as-is.
- * Relative paths are prefixed with the server origin so they work from any host.
+ * Paths starting with /uploads/ or /menus/ are kept relative so they go through
+ * the Next.js rewrite proxy (see next.config.ts). Other relative paths are
+ * prefixed with the server origin.
  */
 export function resolveAssetUrl(url: string | null | undefined): string {
   if (!url || !url.trim()) return '';
   const trimmed = url.trim();
   if (trimmed.startsWith('http://') || trimmed.startsWith('https://')) return trimmed;
+  // Let Next.js proxy handle /uploads and /menus paths
+  if (trimmed.startsWith('/uploads/') || trimmed.startsWith('/menus/')) return trimmed;
   return `${getServerUrl()}${trimmed.startsWith('/') ? '' : '/'}${trimmed}`;
 }

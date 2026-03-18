@@ -82,7 +82,8 @@ export default function SettingsPage() {
       const res = await apiClient.post('/auth/profile-image', formData, {
         headers: { 'Content-Type': 'multipart/form-data' },
       });
-      updateAdmin({ profileImageUrl: `${res.data.profileImageUrl}?t=${Date.now()}` });
+      updateAdmin({ profileImageUrl: res.data.profileImageUrl });
+      setImgCacheBust(String(Date.now()));
       toast.success('Profile image updated');
     } catch (error: any) {
       toast.error(error.response?.data?.error || 'Failed to upload image');
@@ -94,8 +95,10 @@ export default function SettingsPage() {
 
   if (!isAuthenticated()) return null;
 
+  // Cache-bust at render time only — never persist ?t= in the store
+  const [imgCacheBust, setImgCacheBust] = useState('');
   const imageUrl = admin?.profileImageUrl
-    ? resolveAssetUrl(admin.profileImageUrl)
+    ? `${resolveAssetUrl(admin.profileImageUrl)}${imgCacheBust ? `?t=${imgCacheBust}` : ''}`
     : null;
 
   return (

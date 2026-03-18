@@ -78,8 +78,8 @@ app.use('/uploads/logo', express.static(path.join(__dirname, '../uploads/logo'))
 app.use('/uploads/item-image', express.static(path.join(__dirname, '../uploads/item-image')));
 app.use('/uploads/illustration', express.static(path.join(__dirname, '../uploads/illustration')));
 app.use('/uploads/icon', express.static(path.join(__dirname, '../uploads/icon')));
-// Protected: profile images require authentication
-app.use('/uploads/profile', authenticateToken, express.static(path.join(__dirname, '../uploads/profile')));
+// Profile images — served publicly (browser <img> tags cannot send Bearer tokens)
+app.use('/uploads/profile', express.static(path.join(__dirname, '../uploads/profile')));
 
 // Static files for generated menu HTML (public) - no CSP restrictions for menu pages
 // Menu HTML files contain inline scripts for language switching and allergen filtering
