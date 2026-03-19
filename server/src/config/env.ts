@@ -11,6 +11,8 @@ const OPTIONAL_WARN_VARS = [
   'STRIPE_SECRET_KEY',
   'STRIPE_WEBHOOK_SECRET',
   'STRIPE_PRICE_ID',
+  'STRIPE_PRICE_PRO_MONTHLY',
+  'STRIPE_PRICE_PRO_ANNUAL',
 ] as const;
 
 export function validateEnv(): void {

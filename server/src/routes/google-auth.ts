@@ -102,6 +102,7 @@ router.get('/google/callback', async (req, res) => {
           passwordHash,
           googleId: googleId,
           profileImageUrl: picture || null,
+          subscriptionStatus: 'free',
         },
       });
     }

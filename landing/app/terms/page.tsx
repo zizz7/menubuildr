@@ -70,7 +70,7 @@ export default function TermsPage() {
           <section>
             <h2 className="font-serif text-2xl font-semibold text-forest mb-4">4. Subscription Plans and Billing</h2>
             <p className="mb-3">
-              MenuBuildr offers Free, Pro ($29/month), and Enterprise ($79/month) subscription tiers. Features and
+              MenuBuildr offers Free and Pro ($29/month) subscription tiers. Features and
               limitations vary by plan as described on our pricing page.
             </p>
             <p className="mb-3">

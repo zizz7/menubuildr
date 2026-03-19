@@ -50,7 +50,7 @@ router.post('/register', authRateLimiter, async (req, res) => {
 
     const passwordHash = await bcrypt.hash(data.password, 10);
     const admin = await prisma.admin.create({
-      data: { name: data.name, email: data.email, passwordHash },
+      data: { name: data.name, email: data.email, passwordHash, subscriptionStatus: 'free' },
     });
 
     const jwtSecret = process.env.JWT_SECRET!;

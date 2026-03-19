@@ -6,7 +6,7 @@ import { verifyRestaurantOwnership } from '../middleware/ownership';
 import { RestaurantSchema, ThemeSettingsSchema, ModuleSettingsSchema } from '../utils/validation';
 import { sendError } from '../utils/errors';
 import { handleZodError } from '../utils/zod-error';
-import { RESTAURANT_LIMIT } from '../config/limits';
+import { checkUsageLimit } from '../middleware/usage-limits';
 
 const router = express.Router();
 
@@ -62,17 +62,9 @@ router.get('/:id', async (req: AuthRequest, res) => {
   }
 });
 
-// Create restaurant (assigned to admin, limit scoped to admin)
-router.post('/', async (req: AuthRequest, res) => {
+// Create restaurant (assigned to admin, plan-aware limit enforced by middleware)
+router.post('/', checkUsageLimit('restaurant'), async (req: AuthRequest, res) => {
   try {
-    // Check restaurant limit (max 5) — count only this admin's restaurants
-    const count = await prisma.restaurant.count({
-      where: { adminId: req.userId },
-    });
-    if (count >= RESTAURANT_LIMIT) {
-      return sendError(res, 400, `Maximum ${RESTAURANT_LIMIT} restaurants allowed`);
-    }
-
     const data = RestaurantSchema.parse(req.body);
 
     const restaurant = await prisma.restaurant.create({

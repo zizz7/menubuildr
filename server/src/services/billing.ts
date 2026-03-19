@@ -33,20 +33,54 @@ export async function getOrCreateStripeCustomer(adminId: string): Promise<string
 }
 
 /**
+ * Resolves the Stripe price ID for a given billing cycle.
+ * Falls back to STRIPE_PRICE_ID for pro monthly if STRIPE_PRICE_PRO_MONTHLY is not set.
+ * Throws a descriptive error if no price ID is configured.
+ */
+export function resolveStripePriceId(billingCycle: 'monthly' | 'annual'): string {
+  if (billingCycle === 'annual') {
+    const annualPriceId = process.env.STRIPE_PRICE_PRO_ANNUAL;
+    if (!annualPriceId) {
+      throw new Error(
+        'STRIPE_PRICE_PRO_ANNUAL environment variable is not configured. Cannot create annual checkout session.',
+      );
+    }
+    return annualPriceId;
+  }
+
+  // Monthly: prefer STRIPE_PRICE_PRO_MONTHLY, fall back to STRIPE_PRICE_ID
+  const monthlyPriceId = process.env.STRIPE_PRICE_PRO_MONTHLY || process.env.STRIPE_PRICE_ID;
+  if (!monthlyPriceId) {
+    throw new Error(
+      'Neither STRIPE_PRICE_PRO_MONTHLY nor STRIPE_PRICE_ID environment variable is configured. Cannot create monthly checkout session.',
+    );
+  }
+  return monthlyPriceId;
+}
+
+/**
  * Creates a Stripe Checkout Session in subscription mode and returns the
  * session URL the client should redirect to.
+ *
+ * Accepts a billingCycle to resolve the correct Stripe price ID and stores
+ * subscriptionPlan: "pro" in session metadata for webhook processing.
  */
 export async function createCheckoutSession(
   customerId: string,
-  priceId: string,
+  billingCycle: 'monthly' | 'annual',
   urls: { success: string; cancel: string },
 ): Promise<string> {
+  const priceId = resolveStripePriceId(billingCycle);
+
   const session = await getStripe().checkout.sessions.create({
     customer: customerId,
     mode: 'subscription',
     line_items: [{ price: priceId, quantity: 1 }],
     success_url: urls.success,
     cancel_url: urls.cancel,
+    metadata: {
+      subscriptionPlan: 'pro',
+    },
   });
 
   if (!session.url) throw new Error('Stripe did not return a session URL');
@@ -73,7 +107,7 @@ export async function createPortalSession(
  * Processes Stripe webhook events and updates Admin records accordingly.
  *
  * Handled events:
- * - checkout.session.completed → set subscriptionStatus to "active", store stripeSubscriptionId
+ * - checkout.session.completed → set subscriptionStatus to "active", subscriptionPlan from metadata, store stripeSubscriptionId
  * - customer.subscription.updated → update subscriptionStatus to match Stripe status
  * - customer.subscription.deleted → set subscriptionStatus to "canceled", clear stripeSubscriptionId
  * - invoice.payment_failed → set subscriptionStatus to "past_due"
@@ -91,11 +125,14 @@ export async function handleWebhookEvent(event: Stripe.Event): Promise<void> {
         ? session.subscription
         : session.subscription.id;
 
+      const subscriptionPlan = session.metadata?.subscriptionPlan || 'pro';
+
       await prisma.admin.updateMany({
         where: { stripeCustomerId: customerId },
         data: {
           subscriptionStatus: 'active',
           stripeSubscriptionId: subscriptionId,
+          subscriptionPlan,
         },
       });
       break;

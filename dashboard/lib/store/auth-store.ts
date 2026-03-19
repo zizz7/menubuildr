@@ -6,6 +6,10 @@ interface Admin {
   email: string;
   name: string;
   profileImageUrl?: string | null;
+  subscriptionStatus?: string | null;
+  subscriptionPlan?: string | null;
+  hasStripeCustomer?: boolean;
+  hasSubscription?: boolean;
 }
 
 interface AuthState {

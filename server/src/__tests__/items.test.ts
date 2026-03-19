@@ -29,6 +29,9 @@ vi.mock('../config/database', () => {
       recipeDetails: {
         upsert: vi.fn(),
       },
+      admin: {
+        findUnique: vi.fn(),
+      },
     },
   };
 });
@@ -83,6 +86,9 @@ const mockedPrisma = prisma as unknown as {
   };
   recipeDetails: {
     upsert: ReturnType<typeof vi.fn>;
+  };
+  admin: {
+    findUnique: ReturnType<typeof vi.fn>;
   };
 };
 
@@ -184,6 +190,7 @@ describe('POST /section/:sectionId — create item', () => {
     const app = createApp();
     mockedVerifySectionOwnership.mockResolvedValue({ authorized: true, resourceId: SECTION_ID });
     mockedPrisma.section.findUnique.mockResolvedValue({ menuId: 'menu-1' });
+    mockedPrisma.admin.findUnique.mockResolvedValue({ subscriptionPlan: 'pro' });
     mockedPrisma.menuItem.count.mockResolvedValue(0);
     mockedPrisma.menuItem.create.mockResolvedValue({
       id: ITEM_ID,
@@ -349,6 +356,7 @@ describe('POST /:id/duplicate — duplicate item', () => {
       availabilitySchedule: null,
       section: { menuId: 'menu-1' },
     });
+    mockedPrisma.admin.findUnique.mockResolvedValue({ subscriptionPlan: 'pro' });
     mockedPrisma.menuItem.count.mockResolvedValue(1);
     mockedPrisma.menuItem.create.mockResolvedValue({
       id: 'new-item-id',

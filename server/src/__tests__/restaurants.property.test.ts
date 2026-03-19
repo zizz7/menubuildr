@@ -30,6 +30,7 @@ vi.mock('../config/database', () => {
       moduleSettings: { upsert: vi.fn() },
       menu: { findUnique: vi.fn() },
       menuTemplate: { findUnique: vi.fn() },
+      admin: { findUnique: vi.fn() },
     },
   };
 });
@@ -82,6 +83,7 @@ const mockedPrisma = prisma as unknown as {
   moduleSettings: { upsert: ReturnType<typeof vi.fn> };
   menu: { findUnique: ReturnType<typeof vi.fn> };
   menuTemplate: { findUnique: ReturnType<typeof vi.fn> };
+  admin: { findUnique: ReturnType<typeof vi.fn> };
 };
 
 const mockedVerifyOwnership = verifyRestaurantOwnership as ReturnType<typeof vi.fn>;
@@ -205,6 +207,8 @@ describe('Property 1: Restaurant creation assigns ownership', () => {
 
         // Admin is below the limit
         mockedPrisma.restaurant.count.mockResolvedValue(0);
+        // Mock admin lookup for usage-limits middleware
+        mockedPrisma.admin.findUnique.mockResolvedValue({ subscriptionPlan: 'pro', subscriptionStatus: 'active' });
 
         // Capture the data passed to prisma.restaurant.create
         let capturedCreateData: any = null;
@@ -506,24 +510,27 @@ describe('Property 4: Restaurant mutations require ownership', () => {
 // **Validates: Requirements 4.1, 4.2, 4.3**
 // ============================================================
 describe('Property 5: Per-admin restaurant limit enforcement', () => {
-  it('rejects creation with 400 when admin is at the restaurant limit', async () => {
+  it('rejects creation with 403 when free-tier admin is at the restaurant limit', async () => {
     const app = createApp();
 
     await fc.assert(
       fc.asyncProperty(
         arbId,
         arbRestaurantData,
-        fc.integer({ min: 5, max: 20 }),
+        fc.integer({ min: 1, max: 20 }),
         async (adminId, restaurantData, existingCount) => {
           vi.clearAllMocks();
 
-          // Admin is at or above the limit
+          // Admin is on free tier (limit: 1 restaurant)
+          mockedPrisma.admin.findUnique.mockResolvedValue({ subscriptionPlan: null, subscriptionStatus: 'free' });
+          // Admin is at or above the free-tier limit
           mockedPrisma.restaurant.count.mockResolvedValue(existingCount);
 
           const result = await makeRequest(app, 'post', '/api/restaurants', restaurantData, adminId);
 
-          expect(result.status).toBe(400);
-          expect(result.body.error).toMatch(/Maximum 5 restaurants allowed/);
+          expect(result.status).toBe(403);
+          expect(result.body.code).toBe('PLAN_LIMIT_REACHED');
+          expect(result.body.resource).toBe('restaurant');
           // Prisma create should NOT have been called
           expect(mockedPrisma.restaurant.create).not.toHaveBeenCalled();
         }
@@ -539,11 +546,12 @@ describe('Property 5: Per-admin restaurant limit enforcement', () => {
       fc.asyncProperty(
         arbId,
         arbRestaurantData,
-        fc.integer({ min: 0, max: 4 }),
-        async (adminId, restaurantData, existingCount) => {
+        async (adminId, restaurantData) => {
           vi.clearAllMocks();
 
-          mockedPrisma.restaurant.count.mockResolvedValue(existingCount);
+          // Pro admin has unlimited restaurants
+          mockedPrisma.admin.findUnique.mockResolvedValue({ subscriptionPlan: 'pro', subscriptionStatus: 'active' });
+          mockedPrisma.restaurant.count.mockResolvedValue(0);
           mockedPrisma.restaurant.create.mockResolvedValue({
             id: 'new-id',
             adminId,
@@ -570,6 +578,8 @@ describe('Property 5: Per-admin restaurant limit enforcement', () => {
       fc.asyncProperty(arbId, arbRestaurantData, async (adminId, restaurantData) => {
         vi.clearAllMocks();
 
+        // Free-tier admin with 0 restaurants (below limit of 1)
+        mockedPrisma.admin.findUnique.mockResolvedValue({ subscriptionPlan: null, subscriptionStatus: 'free' });
         mockedPrisma.restaurant.count.mockResolvedValue(0);
         mockedPrisma.restaurant.create.mockResolvedValue({
           id: 'new-id',
@@ -581,7 +591,7 @@ describe('Property 5: Per-admin restaurant limit enforcement', () => {
 
         await makeRequest(app, 'post', '/api/restaurants', restaurantData, adminId);
 
-        // Verify count was called with adminId filter
+        // Verify count was called with adminId filter (by the usage-limits middleware)
         expect(mockedPrisma.restaurant.count).toHaveBeenCalledWith(
           expect.objectContaining({
             where: expect.objectContaining({ adminId }),
@@ -599,9 +609,12 @@ describe('Property 5: Per-admin restaurant limit enforcement', () => {
       fc.asyncProperty(arbTwoAdmins, arbRestaurantData, async ([adminAtLimit, adminBelowLimit], restaurantData) => {
         vi.clearAllMocks();
 
-        // adminBelowLimit has 0 restaurants
+        // Both admins are free-tier
+        mockedPrisma.admin.findUnique.mockResolvedValue({ subscriptionPlan: null, subscriptionStatus: 'free' });
+
+        // adminAtLimit has 1 restaurant (at free-tier limit), adminBelowLimit has 0
         mockedPrisma.restaurant.count.mockImplementation(async (args: any) => {
-          if (args?.where?.adminId === adminAtLimit) return 5;
+          if (args?.where?.adminId === adminAtLimit) return 1;
           if (args?.where?.adminId === adminBelowLimit) return 0;
           return 0;
         });

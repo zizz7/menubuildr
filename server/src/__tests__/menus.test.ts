@@ -30,6 +30,9 @@ vi.mock('../config/database', () => {
       restaurant: {
         findUnique: vi.fn(),
       },
+      admin: {
+        findUnique: vi.fn(),
+      },
       language: { findMany: vi.fn() },
       allergenIcon: { findMany: vi.fn() },
       allergenSettings: { findFirst: vi.fn() },
@@ -59,6 +62,22 @@ vi.mock('../middleware/auth', () => {
 // Mock subscription middleware to pass through
 vi.mock('../middleware/subscription', () => ({
   requireSubscription: vi.fn((req: any, res: any, next: any) => next()),
+}));
+
+// Mock usage-limits middleware to pass through
+vi.mock('../middleware/usage-limits', () => ({
+  checkUsageLimit: vi.fn(() => (req: any, res: any, next: any) => next()),
+}));
+
+// Mock plan limits config
+vi.mock('../config/limits', () => ({
+  getPlanLimits: vi.fn(() => ({
+    restaurants: Infinity,
+    menusPerRestaurant: Infinity,
+    itemsPerMenu: Infinity,
+    languages: Infinity,
+    templates: ['all'],
+  })),
 }));
 
 // Mock regenerateMenuIfPublished
@@ -108,6 +127,9 @@ const mockedPrisma = prisma as unknown as {
     findUnique: ReturnType<typeof vi.fn>;
   };
   restaurant: {
+    findUnique: ReturnType<typeof vi.fn>;
+  };
+  admin: {
     findUnique: ReturnType<typeof vi.fn>;
   };
   language: { findMany: ReturnType<typeof vi.fn> };
@@ -371,14 +393,18 @@ describe('POST /:id/duplicate — duplicate menu', () => {
   it('duplicates menu when admin owns it', async () => {
     const app = createApp();
     mockedVerifyMenuOwnership.mockResolvedValue({ authorized: true, resourceId: MENU_ID });
-    mockedPrisma.menu.findUnique.mockResolvedValue({
-      id: MENU_ID,
-      name: { ENG: 'Lunch' },
-      slug: 'lunch',
-      menuType: 'lunch',
-      restaurantId: RESTAURANT_ID,
-      sections: [],
-    });
+    // First findUnique call returns the original menu; subsequent calls (slug collision check) return null
+    mockedPrisma.menu.findUnique
+      .mockResolvedValueOnce({
+        id: MENU_ID,
+        name: { ENG: 'Lunch' },
+        slug: 'lunch',
+        menuType: 'lunch',
+        restaurantId: RESTAURANT_ID,
+        sections: [],
+      })
+      .mockResolvedValue(null);
+    mockedPrisma.admin.findUnique.mockResolvedValue({ subscriptionPlan: 'pro' });
     mockedPrisma.menu.count.mockResolvedValue(1);
     mockedPrisma.menu.create.mockResolvedValue({
       id: 'new-menu-id',
@@ -401,7 +427,6 @@ describe('POST /:id/duplicate — duplicate menu', () => {
 
     expect(result.status).toBe(404);
     expect(result.body.error).toBe('Menu not found');
-    expect(mockedPrisma.menu.findUnique).not.toHaveBeenCalled();
     expect(mockedPrisma.menu.create).not.toHaveBeenCalled();
   });
 });

@@ -8,6 +8,7 @@ import {
   handleWebhookEvent,
 } from '../services/billing';
 import prisma from '../config/database';
+import { getPlanLimits } from '../config/limits';
 
 const router = express.Router();
 
@@ -25,16 +26,27 @@ function getStripe(): Stripe {
 // POST /create-checkout-session — create a Stripe Checkout Session
 router.post('/create-checkout-session', authenticateToken, async (req: AuthRequest, res) => {
   try {
+    // Extract and validate billingCycle from request body, default to "monthly"
+    const { billingCycle: rawCycle } = req.body || {};
+    const billingCycle: 'monthly' | 'annual' =
+      rawCycle === 'annual' ? 'annual' : 'monthly';
+
     const customerId = await getOrCreateStripeCustomer(req.userId!);
 
-    const url = await createCheckoutSession(customerId, process.env.STRIPE_PRICE_ID!, {
+    const url = await createCheckoutSession(customerId, billingCycle, {
       success: `${process.env.FRONTEND_URL}/dashboard/billing?session_id={CHECKOUT_SESSION_ID}`,
       cancel: `${process.env.FRONTEND_URL}/dashboard/billing`,
     });
 
     res.json({ url });
-  } catch (error) {
+  } catch (error: any) {
     console.error('Create checkout session error:', error);
+
+    // Surface descriptive error when Stripe price ID is not configured
+    if (error?.message?.includes('environment variable is not configured')) {
+      return res.status(500).json({ error: error.message });
+    }
+
     res.status(500).json({ error: 'Failed to create checkout session' });
   }
 });
@@ -76,6 +88,46 @@ router.post('/webhook', async (req, res) => {
   } catch (error) {
     console.error('Webhook signature verification failed:', error);
     res.status(400).json({ error: 'Webhook signature verification failed' });
+  }
+});
+
+// GET /usage — return current usage stats and plan limits
+router.get('/usage', authenticateToken, async (req: AuthRequest, res) => {
+  try {
+    const admin = await prisma.admin.findUnique({
+      where: { id: req.userId },
+      select: { subscriptionPlan: true, restaurants: { select: { id: true } } },
+    });
+
+    if (!admin) {
+      return res.status(401).json({ error: 'Admin not found' });
+    }
+
+    const plan = admin.subscriptionPlan || 'free';
+    const limits = getPlanLimits(admin.subscriptionPlan);
+
+    const restaurantCount = admin.restaurants.length;
+    const restaurantIds = admin.restaurants.map((r) => r.id);
+
+    const [menuCount, itemCount] = await Promise.all([
+      prisma.menu.count({ where: { restaurantId: { in: restaurantIds } } }),
+      prisma.menuItem.count({
+        where: { section: { menu: { restaurantId: { in: restaurantIds } } } },
+      }),
+    ]);
+
+    res.json({
+      plan,
+      usage: { restaurants: restaurantCount, menus: menuCount, items: itemCount },
+      limits: {
+        restaurants: limits.restaurants,
+        menusPerRestaurant: limits.menusPerRestaurant,
+        itemsPerMenu: limits.itemsPerMenu,
+      },
+    });
+  } catch (error) {
+    console.error('Usage stats error:', error);
+    res.status(500).json({ error: 'Failed to fetch usage stats' });
   }
 });
 

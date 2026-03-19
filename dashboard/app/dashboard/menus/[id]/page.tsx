@@ -15,6 +15,8 @@ import { Checkbox } from '@/components/ui/checkbox';
 import { Plus, Edit, Trash2, GripVertical, ArrowLeft, ChevronDown, ChevronUp, Copy } from 'lucide-react';
 import { Skeleton } from '@/components/ui/skeleton';
 import { CopySectionModal } from '@/components/copy-section-modal';
+import { useUpgradePrompt } from '@/lib/hooks/useUpgradePrompt';
+import { UpgradePrompt } from '@/components/billing/upgrade-prompt';
 import { toast } from 'sonner';
 import { MultiLanguageInput } from '@/components/multi-language-input';
 import { getServerUrl, resolveAssetUrl } from '@/lib/utils';
@@ -368,6 +370,7 @@ export default function MenuDetailPage() {
   const [copySectionId, setCopySectionId] = useState<string | null>(null);
   const [languages, setLanguages] = useState<Language[]>([]);
   const [allergens, setAllergens] = useState<Allergen[]>([]);
+  const upgradePrompt = useUpgradePrompt();
   const [sectionForm, setSectionForm] = useState({
     title: {} as Record<string, string>,
     description: {} as Record<string, string>,
@@ -910,6 +913,10 @@ export default function MenuDetailPage() {
         fetchMenu();
       }
     } catch (error: any) {
+      if (upgradePrompt.checkLimit(error)) {
+        setItemDialogOpen(false);
+        return;
+      }
       const errorMsg = error.response?.data?.error || error.response?.data?.details || 'Operation failed';
       toast.error(errorMsg);
       console.error('Item creation error:', error.response?.data);
@@ -1783,6 +1790,14 @@ export default function MenuDetailPage() {
         isOpen={!!copySectionId}
         onClose={() => setCopySectionId(null)}
         onSuccess={() => fetchMenu()}
+      />
+
+      <UpgradePrompt
+        open={upgradePrompt.open}
+        onOpenChange={upgradePrompt.setOpen}
+        resource={upgradePrompt.resource}
+        current={upgradePrompt.current}
+        limit={upgradePrompt.limit}
       />
     </div>
   );

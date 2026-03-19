@@ -3,6 +3,7 @@ import prisma from '../config/database';
 import { authenticateToken, AuthRequest } from '../middleware/auth';
 import { requireSubscription } from '../middleware/subscription';
 import { verifySectionOwnership, verifyItemOwnership, verifyBulkItemOwnership } from '../middleware/ownership';
+import { getPlanLimits } from '../config/limits';
 import { MenuItemSchema, RecipeSchema, BulkItemUpdateSchema } from '../utils/validation';
 import { regenerateMenuIfPublished } from '../utils/regenerate-menu';
 
@@ -43,7 +44,7 @@ router.get('/:id', async (req: AuthRequest, res) => {
   }
 });
 
-// Create item
+// Create item (plan-aware limit enforced inline since menuId is not in URL params)
 router.post('/section/:sectionId', async (req: AuthRequest, res) => {
   try {
     const ownership = await verifySectionOwnership(req.params.sectionId, req.userId!);
@@ -58,6 +59,34 @@ router.post('/section/:sectionId', async (req: AuthRequest, res) => {
       where: { id: req.params.sectionId },
       select: { menuId: true },
     });
+
+    // Plan-aware item limit check (count all items across all sections in the menu)
+    if (section) {
+      const admin = await prisma.admin.findUnique({
+        where: { id: req.userId },
+        select: { subscriptionPlan: true },
+      });
+      const limits = getPlanLimits(admin?.subscriptionPlan);
+      const itemLimit = limits.itemsPerMenu;
+
+      if (isFinite(itemLimit)) {
+        const totalItemsInMenu = await prisma.menuItem.count({
+          where: { section: { menuId: section.menuId } },
+        });
+
+        if (totalItemsInMenu >= itemLimit) {
+          const plan = admin?.subscriptionPlan || 'free';
+          return res.status(403).json({
+            error: 'Free plan limit reached',
+            code: 'PLAN_LIMIT_REACHED',
+            limit: itemLimit,
+            current: totalItemsInMenu,
+            resource: 'item',
+            plan,
+          });
+        }
+      }
+    }
 
     const itemCount = await prisma.menuItem.count({
       where: { sectionId: req.params.sectionId },
@@ -222,7 +251,7 @@ router.put('/:id/reorder', async (req: AuthRequest, res) => {
   }
 });
 
-// Duplicate item
+// Duplicate item (plan-aware limit enforced inline since menuId is not in URL params)
 router.post('/:id/duplicate', async (req: AuthRequest, res) => {
   try {
     const ownership = await verifyItemOwnership(req.params.id, req.userId!);
@@ -245,6 +274,32 @@ router.post('/:id/duplicate', async (req: AuthRequest, res) => {
 
     if (!originalItem) {
       return res.status(404).json({ error: 'Item not found' });
+    }
+
+    // Plan-aware item limit check (count all items across all sections in the menu)
+    const admin = await prisma.admin.findUnique({
+      where: { id: req.userId },
+      select: { subscriptionPlan: true },
+    });
+    const limits = getPlanLimits(admin?.subscriptionPlan);
+    const itemLimit = limits.itemsPerMenu;
+
+    if (isFinite(itemLimit)) {
+      const totalItemsInMenu = await prisma.menuItem.count({
+        where: { section: { menuId: originalItem.section.menuId } },
+      });
+
+      if (totalItemsInMenu >= itemLimit) {
+        const plan = admin?.subscriptionPlan || 'free';
+        return res.status(403).json({
+          error: 'Free plan limit reached',
+          code: 'PLAN_LIMIT_REACHED',
+          limit: itemLimit,
+          current: totalItemsInMenu,
+          resource: 'item',
+          plan,
+        });
+      }
     }
 
     const itemCount = await prisma.menuItem.count({

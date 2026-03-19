@@ -27,6 +27,7 @@ import {
   Bell,
   ChevronsLeft,
   ChevronsRight,
+  AlertTriangle,
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
@@ -313,6 +314,17 @@ export function DashboardLayout({ children }: { children: ReactNode }) {
             </button>
           </div>
         </header>
+
+        {/* Past-Due Payment Banner */}
+        {admin?.subscriptionStatus === 'past_due' && (
+          <div className="shrink-0 px-4 lg:px-6 py-2.5 border-b border-amber-200 flex items-center gap-2.5 text-sm" style={{ backgroundColor: '#FEF3C7' }}>
+            <AlertTriangle className="h-4 w-4 shrink-0 text-amber-600" />
+            <span className="text-amber-800 font-medium">Your payment is past due.</span>
+            <Link href="/dashboard/billing" className="text-amber-700 underline underline-offset-2 hover:text-amber-900 font-medium">
+              Update payment method
+            </Link>
+          </div>
+        )}
 
         {/* Page Content */}
         <main className="flex-1 overflow-y-auto">

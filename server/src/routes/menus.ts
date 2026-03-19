@@ -3,6 +3,8 @@ import prisma from '../config/database';
 import { authenticateToken, AuthRequest } from '../middleware/auth';
 import { requireSubscription } from '../middleware/subscription';
 import { verifyRestaurantOwnership, verifyMenuOwnership } from '../middleware/ownership';
+import { checkUsageLimit } from '../middleware/usage-limits';
+import { getPlanLimits } from '../config/limits';
 import { MenuSchema } from '../utils/validation';
 import { regenerateMenuIfPublished } from '../utils/regenerate-menu';
 import { generateHTML } from '../services/menu-generator';
@@ -112,21 +114,17 @@ router.get('/:id', async (req: AuthRequest, res) => {
   }
 });
 
-// Create menu
-router.post('/restaurant/:restaurantId', async (req: AuthRequest, res) => {
+// Create menu (plan-aware limit enforced by middleware)
+router.post('/restaurant/:restaurantId', checkUsageLimit('menu'), async (req: AuthRequest, res) => {
   try {
     const ownership = await verifyRestaurantOwnership(req.params.restaurantId, req.userId!);
     if (!ownership.authorized) {
       return res.status(404).json({ error: 'Restaurant not found' });
     }
 
-    // Check menu limit (max 4 per restaurant)
     const count = await prisma.menu.count({
       where: { restaurantId: req.params.restaurantId },
     });
-    if (count >= 4) {
-      return res.status(400).json({ error: 'Maximum 4 menus per restaurant' });
-    }
 
     const data = MenuSchema.parse(req.body);
 
@@ -457,7 +455,7 @@ router.post('/:id/publish', async (req: AuthRequest, res) => {
   }
 });
 
-// Duplicate menu
+// Duplicate menu (plan-aware limit enforced inline since restaurantId is not in URL params)
 router.post('/:id/duplicate', async (req: AuthRequest, res) => {
   try {
     const ownership = await verifyMenuOwnership(req.params.id, req.userId!);
@@ -488,12 +486,29 @@ router.post('/:id/duplicate', async (req: AuthRequest, res) => {
       return res.status(404).json({ error: 'Menu not found' });
     }
 
-    // Check menu limit
+    // Plan-aware menu limit check
+    const admin = await prisma.admin.findUnique({
+      where: { id: req.userId },
+      select: { subscriptionPlan: true },
+    });
+    const limits = getPlanLimits(admin?.subscriptionPlan);
+    const menuLimit = limits.menusPerRestaurant;
+
+    // Get current menu count for orderIndex and limit check
     const count = await prisma.menu.count({
       where: { restaurantId: originalMenu.restaurantId },
     });
-    if (count >= 4) {
-      return res.status(400).json({ error: 'Maximum 4 menus per restaurant' });
+
+    if (isFinite(menuLimit) && count >= menuLimit) {
+      const plan = admin?.subscriptionPlan || 'free';
+      return res.status(403).json({
+        error: 'Free plan limit reached',
+        code: 'PLAN_LIMIT_REACHED',
+        limit: menuLimit,
+        current: count,
+        resource: 'menu',
+        plan,
+      });
     }
 
     // L3: Handle slug collision by appending -copy, -copy-2, etc.

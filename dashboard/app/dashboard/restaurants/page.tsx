@@ -14,6 +14,8 @@ import { Plus, Store, Edit, Trash2, CheckCircle, XCircle } from 'lucide-react';
 import { toast } from 'sonner';
 import { getServerUrl } from '@/lib/utils';
 import { Skeleton } from '@/components/ui/skeleton';
+import { useUpgradePrompt } from '@/lib/hooks/useUpgradePrompt';
+import { UpgradePrompt } from '@/components/billing/upgrade-prompt';
 interface Restaurant {
   id: string;
   name: string;
@@ -44,6 +46,7 @@ export default function RestaurantsPage() {
   });
   const [logoUploading, setLogoUploading] = useState(false);
   const [logoInputMode, setLogoInputMode] = useState<'upload' | 'url'>('url');
+  const upgradePrompt = useUpgradePrompt();
 
   useEffect(() => {
     if (!isAuthenticated()) {
@@ -132,17 +135,16 @@ export default function RestaurantsPage() {
         await apiClient.put(`/restaurants/${editingRestaurant.id}`, formData);
         toast.success('Restaurant updated successfully');
       } else {
-        // Check limit
-        if (restaurants.length >= 5) {
-          toast.error('Maximum 5 restaurants allowed');
-          return;
-        }
         await apiClient.post('/restaurants', formData);
         toast.success('Restaurant created successfully');
       }
       setDialogOpen(false);
       fetchRestaurants();
     } catch (error: any) {
+      if (upgradePrompt.checkLimit(error)) {
+        setDialogOpen(false);
+        return;
+      }
       const errorMsg = error.response?.data?.error || error.response?.data?.details || 'Operation failed';
       toast.error(errorMsg);
       console.error('Restaurant error:', error.response?.data);
@@ -496,6 +498,14 @@ export default function RestaurantsPage() {
           </Button>
         </Card>
       )}
+
+      <UpgradePrompt
+        open={upgradePrompt.open}
+        onOpenChange={upgradePrompt.setOpen}
+        resource={upgradePrompt.resource}
+        current={upgradePrompt.current}
+        limit={upgradePrompt.limit}
+      />
     </div>
   );
 }

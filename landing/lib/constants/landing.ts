@@ -102,7 +102,7 @@ export const PRICING_PLANS: PricingPlan[] = [
     price: '$29',
     period: '/month',
     features: [
-      'Up to 5 restaurants',
+      'Unlimited restaurants',
       'All menu templates',
       'Full allergen management',
       'Multi-language support',
@@ -111,23 +111,6 @@ export const PRICING_PLANS: PricingPlan[] = [
     ],
     recommended: true,
     ctaLabel: 'Get Pro',
-    ctaHref: '/register',
-  },
-  {
-    name: 'Enterprise',
-    price: '$79',
-    period: '/month',
-    features: [
-      'Unlimited restaurants',
-      'All menu templates',
-      'Full allergen management',
-      'Multi-language support',
-      'Dedicated account manager',
-      'Custom branding',
-      'API access',
-    ],
-    recommended: false,
-    ctaLabel: 'Contact Us',
     ctaHref: '/register',
   },
 ];

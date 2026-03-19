@@ -19,6 +19,8 @@ import { MultiLanguageInput } from '@/components/multi-language-input';
 import { TemplateSelector } from '@/components/menu/TemplateSelector';
 import { PreviewModal } from '@/components/menu/PreviewModal';
 import { Skeleton } from '@/components/ui/skeleton';
+import { useUpgradePrompt } from '@/lib/hooks/useUpgradePrompt';
+import { UpgradePrompt } from '@/components/billing/upgrade-prompt';
 
 interface Menu {
   id: string;
@@ -53,6 +55,7 @@ export default function MenusPage() {
   const [selectedTemplateId, setSelectedTemplateId] = useState<string | null>(null);
   const [previewOpen, setPreviewOpen] = useState(false);
   const [previewTemplateSlug, setPreviewTemplateSlug] = useState('classic');
+  const upgradePrompt = useUpgradePrompt();
 
   useEffect(() => {
     if (!isAuthenticated()) {
@@ -185,12 +188,6 @@ export default function MenusPage() {
         await apiClient.put(`/menus/${editingMenu.id}`, formData);
         toast.success('Menu updated successfully');
       } else {
-        // Check limit
-        const currentMenus = menus.filter((m) => m.restaurantId === selectedRestaurantId);
-        if (currentMenus.length >= 4) {
-          toast.error('Maximum 4 menus per restaurant');
-          return;
-        }
         await apiClient.post(`/menus/restaurant/${selectedRestaurantId}`, formData);
         toast.success('Menu created successfully');
       }
@@ -199,6 +196,10 @@ export default function MenusPage() {
         fetchMenus(selectedRestaurantId);
       }
     } catch (error: any) {
+      if (upgradePrompt.checkLimit(error)) {
+        setDialogOpen(false);
+        return;
+      }
       const errorMsg = error.response?.data?.error || error.response?.data?.details || 'Operation failed';
       toast.error(errorMsg);
       console.error('Menu creation error:', error.response?.data);
@@ -226,6 +227,9 @@ export default function MenusPage() {
         fetchMenus(selectedRestaurantId);
       }
     } catch (error: any) {
+      if (upgradePrompt.checkLimit(error)) {
+        return;
+      }
       toast.error(error.response?.data?.error || 'Failed to duplicate menu');
     }
   };
@@ -677,6 +681,14 @@ export default function MenusPage() {
           templateSlug={previewTemplateSlug}
         />
       )}
+
+      <UpgradePrompt
+        open={upgradePrompt.open}
+        onOpenChange={upgradePrompt.setOpen}
+        resource={upgradePrompt.resource}
+        current={upgradePrompt.current}
+        limit={upgradePrompt.limit}
+      />
     </div>
   );
 }
