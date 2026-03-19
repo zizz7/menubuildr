@@ -112,7 +112,7 @@ export default function SettingsPage() {
             <h1 className="text-4xl font-black tracking-tight text-foreground mb-2">
               Account Settings
             </h1>
-            <div className="flex items-center gap-3 text-muted">
+            <div className="flex items-center gap-3 text-muted-foreground">
               <span className="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-input/40 text-[11px] font-bold uppercase tracking-wider border border-input/30">
                 <Database className="h-3 w-3" />
                 v1.0.0
@@ -144,7 +144,7 @@ export default function SettingsPage() {
               <form onSubmit={handleProfileUpdate} className="space-y-6">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div className="space-y-2.5">
-                    <Label htmlFor="name" className="text-xs font-bold uppercase tracking-wider text-muted px-1">Full Name</Label>
+                    <Label htmlFor="name" className="text-xs font-bold uppercase tracking-wider text-muted-foreground px-1">Full Name</Label>
                     <Input 
                       id="name" 
                       value={name} 
@@ -154,17 +154,17 @@ export default function SettingsPage() {
                     />
                   </div>
                   <div className="space-y-2.5">
-                    <Label htmlFor="email" className="text-xs font-bold uppercase tracking-wider text-muted px-1">Email Address</Label>
+                    <Label htmlFor="email" className="text-xs font-bold uppercase tracking-wider text-muted-foreground px-1">Email Address</Label>
                     <div className="relative">
                       <Input 
                         id="email" 
                         type="email" 
                         value={email} 
                         disabled 
-                        className="h-11 bg-input/20 border-input/30 text-muted opacity-80 cursor-not-allowed" 
+                        className="h-11 bg-input/20 border-input/30 text-muted-foreground opacity-80 cursor-not-allowed" 
                       />
                       <div className="absolute right-3 top-1/2 -translate-y-1/2">
-                        <Lock className="h-3.5 w-3.5 text-muted/50" />
+                        <Lock className="h-3.5 w-3.5 text-muted-foreground/50" />
                       </div>
                     </div>
                   </div>
@@ -195,7 +195,7 @@ export default function SettingsPage() {
             <CardContent className="pt-8">
               <form onSubmit={handlePasswordChange} className="space-y-6">
                 <div className="space-y-2.5">
-                  <Label htmlFor="currentPassword" title="current-password" className="text-xs font-bold uppercase tracking-wider text-muted px-1">Current Password</Label>
+                  <Label htmlFor="currentPassword" title="current-password" className="text-xs font-bold uppercase tracking-wider text-muted-foreground px-1">Current Password</Label>
                   <Input 
                     id="currentPassword" 
                     type="password" 
@@ -208,7 +208,7 @@ export default function SettingsPage() {
                 </div>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div className="space-y-2.5">
-                    <Label htmlFor="newPassword" title="new-password" className="text-xs font-bold uppercase tracking-wider text-muted px-1">New Password</Label>
+                    <Label htmlFor="newPassword" title="new-password" className="text-xs font-bold uppercase tracking-wider text-muted-foreground px-1">New Password</Label>
                     <Input 
                       id="newPassword" 
                       type="password" 
@@ -220,7 +220,7 @@ export default function SettingsPage() {
                     />
                   </div>
                   <div className="space-y-2.5">
-                    <Label htmlFor="confirmPassword" title="confirm-password" className="text-xs font-bold uppercase tracking-wider text-muted px-1">Confirm New Password</Label>
+                    <Label htmlFor="confirmPassword" title="confirm-password" className="text-xs font-bold uppercase tracking-wider text-muted-foreground px-1">Confirm New Password</Label>
                     <Input 
                       id="confirmPassword" 
                       type="password" 
@@ -256,7 +256,7 @@ export default function SettingsPage() {
                     {imageUrl ? (
                       <img src={imageUrl} alt="" className="absolute inset-0 w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" />
                     ) : (
-                      <User className="h-12 w-12 text-muted" />
+                      <User className="h-12 w-12 text-muted-foreground" />
                     )}
                     {imageLoading && (
                       <div className="absolute inset-0 bg-white/80 flex items-center justify-center">
@@ -273,7 +273,7 @@ export default function SettingsPage() {
                   </button>
                 </div>
                 <div className="text-center">
-                  <p className="text-xs text-muted font-medium mb-3">JPG, PNG, WebP or SVG.<br/>Max 5MB.</p>
+                  <p className="text-xs text-muted-foreground font-medium mb-3">JPG, PNG or WebP.<br/>Max 5MB.</p>
                   <Button
                     variant="ghost"
                     size="sm"
@@ -287,7 +287,7 @@ export default function SettingsPage() {
                 <input
                   ref={fileInputRef}
                   type="file"
-                  accept="image/jpeg,image/png,image/webp,image/svg+xml"
+                  accept="image/jpeg,image/png,image/webp"
                   onChange={handleImageUpload}
                   className="hidden"
                 />
@@ -304,7 +304,7 @@ export default function SettingsPage() {
               <div className="space-y-4">
                 <div className="p-3 rounded-xl bg-black/[0.03] border border-input/20">
                   <div className="flex justify-between items-center mb-1">
-                    <span className="text-[10px] font-black uppercase tracking-widest text-muted">Version</span>
+                    <span className="text-[10px] font-black uppercase tracking-widest text-muted-foreground">Version</span>
                     <span className="text-xs font-bold text-foreground">1.0.0</span>
                   </div>
                   <div className="w-full h-1 bg-input/20 rounded-full overflow-hidden">
@@ -312,7 +312,7 @@ export default function SettingsPage() {
                   </div>
                 </div>
                 <div className="p-3 rounded-xl bg-black/[0.03] border border-input/20">
-                  <div className="text-[10px] font-black uppercase tracking-widest text-muted mb-2">API Endpoint</div>
+                  <div className="text-[10px] font-black uppercase tracking-widest text-muted-foreground mb-2">API Endpoint</div>
                   <div className="font-mono text-[10px] text-primary truncate bg-white/50 p-1.5 rounded border border-input/10">
                     {process.env.NEXT_PUBLIC_API_URL || 'Not configured'}
                   </div>

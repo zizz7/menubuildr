@@ -49,7 +49,7 @@ app.use(helmet({
       defaultSrc: ["'self'"],
       scriptSrc: ["'self'"],
       styleSrc: ["'self'", "'unsafe-inline'", 'https://fonts.googleapis.com'],
-      imgSrc: ["'self'", 'data:', 'https://res.cloudinary.com'],
+      imgSrc: ["'self'", 'data:', 'https://res.cloudinary.com', 'https://app.menubuildr.com', 'https://api.menubuildr.com'],
       fontSrc: ["'self'", 'https://fonts.gstatic.com'],
       connectSrc: ["'self'"],
     },

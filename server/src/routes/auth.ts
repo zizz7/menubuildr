@@ -277,6 +277,15 @@ router.post('/profile-image', authenticateToken, async (req: AuthRequest, res) =
         return sendError(res, 400, 'Invalid file type. Only JPEG, PNG, and WebP images are allowed.');
       }
 
+      // Remove old profile images with different extensions to avoid stale files
+      const exts = ['.jpg', '.jpeg', '.png', '.webp'];
+      for (const ext of exts) {
+        const oldPath = path.join(uploadDir, `${req.userId}${ext}`);
+        if (oldPath !== file.path && fs.existsSync(oldPath)) {
+          try { fs.unlinkSync(oldPath); } catch { /* ignore */ }
+        }
+      }
+
       const imageUrl = `/uploads/profile/${file.filename}`;
 
       const admin = await prisma.admin.update({
