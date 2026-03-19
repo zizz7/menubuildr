@@ -107,8 +107,12 @@ export function RegisterForm() {
       </div>
 
       {/* Google SSO */}
-      <button type="button" disabled
-        className="w-full py-[13px] bg-white text-[#1A3C2E] font-[var(--font-dm-sans)] text-[0.9rem] font-medium border-[1.5px] border-[rgba(26,60,46,0.13)] rounded-[10px] cursor-pointer flex items-center justify-center gap-2.5 transition-all duration-200 hover:border-[rgba(26,60,46,0.28)] hover:shadow-[0_4px_16px_rgba(26,60,46,0.07)] disabled:opacity-50 disabled:cursor-not-allowed">
+      <button type="button"
+        onClick={() => {
+          const apiUrl = process.env.NEXT_PUBLIC_API_URL || `http://${window.location.hostname}:5000/api`;
+          window.location.href = `${apiUrl}/auth/google`;
+        }}
+        className="w-full py-[13px] bg-white text-[#1A3C2E] font-[var(--font-dm-sans)] text-[0.9rem] font-medium border-[1.5px] border-[rgba(26,60,46,0.13)] rounded-[10px] cursor-pointer flex items-center justify-center gap-2.5 transition-all duration-200 hover:border-[rgba(26,60,46,0.28)] hover:shadow-[0_4px_16px_rgba(26,60,46,0.07)]">
         <svg width="18" height="18" viewBox="0 0 24 24">
           <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>
           <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/>

@@ -51,7 +51,7 @@ app.use(helmet({
       styleSrc: ["'self'", "'unsafe-inline'", 'https://fonts.googleapis.com'],
       imgSrc: ["'self'", 'data:', 'https://res.cloudinary.com', 'https://app.menubuildr.com', 'https://api.menubuildr.com'],
       fontSrc: ["'self'", 'https://fonts.gstatic.com'],
-      connectSrc: ["'self'"],
+      connectSrc: ["'self'", 'https://accounts.google.com'],
     },
   },
 }));
@@ -122,6 +122,7 @@ app.post('/api/regenerate-menus', authenticateToken, async (_req: AuthRequest, r
 
 // Routes
 import authRoutes from './routes/auth';
+import googleAuthRoutes from './routes/google-auth';
 import restaurantRoutes from './routes/restaurants';
 import menuRoutes from './routes/menus';
 import sectionRoutes from './routes/sections';
@@ -138,6 +139,7 @@ import translationRoutes from './routes/translations';
 import billingRoutes from './routes/billing';
 
 app.use('/api/auth', authRoutes);
+app.use('/api/auth', googleAuthRoutes);
 app.use('/api/restaurants', restaurantRoutes);
 app.use('/api/menus', menuRoutes);
 app.use('/api/sections', sectionRoutes);

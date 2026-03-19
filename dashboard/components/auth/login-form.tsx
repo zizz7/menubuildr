@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
+import { useSearchParams } from 'next/navigation';
 import { useAuthForm } from '@/lib/hooks/useAuthForm';
 import { Eye, EyeOff, ArrowLeft } from 'lucide-react';
 
@@ -10,6 +11,8 @@ export function LoginForm() {
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const { error, loading, handleSubmit } = useAuthForm({ endpoint: '/auth/login' });
+  const searchParams = useSearchParams();
+  const googleError = searchParams.get('error') === 'google_auth_failed';
 
   return (
     <div className="w-full">
@@ -24,6 +27,11 @@ export function LoginForm() {
       </p>
 
       <form onSubmit={(e) => handleSubmit(e, { email, password })}>
+        {googleError && (
+          <div className="text-sm text-red-600 bg-red-50 p-3 rounded-[10px] mb-4" role="alert">
+            Google sign-in failed. Please try again or use email/password.
+          </div>
+        )}
         {/* Email */}
         <div className="mb-5">
           <label htmlFor="email" className="block text-[0.8rem] font-medium text-[#1A3C2E] mb-[7px] tracking-[0.01em]">
@@ -100,8 +108,11 @@ export function LoginForm() {
       {/* Google SSO */}
       <button
         type="button"
-        disabled
-        className="w-full py-[13px] bg-white text-[#1A3C2E] font-[var(--font-dm-sans)] text-[0.9rem] font-medium border-[1.5px] border-[rgba(26,60,46,0.13)] rounded-[10px] cursor-pointer flex items-center justify-center gap-2.5 transition-all duration-200 hover:border-[rgba(26,60,46,0.28)] hover:shadow-[0_4px_16px_rgba(26,60,46,0.07)] disabled:opacity-50 disabled:cursor-not-allowed"
+        onClick={() => {
+          const apiUrl = process.env.NEXT_PUBLIC_API_URL || `http://${window.location.hostname}:5000/api`;
+          window.location.href = `${apiUrl}/auth/google`;
+        }}
+        className="w-full py-[13px] bg-white text-[#1A3C2E] font-[var(--font-dm-sans)] text-[0.9rem] font-medium border-[1.5px] border-[rgba(26,60,46,0.13)] rounded-[10px] cursor-pointer flex items-center justify-center gap-2.5 transition-all duration-200 hover:border-[rgba(26,60,46,0.28)] hover:shadow-[0_4px_16px_rgba(26,60,46,0.07)]"
       >
         <svg width="18" height="18" viewBox="0 0 24 24">
           <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>

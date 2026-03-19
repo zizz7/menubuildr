@@ -15,6 +15,7 @@ model Admin {
   email                 String       @unique
   passwordHash          String       @map("password_hash")
   name                  String
+  googleId              String?      @unique @map("google_id")
   profileImageUrl       String?      @map("profile_image_url")
   stripeCustomerId      String?      @unique @map("stripe_customer_id")
   stripeSubscriptionId  String?      @map("stripe_subscription_id")
