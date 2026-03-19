@@ -7,11 +7,13 @@ import { useRestaurantStore } from '@/lib/store/restaurant-store';
 import apiClient from '@/lib/api/client';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Store, BookOpen, Menu, TrendingUp, Palette } from 'lucide-react';
+import { Skeleton } from '@/components/ui/skeleton';
 
 export default function DashboardPage() {
   const router = useRouter();
   const { isAuthenticated } = useAuthStore();
   const { restaurants, setRestaurants } = useRestaurantStore();
+  const [loading, setLoading] = useState(true);
   const [stats, setStats] = useState({
     totalRestaurants: 0,
     totalMenus: 0,
@@ -72,8 +74,52 @@ export default function DashboardPage() {
       if (error.code === 'ERR_NETWORK' || error.message?.includes('ECONNREFUSED')) {
         console.error('Backend server is not running. Please start it with: cd server && npm run dev');
       }
+    } finally {
+      setLoading(false);
     }
   };
+
+  if (loading) {
+    return (
+      <div className="p-8 max-w-7xl mx-auto space-y-8">
+        <div>
+          <Skeleton variant="text" className="h-9 w-48 rounded-md" />
+          <Skeleton variant="text" className="h-5 w-80 mt-2 rounded-md" />
+        </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+          {[...Array(4)].map((_, i) => (
+            <Card key={i} className="border-border/50 shadow-sm rounded-lg overflow-hidden">
+              <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                <Skeleton variant="text" className="h-4 w-20 rounded" />
+                <Skeleton variant="circular" className="h-4 w-4" />
+              </CardHeader>
+              <CardContent>
+                <Skeleton variant="text" className="h-8 w-12 rounded-md" />
+                <Skeleton variant="text" className="h-3 w-28 mt-2 rounded" />
+              </CardContent>
+            </Card>
+          ))}
+        </div>
+        <Card className="border-border/50 shadow-sm rounded-lg overflow-hidden">
+          <CardHeader className="border-b border-border/30 bg-muted/50 py-6">
+            <Skeleton variant="text" className="h-6 w-32 rounded-md" />
+            <Skeleton variant="text" className="h-4 w-64 mt-1 rounded" />
+          </CardHeader>
+          <CardContent className="p-0">
+            <div className="grid grid-cols-1 md:grid-cols-3 divide-y md:divide-y-0 md:divide-x divide-border/30">
+              {[...Array(3)].map((_, i) => (
+                <div key={i} className="p-8">
+                  <Skeleton variant="rounded" className="h-11 w-11 mb-4" />
+                  <Skeleton variant="text" className="h-5 w-36 rounded-md" />
+                  <Skeleton variant="text" className="h-4 w-56 mt-2 rounded" />
+                </div>
+              ))}
+            </div>
+          </CardContent>
+        </Card>
+      </div>
+    );
+  }
 
   return (
     <div className="p-8 max-w-7xl mx-auto space-y-8">

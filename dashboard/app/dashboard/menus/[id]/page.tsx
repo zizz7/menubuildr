@@ -13,6 +13,7 @@ import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Plus, Edit, Trash2, GripVertical, ArrowLeft, ChevronDown, ChevronUp, Copy } from 'lucide-react';
+import { Skeleton } from '@/components/ui/skeleton';
 import { CopySectionModal } from '@/components/copy-section-modal';
 import { toast } from 'sonner';
 import { MultiLanguageInput } from '@/components/multi-language-input';
@@ -928,10 +929,40 @@ export default function MenuDetailPage() {
 
   if (loading) {
     return (
-      <div className="p-8">
-        <div className="flex items-center justify-center h-64">
-          <p>Loading...</p>
+      <div className="p-8 max-w-7xl mx-auto space-y-6">
+        <div className="flex items-center gap-4">
+          <Skeleton variant="rounded" className="h-9 w-24" />
+          <Skeleton variant="text" className="h-8 w-48 rounded-md" />
         </div>
+        <div className="flex items-center justify-between">
+          <Skeleton variant="text" className="h-5 w-64 rounded" />
+          <Skeleton variant="rounded" className="h-10 w-36" />
+        </div>
+        {[...Array(3)].map((_, i) => (
+          <Card key={i} className="mb-6 border border-border overflow-hidden">
+            <CardHeader className="p-6">
+              <div className="flex items-center gap-4">
+                <Skeleton variant="rounded" className="h-9 w-9" />
+                <Skeleton variant="text" className="h-7 w-44 rounded-md" />
+                <Skeleton variant="rounded" className="h-5 w-16 ml-2" />
+              </div>
+            </CardHeader>
+            <CardContent className="px-6 pb-6 pt-0 border-t border-border bg-muted/20">
+              <div className="mt-6 space-y-3">
+                {[...Array(3)].map((_, j) => (
+                  <div key={j} className="flex items-center gap-4 p-4 border border-border bg-card rounded-md">
+                    <Skeleton variant="rounded" className="h-9 w-9" />
+                    <div className="flex-1 space-y-2">
+                      <Skeleton variant="text" className="h-5 w-40 rounded" />
+                      <Skeleton variant="text" className="h-4 w-64 rounded" />
+                    </div>
+                    <Skeleton variant="text" className="h-5 w-16 rounded" />
+                  </div>
+                ))}
+              </div>
+            </CardContent>
+          </Card>
+        ))}
       </div>
     );
   }

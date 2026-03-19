@@ -5,6 +5,7 @@ import { useSearchParams } from 'next/navigation';
 import apiClient from '@/lib/api/client';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
+import { Skeleton } from '@/components/ui/skeleton';
 
 type SubscriptionStatus = 'none' | 'active' | 'past_due' | 'canceled' | 'trialing';
 
@@ -73,10 +74,21 @@ export default function BillingPage() {
 
   if (loading) {
     return (
-      <div className="p-8">
-        <div className="flex items-center justify-center h-64">
-          <p>Loading billing information...</p>
-        </div>
+      <div className="p-8 max-w-2xl mx-auto space-y-8">
+        <Skeleton variant="text" className="h-9 w-32 rounded-md" />
+        <Card>
+          <CardHeader>
+            <Skeleton variant="text" className="h-6 w-44 rounded-md" />
+            <Skeleton variant="text" className="h-4 w-64 mt-1 rounded" />
+          </CardHeader>
+          <CardContent className="space-y-6">
+            <div className="flex items-center justify-between">
+              <Skeleton variant="text" className="h-4 w-28 rounded" />
+              <Skeleton variant="text" className="h-5 w-20 rounded" />
+            </div>
+            <Skeleton variant="rounded" className="h-10 w-full" />
+          </CardContent>
+        </Card>
       </div>
     );
   }

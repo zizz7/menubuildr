@@ -13,7 +13,9 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Plus, Edit, Trash2, FileText, GripVertical, Settings } from 'lucide-react';
 import { toast } from 'sonner';
 import { MultiLanguageInput } from '@/components/multi-language-input';
-import { resolveAssetUrl } from '@/lib/utils';import {
+import { resolveAssetUrl } from '@/lib/utils';
+import { Skeleton } from '@/components/ui/skeleton';
+import {
   DndContext,
   closestCenter,
   KeyboardSensor,
@@ -365,9 +367,37 @@ export default function AllergensPage() {
 
   if (loading) {
     return (
-      <div className="p-8">
-        <div className="flex items-center justify-center h-64">
-          <p>Loading...</p>
+      <div className="p-8 space-y-8">
+        <div className="flex items-center justify-between">
+          <div>
+            <Skeleton variant="text" className="h-9 w-44 rounded-md" />
+            <Skeleton variant="text" className="h-5 w-56 mt-2 rounded-md" />
+          </div>
+          <Skeleton variant="rounded" className="h-10 w-44" />
+        </div>
+        <Card>
+          <CardHeader>
+            <Skeleton variant="text" className="h-6 w-48 rounded-md" />
+            <Skeleton variant="text" className="h-4 w-72 mt-1 rounded" />
+          </CardHeader>
+          <CardContent>
+            <Skeleton variant="rounded" className="h-10 w-full max-w-md" />
+          </CardContent>
+        </Card>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3">
+          {[...Array(8)].map((_, i) => (
+            <Card key={i} className="mb-2">
+              <CardContent className="p-3">
+                <div className="flex items-center gap-3">
+                  <Skeleton variant="rounded" className="h-5 w-5" />
+                  <Skeleton variant="rounded" className="h-12 w-12" />
+                  <Skeleton variant="text" className="h-4 w-20 flex-1 rounded" />
+                  <Skeleton variant="circular" className="h-8 w-8" />
+                  <Skeleton variant="circular" className="h-8 w-8" />
+                </div>
+              </CardContent>
+            </Card>
+          ))}
         </div>
       </div>
     );

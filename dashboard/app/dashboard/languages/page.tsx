@@ -12,6 +12,7 @@ import { Label } from '@/components/ui/label';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Plus, Edit, Trash2, Languages as LanguagesIcon, CheckCircle, XCircle } from 'lucide-react';
 import { toast } from 'sonner';
+import { Skeleton } from '@/components/ui/skeleton';
 
 interface Language {
   id: string;
@@ -116,9 +117,36 @@ export default function LanguagesPage() {
 
   if (loading) {
     return (
-      <div className="p-8">
-        <div className="flex items-center justify-center h-64">
-          <p>Loading...</p>
+      <div className="p-8 space-y-8">
+        <div className="flex items-center justify-between">
+          <div>
+            <Skeleton variant="text" className="h-9 w-40 rounded-md" />
+            <Skeleton variant="text" className="h-5 w-52 mt-2 rounded-md" />
+          </div>
+          <Skeleton variant="rounded" className="h-10 w-36" />
+        </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {[...Array(6)].map((_, i) => (
+            <Card key={i}>
+              <CardHeader>
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-3">
+                    <Skeleton variant="rounded" className="h-6 w-6" />
+                    <Skeleton variant="text" className="h-6 w-24 rounded-md" />
+                  </div>
+                  <Skeleton variant="circular" className="h-5 w-5" />
+                </div>
+                <Skeleton variant="text" className="h-4 w-16 mt-1 rounded" />
+              </CardHeader>
+              <CardContent>
+                <div className="flex gap-2">
+                  <Skeleton variant="rounded" className="h-9 w-24" />
+                  <Skeleton variant="rounded" className="h-9 w-16" />
+                  <Skeleton variant="rounded" className="h-9 w-20" />
+                </div>
+              </CardContent>
+            </Card>
+          ))}
         </div>
       </div>
     );

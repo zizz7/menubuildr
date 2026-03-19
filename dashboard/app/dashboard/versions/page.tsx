@@ -11,6 +11,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { History, RotateCcw, Eye, Calendar } from 'lucide-react';
 import { toast } from 'sonner';
+import { Skeleton } from '@/components/ui/skeleton';
 
 interface Version {
   id: string;
@@ -172,8 +173,30 @@ export default function VersionsPage() {
       </div>
 
       {loading ? (
-        <div className="flex items-center justify-center h-64">
-          <p>Loading versions...</p>
+        <div className="space-y-4">
+          {[...Array(3)].map((_, i) => (
+            <Card key={i}>
+              <CardHeader>
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-3">
+                    <Skeleton variant="rounded" className="h-5 w-5" />
+                    <Skeleton variant="text" className="h-6 w-28 rounded-md" />
+                    {i === 0 && <Skeleton variant="rounded" className="h-5 w-14" />}
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <Skeleton variant="rounded" className="h-4 w-4" />
+                    <Skeleton variant="text" className="h-4 w-36 rounded" />
+                  </div>
+                </div>
+              </CardHeader>
+              <CardContent>
+                <div className="flex gap-2">
+                  <Skeleton variant="rounded" className="h-9 w-44" />
+                  <Skeleton variant="rounded" className="h-9 w-40" />
+                </div>
+              </CardContent>
+            </Card>
+          ))}
         </div>
       ) : versions.length === 0 ? (
         <Card>

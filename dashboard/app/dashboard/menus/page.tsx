@@ -18,6 +18,7 @@ import { toast } from 'sonner';
 import { MultiLanguageInput } from '@/components/multi-language-input';
 import { TemplateSelector } from '@/components/menu/TemplateSelector';
 import { PreviewModal } from '@/components/menu/PreviewModal';
+import { Skeleton } from '@/components/ui/skeleton';
 
 interface Menu {
   id: string;
@@ -330,9 +331,47 @@ export default function MenusPage() {
 
   if (loading) {
     return (
-      <div className="p-8">
-        <div className="flex items-center justify-center h-64">
-          <p>Loading...</p>
+      <div className="p-10 space-y-10">
+        <div className="flex items-center justify-between">
+          <div>
+            <Skeleton variant="text" className="h-9 w-32 rounded-md" />
+            <Skeleton variant="text" className="h-5 w-64 mt-2 rounded-md" />
+          </div>
+          <div className="flex gap-3">
+            <Skeleton variant="rounded" className="h-10 w-[200px]" />
+            <Skeleton variant="rounded" className="h-10 w-32" />
+          </div>
+        </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {[...Array(3)].map((_, i) => (
+            <Card key={i} className="border-border/50 overflow-hidden rounded-lg shadow-sm">
+              <CardHeader className="pb-4">
+                <div className="flex items-center justify-between mb-4">
+                  <Skeleton variant="rounded" className="h-10 w-10" />
+                  <Skeleton variant="rounded" className="h-6 w-20" />
+                </div>
+                <Skeleton variant="text" className="h-7 w-36 rounded-md" />
+                <Skeleton variant="text" className="h-3 w-28 mt-1 rounded" />
+              </CardHeader>
+              <CardContent className="space-y-6">
+                <div className="flex justify-between py-4 border-y border-border/30">
+                  <div className="space-y-0.5">
+                    <Skeleton variant="text" className="h-3 w-14 rounded" />
+                    <Skeleton variant="text" className="h-6 w-6 rounded" />
+                  </div>
+                  <div className="space-y-0.5 text-right">
+                    <Skeleton variant="text" className="h-3 w-10 rounded" />
+                    <Skeleton variant="text" className="h-5 w-16 rounded" />
+                  </div>
+                </div>
+                <div className="flex flex-wrap gap-2 pt-2">
+                  <Skeleton variant="rounded" className="h-8 flex-1" />
+                  <Skeleton variant="rounded" className="h-8 flex-1" />
+                  <Skeleton variant="rounded" className="h-8 w-16" />
+                </div>
+              </CardContent>
+            </Card>
+          ))}
         </div>
       </div>
     );

@@ -13,6 +13,7 @@ import { Label } from '@/components/ui/label';
 import { Plus, Store, Edit, Trash2, CheckCircle, XCircle } from 'lucide-react';
 import { toast } from 'sonner';
 import { getServerUrl } from '@/lib/utils';
+import { Skeleton } from '@/components/ui/skeleton';
 interface Restaurant {
   id: string;
   name: string;
@@ -166,9 +167,41 @@ export default function RestaurantsPage() {
 
   if (loading) {
     return (
-      <div className="p-8">
-        <div className="flex items-center justify-center h-64">
-          <p>Loading...</p>
+      <div className="p-10 space-y-10">
+        <div className="flex items-center justify-between">
+          <div>
+            <Skeleton variant="text" className="h-9 w-44 rounded-md" />
+            <Skeleton variant="text" className="h-5 w-56 mt-2 rounded-md" />
+          </div>
+          <Skeleton variant="rounded" className="h-10 w-40" />
+        </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {[...Array(3)].map((_, i) => (
+            <Card key={i} className="border-border/50 overflow-hidden rounded-lg shadow-sm">
+              <CardHeader className="pb-4">
+                <div className="flex items-center justify-between mb-4">
+                  <Skeleton variant="rounded" className="h-14 w-14" />
+                  <Skeleton variant="rounded" className="h-6 w-16" />
+                </div>
+                <Skeleton variant="text" className="h-7 w-40 rounded-md" />
+                <Skeleton variant="text" className="h-4 w-24 mt-1 rounded" />
+              </CardHeader>
+              <CardContent className="space-y-6">
+                <div className="grid grid-cols-3 gap-2 py-4 border-y border-input">
+                  {[...Array(3)].map((_, j) => (
+                    <div key={j} className="space-y-1">
+                      <Skeleton variant="text" className="h-3 w-12 rounded" />
+                      <Skeleton variant="text" className="h-5 w-8 rounded" />
+                    </div>
+                  ))}
+                </div>
+                <div className="flex gap-2 pt-2">
+                  <Skeleton variant="rounded" className="h-9 flex-1" />
+                  <Skeleton variant="rounded" className="h-9 flex-1" />
+                </div>
+              </CardContent>
+            </Card>
+          ))}
         </div>
       </div>
     );

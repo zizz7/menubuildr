@@ -18,6 +18,7 @@ import dynamic from 'next/dynamic';
 import { DEFAULT_COLOR_PALETTE } from '@/lib/constants/color-palette';
 import { getServerUrl, resolveAssetUrl } from '@/lib/utils';
 import { TemplateSelector } from '@/components/theme/template-selector';
+import { Skeleton } from '@/components/ui/skeleton';
 
 // Dynamically import Monaco Editor to avoid SSR issues
 const MonacoEditor = dynamic(() => import('@monaco-editor/react'), { ssr: false });
@@ -646,9 +647,47 @@ export default function ThemePage() {
 
   if (loading) {
     return (
-      <div className="p-8">
-        <div className="flex items-center justify-center h-64">
-          <p>Loading...</p>
+      <div className="p-8 space-y-8">
+        <div className="flex items-center justify-between">
+          <div>
+            <Skeleton variant="text" className="h-9 w-52 rounded-md" />
+            <Skeleton variant="text" className="h-5 w-64 mt-2 rounded-md" />
+          </div>
+          <div className="flex gap-2">
+            <Skeleton variant="rounded" className="h-10 w-[200px]" />
+            <Skeleton variant="rounded" className="h-10 w-[200px]" />
+            <Skeleton variant="rounded" className="h-10 w-40" />
+          </div>
+        </div>
+        <Skeleton variant="rounded" className="h-10 w-64" />
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+          <div className="lg:col-span-2 space-y-6">
+            <Skeleton variant="rounded" className="h-10 w-full max-w-lg" />
+            <Card>
+              <CardHeader>
+                <Skeleton variant="text" className="h-6 w-32 rounded-md" />
+              </CardHeader>
+              <CardContent className="space-y-4">
+                {[...Array(5)].map((_, i) => (
+                  <div key={i} className="flex items-center gap-4">
+                    <Skeleton variant="rounded" className="h-10 w-10" />
+                    <Skeleton variant="text" className="h-4 w-24 rounded" />
+                    <Skeleton variant="rounded" className="h-10 flex-1" />
+                  </div>
+                ))}
+              </CardContent>
+            </Card>
+          </div>
+          <div>
+            <Card>
+              <CardHeader>
+                <Skeleton variant="text" className="h-6 w-28 rounded-md" />
+              </CardHeader>
+              <CardContent>
+                <Skeleton variant="rounded" className="h-[400px] w-full" />
+              </CardContent>
+            </Card>
+          </div>
         </div>
       </div>
     );
