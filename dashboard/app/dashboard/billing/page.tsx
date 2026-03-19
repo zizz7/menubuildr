@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { Suspense, useEffect, useState } from 'react';
 import { useSearchParams } from 'next/navigation';
 import apiClient from '@/lib/api/client';
 import { Button } from '@/components/ui/button';
@@ -28,6 +28,14 @@ const statusConfig: Record<SubscriptionStatus, { label: string; color: string }>
 };
 
 export default function BillingPage() {
+  return (
+    <Suspense>
+      <BillingPageContent />
+    </Suspense>
+  );
+}
+
+function BillingPageContent() {
   const searchParams = useSearchParams();
   const sessionId = searchParams.get('session_id');
 
